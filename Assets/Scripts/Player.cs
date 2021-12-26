@@ -74,7 +74,7 @@ public class Player : MonoBehaviour
 
     void HandleMovement()
     {
-        transform.position = Vector2.MoveTowards(transform.position, target, Time.deltaTime * 4f);
+        transform.position = Vector2.MoveTowards(transform.position, target, Time.deltaTime * ship.speed);
     }
 
     void HandleDamageInputs()

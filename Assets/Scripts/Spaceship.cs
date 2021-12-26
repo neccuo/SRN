@@ -4,18 +4,37 @@ using UnityEngine;
 
 public class Spaceship : MonoBehaviour
 {
+    // stats realm
     public float maxHealth = 100;
     public float currentHealth;
-    public float velocity;
+    public float speed = 10;
 
+    // Rotation realm (work in progress)
     public float rotationBounds = 30; // 150 - 180 - 210
     public float rotationSpeed = 10f;
     private readonly float initialRotationY = 180f;
     private int rotationUpOrDown = 1; // 1 up, -1 down
-    
+
+    // Sprite realm
+    public Sprite sprite;
+    private SpriteRenderer spriteRenderer;
+
+    float GetScaleFromMaxHealth()
+    {
+        if(maxHealth <= 100) { return 0.5f; }
+        else if(maxHealth >= 1000) { return 5f; }
+        else { return maxHealth / 200; }
+    }
+
 
     void Start()
     {
+        float shipScale = GetScaleFromMaxHealth();
+        transform.localScale = new Vector3(shipScale, shipScale, 1);
+
+        spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
+        spriteRenderer.sprite = sprite;
+
         //transform.rotation.Set(transform.rotation.x, initialRotationY, transform.rotation.z, 0);
         transform.rotation = new Quaternion(0, initialRotationY, transform.rotation.z, 0);
         currentHealth = maxHealth;
