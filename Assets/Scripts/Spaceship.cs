@@ -1,0 +1,84 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Spaceship : MonoBehaviour
+{
+    public float maxHealth = 100;
+    public float currentHealth;
+    public float velocity;
+
+    public float rotationBounds = 30; // 150 - 180 - 210
+    public float rotationSpeed = 10f;
+    private readonly float initialRotationY = 180f;
+    private int rotationUpOrDown = 1; // 1 up, -1 down
+    
+
+    void Start()
+    {
+        //transform.rotation.Set(transform.rotation.x, initialRotationY, transform.rotation.z, 0);
+        transform.rotation = new Quaternion(0, initialRotationY, transform.rotation.z, 0);
+        currentHealth = maxHealth;
+
+    }
+
+    void Update()
+    {
+        // RotationAnimation(transform.rotation.y);
+        /*if(Input.GetKeyDown(KeyCode.Space))
+        {
+            TakeDamage(20);
+        }*/
+    }
+
+    public void TakeDamage(float dmg)
+    {
+        if (currentHealth <= 0) { return; }
+        float takenDamage;
+
+        if(currentHealth - dmg < 0) // overkill
+        {
+            takenDamage = currentHealth;
+            currentHealth = 0;
+        }
+        else // normal damage
+        {
+            takenDamage = dmg;
+            currentHealth -= dmg;
+        }
+        Debug.Log("Took " + takenDamage + " damage");
+    }
+
+    public void RepairDamage(float repair)
+    {
+        if(currentHealth == maxHealth) { return; }
+        float repairedAmount;
+
+        if(currentHealth + repair > maxHealth)  // overheal
+        {
+            repairedAmount = maxHealth - currentHealth;
+            currentHealth = maxHealth;
+        }
+        else // normal repair
+        {
+            repairedAmount = repair;
+            currentHealth += repair; 
+        }
+        Debug.Log("Repaired " + (repairedAmount) + " health");
+    }
+
+    void RotationAnimation(float currentRotationY)
+    {
+        if(currentRotationY >= initialRotationY + rotationBounds) //  current >= 210
+        {
+            rotationUpOrDown = -1; // go down
+        }
+        else if(currentRotationY <= initialRotationY - rotationBounds) // current <= 150
+        {
+            rotationUpOrDown = 1; // go up
+        }
+        float newRotationY = currentRotationY + (rotationUpOrDown * rotationSpeed * Time.deltaTime); // currentRotation +/- rotationSpeed*delta
+        Debug.Log(newRotationY);
+        transform.rotation = new Quaternion(0, newRotationY, transform.rotation.z, 0);
+    }
+}
