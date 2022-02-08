@@ -5,54 +5,32 @@ using UnityEngine;
 public class Planet : MonoBehaviour
 {
     // size realm
-    public float scaleBase = 1f;
-    public float scaleRange = 1.2f;
+    // float scaleBase;
+    float scaleRange;
 
     // movement realm
-    public float speedBase = 1f;
-    public float speedRange = 5f;
-
-    // private bool isForward = true;
+    float speedBase;
+    float speedRange;
+    public float angularSpeed;
 
     public Transform sunLocation;
 
-    Vector2 sunPos;
-    public Vector2 planetPos;
-
-
-    float rotationRadius; // distance between sun and planet
-    float angularSpeed = 2f;
-
-    float posX, posY;
-    public float angle;
-
-
     void Start()
     {
-        sunPos = sunLocation.position;
-        planetPos = transform.position;
-
-        rotationRadius = Vector2.Distance(sunPos, planetPos);
-        Debug.Log(rotationRadius.ToString());
+        //scaleBase = 1f;
+        scaleRange = 1.2f;
+        speedBase = 10f;
+        speedRange = 50f;
+        angularSpeed = 0f;
 
         InitScale();
-        InitAngle();
+        InitAngularSpeed();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        posX = sunLocation.position.x + Mathf.Cos(angle) * rotationRadius;
-        posY = sunLocation.position.y + Mathf.Sin(angle) * rotationRadius;
-        transform.position = new Vector2(posX, posY);
-        angle -= Time.deltaTime * angularSpeed;
+        OrbitSun(sunLocation.position, angularSpeed * Time.deltaTime);
 
-        if (angle >= 360f)
-            angle = 0f;
-        else if (angle < 0f)
-            angle = 360f;
-
-        Debug.LogFormat("Angle: {0}", angle);
     }
     void InitScale() // inits scale with random numbers (using designated range)
     {
@@ -65,27 +43,29 @@ public class Planet : MonoBehaviour
         transform.localScale = temp;
     }
 
-    void InitAngle()
+    void InitAngularSpeed()
     {
-        Debug.LogFormat("sun: {0}, planet: {1}", ((Vector2) sunLocation.position).ToString(), ((Vector2) transform.position).ToString());
-        angle = getAngle(transform.position, sunLocation.position); //Vector2.Angle(transform.position, sunLocation.position);
-        
-        /*posX = sunLocation.position.x + Mathf.Cos(angle) * rotationRadius;
-        posY = sunLocation.position.y + Mathf.Sin(angle) * rotationRadius;
-        Debug.LogFormat("sun: {0}, planet: {1}", sunLocation.position.ToString(), transform.position.ToString());*/
+        if(angularSpeed != 0f)
+            return;
+        float randNum = Random.Range(-speedRange, speedRange);
+        // in case the randNum is too low, adding base speed just in case
+        if(randNum < 0)
+            angularSpeed = randNum - speedBase;
+        else
+            angularSpeed = randNum + speedBase;
 
-        Debug.LogFormat("Initial angle: {0}", angle);
-        Debug.LogFormat("Initial position: {0}, {1}", posX, posY);
+        // Debug.LogFormat("angular speed: {0}", angularSpeed);
 
     }
 
-    void InitVelocity()
-    {
 
-    }
-
-    public float getAngle(Vector2 me, Vector2 target)
+    // taken from transform.RotateAround()
+    void OrbitSun(Vector2 center, float angle)
     {
-        return Mathf.Atan2(target.y - me.y, target.x - me.x) * (180 / Mathf.PI);
+        Vector2 pos = transform.position;
+        Quaternion rot = Quaternion.AngleAxis(angle, new Vector3(0, 0, 1));
+        Vector2 dir = pos - center;
+        dir = rot * dir;
+        transform.position = center + dir;
     }
 }

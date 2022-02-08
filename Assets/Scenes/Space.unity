@@ -499,3 +499,6 @@ MonoBehaviour:
   speedBase: 5
   speedRange: 5
   sunLocation: {fileID: 467269415}
+  planetPos: {x: 0, y: 0}
+  angularSpeed: 3
+  angle: 15
