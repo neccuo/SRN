@@ -7,6 +7,11 @@ public class Player : MonoBehaviour
     // export realm
     public Spaceship ship;
     public HealthBar hpBar;
+    public Camera cam;
+
+    // cam realm
+    private float minimumZoom = 10;
+    private float zoomUnit = 1;
 
     // movement realm
     private Vector2 target;
@@ -46,6 +51,14 @@ public class Player : MonoBehaviour
                 {
                     currentGameInstance.UpdateGameState(GameState.DuringMovement);
                 }
+                if(Input.GetKeyDown(KeyCode.Alpha9))
+                {
+                    HandleCamZoom(-1);
+                }
+                if (Input.GetKeyDown(KeyCode.Alpha0))
+                {
+                    HandleCamZoom(1);
+                }
                 break;
             case GameState.DuringMovement:
 
@@ -70,6 +83,19 @@ public class Player : MonoBehaviour
         dir = Input.mousePosition - Camera.main.WorldToScreenPoint(transform.position);
         angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.AngleAxis(angle - 90, Vector3.forward);
+    }
+
+    void HandleCamZoom(int zoomDensity)
+    {
+        if(minimumZoom <= cam.orthographicSize + (zoomDensity*zoomUnit))
+        {
+            cam.orthographicSize += zoomDensity * zoomUnit;
+            Debug.LogFormat("Cam size: {0}", cam.orthographicSize);
+        }
+        else
+        {
+            Debug.LogWarning("Minimum zoom cannot be exceeded");
+        }
     }
 
     void HandleMovement()
