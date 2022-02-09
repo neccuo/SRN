@@ -24,7 +24,8 @@ public class Player : MonoBehaviour
     void Start()
     {
         // initializing game
-        hpBar.SetMaxHealth(ship.maxHealth);
+        if(hpBar)
+            hpBar.SetMaxHealth(ship.maxHealth);
 
         target = transform.position;
         angle = transform.rotation.z;
@@ -35,7 +36,7 @@ public class Player : MonoBehaviour
     void Update()
     {
         HandleDamageInputs();
-        HandleGameState();
+        // HandleGameState();
     }
 
     void HandleGameState()
@@ -77,12 +78,17 @@ public class Player : MonoBehaviour
         }
     }
 
-    void SetMovement()
+    public void SetMovement()
     {
         target = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         dir = Input.mousePosition - Camera.main.WorldToScreenPoint(transform.position);
         angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.AngleAxis(angle - 90, Vector3.forward);
+    }
+
+    public void HandleMovement()
+    {
+        transform.position = Vector2.MoveTowards(transform.position, target, Time.deltaTime * ship.speed);
     }
 
     void HandleCamZoom(int zoomDensity)
@@ -98,11 +104,6 @@ public class Player : MonoBehaviour
         }
     }
 
-    void HandleMovement()
-    {
-        transform.position = Vector2.MoveTowards(transform.position, target, Time.deltaTime * ship.speed);
-    }
-
     void HandleDamageInputs()
     {
         if (Input.GetKeyDown(KeyCode.LeftControl))
@@ -113,6 +114,8 @@ public class Player : MonoBehaviour
         {
             ship.RepairDamage(17);
         }
-        hpBar.SetHealth(ship.currentHealth);
+
+        if(hpBar)
+            hpBar.SetHealth(ship.currentHealth);
     }
 }

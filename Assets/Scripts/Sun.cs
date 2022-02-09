@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Sun : MonoBehaviour
 {
-    public float baseScale = 5f;
+    public float baseScale = 4f;
     public float scaleRange = 5f;
 
     void Start()

@@ -4,14 +4,19 @@ using UnityEngine;
 
 public class Planet : MonoBehaviour
 {
-    // size realm
+    #region size realm
     // float scaleBase;
     float scaleRange;
 
-    // movement realm
+    #endregion
+
+    #region movement realm
     float speedBase;
     float speedRange;
     public float angularSpeed;
+
+    #endregion
+
 
     public Transform sunLocation;
 
@@ -20,7 +25,7 @@ public class Planet : MonoBehaviour
         //scaleBase = 1f;
         scaleRange = 1.2f;
         speedBase = 10f;
-        speedRange = 50f;
+        speedRange = 100f;
         angularSpeed = 0f;
 
         InitScale();

@@ -19,9 +19,8 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-        State = GameState.PlanMovement;
+        UpdateGameState(GameState.PlanMovement);
     }
-
 
     public void UpdateGameState(GameState newState)
     {
@@ -34,8 +33,10 @@ public class GameManager : MonoBehaviour
         switch (newState)
         {
             case GameState.PlanMovement:
+                Time.timeScale = 0;
                 break;
             case GameState.DuringMovement:
+                Time.timeScale = 1;
                 break;
             case GameState.Combat:
                 break;
