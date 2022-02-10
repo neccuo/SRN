@@ -24,8 +24,17 @@ public class GameManager : MonoBehaviour
 
     public void UpdateGameState(GameState newState)
     {
-        Debug.Log("Changing from state: " + State.ToString() + " to state: " + newState.ToString());
+        /// MAY NEED OPTIMIZATION, BUT NOT TODAY :3
+        
+        /*if(newState == State)
+        {
+            Debug.Log("Already in the state: (" + State.ToString() + ")");
+            return;
+        }*/
 
+        if(newState != State)
+            Debug.Log("Changing from state: " + State.ToString() + " to state: " + newState.ToString());
+        
 
         State = newState;
 

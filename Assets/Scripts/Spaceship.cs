@@ -29,8 +29,8 @@ public class Spaceship : MonoBehaviour
 
     void Start()
     {
-        float shipScale = GetScaleFromMaxHealth();
-        transform.localScale = new Vector3(shipScale, shipScale, 1);
+        //float shipScale = GetScaleFromMaxHealth();
+        //transform.localScale = new Vector3(shipScale, shipScale, 1);
 
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
         spriteRenderer.sprite = sprite;

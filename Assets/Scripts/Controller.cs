@@ -9,6 +9,9 @@ public class Controller : MonoBehaviour
     private GameManager gameInstance; // for storing the game state
     public Player player;
 
+    public Vector2 playerTargetLocation;
+    public Vector2 playerCurrentLocation;
+
     void Start()
     {
         gameInstance = GameManager.Instance;
@@ -17,7 +20,6 @@ public class Controller : MonoBehaviour
     void Update()
     {
         HandleGameState();
-        
     }
 
     void HandleGameState()
@@ -29,13 +31,14 @@ public class Controller : MonoBehaviour
                 break;
 
             case GameState.DuringMovement:
-                player.HandleMovement();
+                playerCurrentLocation = player.HandleMovement();
                 TakeDuringMovementInput(); // where state changes may happen
                 break;
 
             default:
                 throw new MissingComponentException("" + gameInstance.ToString() + "is not an available state.");
         }
+        FinalStateChecker();
     }
 
     void TakePlanMovementInput()
@@ -43,7 +46,7 @@ public class Controller : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
             gameInstance.UpdateGameState(GameState.DuringMovement); // continue game
         else if (Input.GetMouseButtonDown(0) || Input.GetMouseButton(0))
-            player.SetMovement();
+            playerTargetLocation = player.SetMovement();
     }
 
     void TakeDuringMovementInput()
@@ -51,6 +54,12 @@ public class Controller : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
             gameInstance.UpdateGameState(GameState.PlanMovement); // stop game
         // else if()
+    }
+
+    void FinalStateChecker()
+    {
+        if(playerTargetLocation == playerCurrentLocation)
+            gameInstance.UpdateGameState(GameState.PlanMovement); // stop game
     }
 
 }

@@ -10,8 +10,8 @@ public class Player : MonoBehaviour
     public Camera cam;
 
     // cam realm
-    private float minimumZoom = 10;
-    private float zoomUnit = 1;
+    private float _minimumZoom = 10;
+    private float _zoomUnit = 1;
 
     // movement realm
     private Vector2 target;
@@ -78,24 +78,26 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void SetMovement()
+    public Vector2 SetMovement()
     {
         target = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         dir = Input.mousePosition - Camera.main.WorldToScreenPoint(transform.position);
         angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.AngleAxis(angle - 90, Vector3.forward);
+        return target;
     }
 
-    public void HandleMovement()
+    public Vector2 HandleMovement()
     {
         transform.position = Vector2.MoveTowards(transform.position, target, Time.deltaTime * ship.speed);
+        return transform.position;
     }
 
     void HandleCamZoom(int zoomDensity)
     {
-        if(minimumZoom <= cam.orthographicSize + (zoomDensity*zoomUnit))
+        if(_minimumZoom <= cam.orthographicSize + (zoomDensity*_zoomUnit))
         {
-            cam.orthographicSize += zoomDensity * zoomUnit;
+            cam.orthographicSize += zoomDensity * _zoomUnit;
             Debug.LogFormat("Cam size: {0}", cam.orthographicSize);
         }
         else
