@@ -41,3 +41,12 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Planets
+    uniqueID: 1968533339
+    locked: 0
+  - name: ClickPoint
+    uniqueID: 486408587
+    locked: 0
+  - name: Player
+    uniqueID: 3647113057
+    locked: 0

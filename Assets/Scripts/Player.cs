@@ -14,9 +14,9 @@ public class Player : MonoBehaviour
     private float _zoomUnit = 1;
 
     // movement realm
-    private Vector2 target;
-    private Vector2 dir;
-    private float angle;
+    private Vector2 _target;
+    private Vector2 _dir;
+    private float _angle;
 
     // for getting game state
     private GameManager currentGameInstance;
@@ -27,8 +27,8 @@ public class Player : MonoBehaviour
         if(hpBar)
             hpBar.SetMaxHealth(ship.maxHealth);
 
-        target = transform.position;
-        angle = transform.rotation.z;
+        _target = transform.position;
+        _angle = transform.rotation.z;
 
         currentGameInstance = GameManager.Instance;
     }
@@ -41,7 +41,7 @@ public class Player : MonoBehaviour
 
     void HandleGameState()
     {
-        switch (currentGameInstance.State)
+        switch (currentGameInstance.state)
         {
             case GameState.PlanMovement:
                 if (Input.GetMouseButtonDown(0) || Input.GetMouseButton(0))
@@ -64,7 +64,7 @@ public class Player : MonoBehaviour
             case GameState.DuringMovement:
 
                 HandleMovement();
-                if ((Vector2)transform.position == target)
+                if ((Vector2)transform.position == _target)
                 {
                     currentGameInstance.UpdateGameState(GameState.PlanMovement);
                 }
@@ -80,16 +80,16 @@ public class Player : MonoBehaviour
 
     public Vector2 SetMovement()
     {
-        target = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        dir = Input.mousePosition - Camera.main.WorldToScreenPoint(transform.position);
-        angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.AngleAxis(angle - 90, Vector3.forward);
-        return target;
+        _target = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        _dir = Input.mousePosition - Camera.main.WorldToScreenPoint(transform.position);
+        _angle = Mathf.Atan2(_dir.y, _dir.x) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.AngleAxis(_angle - 90, Vector3.forward);
+        return _target;
     }
 
     public Vector2 HandleMovement()
     {
-        transform.position = Vector2.MoveTowards(transform.position, target, Time.deltaTime * ship.speed);
+        transform.position = Vector2.MoveTowards(transform.position, _target, Time.deltaTime * ship.speed);
         return transform.position;
     }
 

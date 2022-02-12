@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
-    public GameState State;
+    public GameState state;
 
     private void Awake()
     {
@@ -26,17 +26,17 @@ public class GameManager : MonoBehaviour
     {
         /// MAY NEED OPTIMIZATION, BUT NOT TODAY :3
         
-        /*if(newState == State)
+        /*if(newState == state)
         {
-            Debug.Log("Already in the state: (" + State.ToString() + ")");
+            Debug.Log("Already in the state: (" + state.ToString() + ")");
             return;
         }*/
 
-        if(newState != State)
-            Debug.Log("Changing from state: " + State.ToString() + " to state: " + newState.ToString());
+        if(newState != state)
+            Debug.Log("Changing from state: " + state.ToString() + " to state: " + newState.ToString());
         
 
-        State = newState;
+        state = newState;
 
 
         switch (newState)

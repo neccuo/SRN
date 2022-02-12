@@ -17,7 +17,8 @@ public class ClickPoint : MonoBehaviour
     List<Object> dotPointers;
     Object crossPointer;
 
-    // Start is called before the first frame update
+    float targetAngle;
+
     void Start()
     {
         dotPointers = new List<Object>();
@@ -25,22 +26,31 @@ public class ClickPoint : MonoBehaviour
 
         crossObject.transform.localScale = new Vector2(crossScale, crossScale);
         dotObject.transform.localScale = new Vector2(dotScale, dotScale);
-
-        
     }
 
     // Update is called once per frame
-    void Update()
+    /*void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) || Input.GetMouseButton(0))
         {
-            SpawnCursor();
-            SpawnDots();
+            SpawnArrow();
         }
-        
+    }*/
+
+    public void SpawnArrow()
+    {
+        SpawnCross();
+        SpawnDots();
     }
 
-    void SpawnDots()
+    public void DestroyArrow()
+    {
+        //Debug.Log("DestroyArrow");
+        DestroyCross();
+        DestroyDots();
+    }
+
+    void DestroyDots()
     {
         if(dotPointers.Count > 0)
         {
@@ -49,27 +59,40 @@ public class ClickPoint : MonoBehaviour
                 Destroy(dotPointers[i]);
             }
         }
-        
+    }
+
+    void DestroyCross()
+    {
+        Destroy(crossPointer);
+    }
+
+    void SpawnDots()
+    {
+        DestroyDots();
+
         Vector2 difference = target - origin;
         Vector2 unit = difference.normalized;
 
-
-        for(Vector2 parser = origin; parser.magnitude < target.magnitude; parser += unit)
+        int counter = 0;
+        for(Vector2 parser = origin /*+ unit*/; (origin - parser).magnitude < (origin - target).magnitude; parser += unit)
         {
-            dotPointers.Add(Instantiate(dotObject, parser, new Quaternion(0, 0, 0, 0)));
+            dotPointers.Add(Instantiate(dotObject, parser, Quaternion.AngleAxis(targetAngle - 90, Vector3.forward)));
+
+            //Debug.Log("" + dotPointers[counter].ToString() + " is created at " + parser);
+            counter++;
         }
     }
 
-    void SpawnCursor()
+    void SpawnCross()
     {
-        Destroy(crossPointer);
-        target = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        DestroyCross();
+        target = (Vector2) Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
         Vector2 dir = Input.mousePosition - Camera.main.WorldToScreenPoint(transform.position);
-        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+        targetAngle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
 
-        crossPointer = Instantiate(crossObject, target, Quaternion.AngleAxis(angle - 90, Vector3.forward));
-        Debug.Log("" + crossPointer.ToString() + " is created");
+        crossPointer = Instantiate(crossObject, target, Quaternion.AngleAxis(targetAngle - 90, Vector3.forward));
+        //Debug.Log("" + crossPointer.ToString() + " is created at " + target);
 
     }
 }

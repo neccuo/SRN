@@ -12,19 +12,26 @@ public class Controller : MonoBehaviour
     public Vector2 playerTargetLocation;
     public Vector2 playerCurrentLocation;
 
+    public ClickPoint clickPoint;
+
     void Start()
     {
         gameInstance = GameManager.Instance;
+
+        playerCurrentLocation = player.transform.position;
+        clickPoint.origin = playerCurrentLocation;
     }
 
     void Update()
     {
         HandleGameState();
+        clickPoint.origin = playerCurrentLocation;
+        clickPoint.target = playerTargetLocation;
     }
 
     void HandleGameState()
     {
-        switch (gameInstance.State)
+        switch (gameInstance.state)
         {
             case GameState.PlanMovement:
                 TakePlanMovementInput(); // where state changes may happen
@@ -41,25 +48,38 @@ public class Controller : MonoBehaviour
         FinalStateChecker();
     }
 
+    void ChangeState(GameState newState)
+    {
+        GameState stateToBeChanged = gameInstance.state;
+        if(stateToBeChanged == GameState.PlanMovement)
+        {
+            clickPoint.DestroyArrow();
+        }
+        gameInstance.UpdateGameState(newState);
+    }
+
     void TakePlanMovementInput()
     {
         if (Input.GetKeyDown(KeyCode.Space))
-            gameInstance.UpdateGameState(GameState.DuringMovement); // continue game
+            ChangeState(GameState.DuringMovement); // continue game
         else if (Input.GetMouseButtonDown(0) || Input.GetMouseButton(0))
+        {
             playerTargetLocation = player.SetMovement();
+            clickPoint.SpawnArrow();
+        }
     }
 
     void TakeDuringMovementInput()
     {
         if (Input.GetKeyDown(KeyCode.Space))
-            gameInstance.UpdateGameState(GameState.PlanMovement); // stop game
+            ChangeState(GameState.PlanMovement); // stop game
         // else if()
     }
 
     void FinalStateChecker()
     {
-        if(playerTargetLocation == playerCurrentLocation)
-            gameInstance.UpdateGameState(GameState.PlanMovement); // stop game
+        if(playerTargetLocation == playerCurrentLocation && gameInstance.state != GameState.PlanMovement)
+            ChangeState(GameState.PlanMovement); // stop game
     }
 
 }
