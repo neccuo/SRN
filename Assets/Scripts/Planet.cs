@@ -23,7 +23,7 @@ public class Planet : MonoBehaviour
     void Start()
     {
         //scaleBase = 1f;
-        scaleRange = 1.2f;
+        scaleRange = 0.6f;
         speedBase = 10f;
         speedRange = 100f;
         angularSpeed = 0f;

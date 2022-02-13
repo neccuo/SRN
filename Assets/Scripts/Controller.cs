@@ -14,6 +14,8 @@ public class Controller : MonoBehaviour
 
     public ClickPoint clickPoint;
 
+    float lastClickTime;
+
     void Start()
     {
         gameInstance = GameManager.Instance;
@@ -27,6 +29,11 @@ public class Controller : MonoBehaviour
         HandleGameState();
         clickPoint.origin = playerCurrentLocation;
         clickPoint.target = playerTargetLocation;
+    }
+
+    private void WhenClicked() // Always use after click is used
+    {
+        lastClickTime = Time.time;
     }
 
     void HandleGameState()
@@ -64,6 +71,10 @@ public class Controller : MonoBehaviour
             ChangeState(GameState.DuringMovement); // continue game
         else if (Input.GetMouseButtonDown(0) || Input.GetMouseButton(0))
         {
+            // THIS IS WHERE YOU LEFT DEBUGGING, KEEP UP
+            // Debug.Log("YOYOYO HEY, LOOK: " + (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition));
+
+            WhenClicked();
             playerTargetLocation = player.SetMovement();
             clickPoint.SpawnArrow();
         }

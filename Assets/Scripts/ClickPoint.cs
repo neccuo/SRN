@@ -22,7 +22,7 @@ public class ClickPoint : MonoBehaviour
     void Start()
     {
         dotPointers = new List<Object>();
-        origin = transform.position;
+        // origin = transform.position;
 
         crossObject.transform.localScale = new Vector2(crossScale, crossScale);
         dotObject.transform.localScale = new Vector2(dotScale, dotScale);
@@ -88,7 +88,7 @@ public class ClickPoint : MonoBehaviour
         DestroyCross();
         target = (Vector2) Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-        Vector2 dir = Input.mousePosition - Camera.main.WorldToScreenPoint(transform.position);
+        Vector2 dir = Input.mousePosition - Camera.main.WorldToScreenPoint(origin);
         targetAngle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
 
         crossPointer = Instantiate(crossObject, target, Quaternion.AngleAxis(targetAngle - 90, Vector3.forward));
