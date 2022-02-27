@@ -28,15 +28,15 @@ public class SkinManager : MonoBehaviour
 
     public void BackOption()
     {
-        selectedSkinIndex = (selectedSkinIndex - 1) % skinList.Count;
+        selectedSkinIndex = (selectedSkinIndex - 1) < 0 ? skinList.Count - 1 : selectedSkinIndex - 1;
         ChangeSkin(skinList[selectedSkinIndex]);
     }
 
     public void Confirm()
     {
-        playerShip.transform.localScale = new Vector3(1.5f, 1.5f, 1); // CHANGE IF YOU DON'T LIKE IT, I KNOW IT'S MESSY
+        // playerShip.transform.localScale = new Vector3(1.5f, 1.5f, 1); // CHANGE IF YOU DON'T LIKE IT, I KNOW IT'S MESSY
 
-        PrefabUtility.SaveAsPrefabAsset(playerShip, "Assets/Prefabs/PlayerShip.prefab");
+        // PrefabUtility.SaveAsPrefabAsset(playerShip, "Assets/Prefabs/PlayerShip.prefab");
         SceneManager.LoadScene("Space");
     }
 

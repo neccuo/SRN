@@ -9,6 +9,8 @@ public class Player : MonoBehaviour
     public HealthBar hpBar;
     public Camera cam;
 
+    public CreditManager creditManager;
+
     // cam realm
     private float _minimumZoom = 10;
     private float _zoomUnit = 1;
@@ -106,14 +108,17 @@ public class Player : MonoBehaviour
         }
     }
 
-    void HandleDamageInputs()
+    void HandleDamageInputs() 
     {
+        // MAKE SURE DAMAGE INFLICTS AT THE END OF "DuringMovement"
         if (Input.GetKeyDown(KeyCode.LeftControl))
         {
+            //creditManager.ExchangeCredits(-100);
             ship.TakeDamage(20);
         }
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
+            //creditManager.ExchangeCredits(+100);
             ship.RepairDamage(17);
         }
 
