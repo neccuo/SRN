@@ -7,7 +7,7 @@ TextureImporter:
     second: x_dark
   - first:
       213: -2934310787372315383
-    second: x_light
+    second: x_dark
   - first:
       213: -2672774898138095422
     second: pos_dark
@@ -121,7 +121,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: x_dark
+      name: x_light
       rect:
         serializedVersion: 2
         x: 216
@@ -142,7 +142,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: x_light
+      name: x_dark
       rect:
         serializedVersion: 2
         x: 232
@@ -318,7 +318,7 @@ TextureImporter:
         width: 24
         height: 22
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []

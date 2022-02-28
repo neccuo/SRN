@@ -16,12 +16,16 @@ public class Controller : MonoBehaviour
 
     float lastClickTime;
 
+    public GameObject cheatCodeBar;
+
     void Start()
     {
         gameInstance = GameManager.Instance;
 
         playerCurrentLocation = player.transform.position;
         clickPoint.origin = playerCurrentLocation;
+
+        // cheatCodeBar = GameObject.Find("CheatCodeBar");
     }
 
     void Update()
@@ -78,6 +82,18 @@ public class Controller : MonoBehaviour
             playerTargetLocation = player.SetMovement();
             clickPoint.SpawnArrow();
         }
+        else if (Input.GetKey(KeyCode.C) && Input.GetKeyDown(KeyCode.H)) // HOLD C AND PRESS H TO OPEN CHEAT CODE SCREEN
+        {
+            Debug.Log("Cheat code screen");
+            OpenCheatCodeScreen();
+        }
+    }
+
+    void OpenCheatCodeScreen()
+    {
+        // Debug.Log(cheatCodeBar.ToString());
+        //GameObject.Find("CheatCodeBar").SetActive(true);
+        cheatCodeBar.SetActive(true);
     }
 
     void TakeDuringMovementInput()

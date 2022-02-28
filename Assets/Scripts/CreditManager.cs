@@ -39,6 +39,6 @@ public class CreditManager : MonoBehaviour
 
     void UpdateText()
     {
-        creditText.text = "CREDIT: " + GetCredits();
+        creditText.text = "CREDITS: " + GetCredits();
     }
 }
