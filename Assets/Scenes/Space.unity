@@ -2151,7 +2151,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inputField: {fileID: 154258563}
   cheatCode: 
-  cheatCodeHandler: {fileID: 0}
+  cheatCodeHandler: {fileID: 375930919}
 --- !u!114 &1530002771 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8994337465208505314, guid: f8f67eeb31d53534897658337c27c48c,
