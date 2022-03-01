@@ -6,11 +6,14 @@ public class Controller : MonoBehaviour
 {
     /// PlanMovement
     /// DuringMovement
+
+    public static Controller ControllerGod; // GOD CLASS
+
     private GameManager gameInstance; // for storing the game state
     public Player player;
 
-    public Vector2 playerTargetLocation;
-    public Vector2 playerCurrentLocation;
+    // public Vector2 playerTargetLocation;
+    // public Vector2 playerCurrentLocation;
 
     public ClickPoint clickPoint;
 
@@ -18,12 +21,16 @@ public class Controller : MonoBehaviour
 
     public GameObject cheatCodeBar;
 
+    private void Awake()
+    {
+        ControllerGod = this;
+    }
+
     void Start()
     {
         gameInstance = GameManager.Instance;
 
-        playerCurrentLocation = player.transform.position;
-        clickPoint.origin = playerCurrentLocation;
+        clickPoint.origin = (Vector2) player.transform.position;
 
         // cheatCodeBar = GameObject.Find("CheatCodeBar");
     }
@@ -31,8 +38,8 @@ public class Controller : MonoBehaviour
     void Update()
     {
         HandleGameState();
-        clickPoint.origin = playerCurrentLocation;
-        clickPoint.target = playerTargetLocation;
+        clickPoint.origin = (Vector2) player.transform.position;
+        clickPoint.target = player.GetTarget();
     }
 
     private void WhenClicked() // Always use after click is used
@@ -49,9 +56,14 @@ public class Controller : MonoBehaviour
                 break;
 
             case GameState.DuringMovement:
-                playerCurrentLocation = player.HandleMovement();
+                player.HandleMovement();
                 TakeDuringMovementInput(); // where state changes may happen
                 break;
+
+            case GameState.MenuState:
+                break;
+
+            
 
             default:
                 throw new MissingComponentException("" + gameInstance.ToString() + "is not an available state.");
@@ -59,12 +71,16 @@ public class Controller : MonoBehaviour
         FinalStateChecker();
     }
 
-    void ChangeState(GameState newState)
+    public void ChangeState(GameState newState) // DEFINITELY CLEAN IT IN THE FUTURE
     {
         GameState stateToBeChanged = gameInstance.state;
-        if(stateToBeChanged == GameState.PlanMovement)
+        if(stateToBeChanged == GameState.PlanMovement) // if you are going from PlanMovement, destroy arrow
         {
             clickPoint.DestroyArrow();
+        }
+        if(newState != GameState.DuringMovement) // if you are going to DuringMovement, reset the target of the player
+        {
+            player.ResetTarget();
         }
         gameInstance.UpdateGameState(newState);
     }
@@ -79,7 +95,7 @@ public class Controller : MonoBehaviour
             // Debug.Log("YOYOYO HEY, LOOK: " + (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition));
 
             WhenClicked();
-            playerTargetLocation = player.SetMovement();
+            player.SetMovement();
             clickPoint.SpawnArrow();
         }
         else if (Input.GetKey(KeyCode.C) && Input.GetKeyDown(KeyCode.H)) // HOLD C AND PRESS H TO OPEN CHEAT CODE SCREEN
@@ -92,7 +108,8 @@ public class Controller : MonoBehaviour
     void OpenCheatCodeScreen()
     {
         // Debug.Log(cheatCodeBar.ToString());
-        //GameObject.Find("CheatCodeBar").SetActive(true);
+        // GameObject.Find("CheatCodeBar").SetActive(true);
+        // ChangeState(GameState.MenuState);
         cheatCodeBar.SetActive(true);
     }
 
@@ -105,7 +122,7 @@ public class Controller : MonoBehaviour
 
     void FinalStateChecker()
     {
-        if(playerTargetLocation == playerCurrentLocation && gameInstance.state != GameState.PlanMovement)
+        if(player.GetTarget() == (Vector2) player.transform.position && gameInstance.state == GameState.DuringMovement /*!= GameState.PlanMovement*/)
             ChangeState(GameState.PlanMovement); // stop game
     }
 

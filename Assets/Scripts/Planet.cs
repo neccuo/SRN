@@ -17,7 +17,6 @@ public class Planet : MonoBehaviour
 
     #endregion
 
-
     public Transform sunLocation;
 
     void Start()
@@ -35,8 +34,13 @@ public class Planet : MonoBehaviour
     void Update()
     {
         OrbitSun(sunLocation.position, angularSpeed * Time.deltaTime);
-
     }
+
+    void OnMouseDown() // TO BE CONTINUED
+    {
+        Debug.Log("You just clicked " + this.name);
+    }
+
     void InitScale() // inits scale with random numbers (using designated range)
     {
         Vector3 temp;

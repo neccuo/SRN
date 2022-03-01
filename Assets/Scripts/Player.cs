@@ -80,6 +80,18 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void ResetTarget()
+    {
+        _target = transform.position;
+    }
+
+    public Vector2 GetTarget()
+    {
+        return _target;
+    }
+
+    ///public void
+
     public Vector2 SetMovement()
     {
         _target = Camera.main.ScreenToWorldPoint(Input.mousePosition);

@@ -7,7 +7,8 @@ public enum GameState
     PlanMovement,
     DuringMovement,
     Combat,
-    TurnEvaluation
+    TurnEvaluation,
+    MenuState
 }
 
 public class GameManager : MonoBehaviour
@@ -34,10 +35,7 @@ public class GameManager : MonoBehaviour
 
         if(newState != state)
             Debug.Log("Changing from state: " + state.ToString() + " to state: " + newState.ToString());
-        
-
         state = newState;
-
 
         switch (newState)
         {
@@ -50,6 +48,8 @@ public class GameManager : MonoBehaviour
             case GameState.Combat:
                 break;
             case GameState.TurnEvaluation:
+                break;
+            case GameState.MenuState:
                 break;
             default:
                 throw new MissingComponentException("" + newState.ToString() + "is not an available state.");
