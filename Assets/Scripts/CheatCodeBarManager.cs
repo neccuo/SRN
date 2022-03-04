@@ -45,6 +45,9 @@ public class CheatCodeBarManager : MonoBehaviour
             case "monet":
                 cheatCodeHandler.AddCredit();
                 break;
+            case "lightning":
+                cheatCodeHandler.Speed67();
+                break;
             default:
                 Debug.Log("Code not valid.");
                 break;

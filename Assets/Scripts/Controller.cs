@@ -18,8 +18,11 @@ public class Controller : MonoBehaviour
     public ClickPoint clickPoint;
 
     float lastClickTime;
+    float doubleClickRate = 0.5f; // in seconds
 
     public GameObject cheatCodeBar;
+
+    public GameObject clickedObject;
 
     private void Awake()
     {
@@ -42,9 +45,21 @@ public class Controller : MonoBehaviour
         clickPoint.target = player.GetTarget();
     }
 
+    private bool CheckDoubleClick()
+    {
+        if(Time.unscaledTime - lastClickTime < doubleClickRate)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
     private void WhenClicked() // Always use after click is used
     {
-        lastClickTime = Time.time;
+        lastClickTime = Time.unscaledTime;
     }
 
     void HandleGameState()
@@ -56,14 +71,16 @@ public class Controller : MonoBehaviour
                 break;
 
             case GameState.DuringMovement:
+                if(player.GetFollowedObject() != null)
+                {
+                    player.SetMovementFollow();
+                }
                 player.HandleMovement();
                 TakeDuringMovementInput(); // where state changes may happen
                 break;
 
             case GameState.MenuState:
                 break;
-
-            
 
             default:
                 throw new MissingComponentException("" + gameInstance.ToString() + "is not an available state.");
@@ -81,22 +98,48 @@ public class Controller : MonoBehaviour
         if(newState != GameState.DuringMovement) // if you are going to DuringMovement, reset the target of the player
         {
             player.ResetTarget();
+            player.SetFollowedObject(null);
         }
         gameInstance.UpdateGameState(newState);
+    }
+
+    void BasicMovementProcedure()
+    {
+        player.SetMovementBasic();
+        clickPoint.SpawnCrossArrow();
     }
 
     void TakePlanMovementInput()
     {
         if (Input.GetKeyDown(KeyCode.Space))
             ChangeState(GameState.DuringMovement); // continue game
-        else if (Input.GetMouseButtonDown(0) || Input.GetMouseButton(0))
+        else if (Input.GetMouseButtonDown(0)/* || Input.GetMouseButton(0)*/) 
         {
-            // THIS IS WHERE YOU LEFT DEBUGGING, KEEP UP
-            // Debug.Log("YOYOYO HEY, LOOK: " + (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition));
 
-            WhenClicked();
-            player.SetMovement();
-            clickPoint.SpawnArrow();
+            // HOLDING MOUSE IS UNAVAILABLE FOR A WHILE
+            if(!CheckDoubleClick()) // if it is first click
+            {
+                BasicMovementProcedure();
+            }
+            else // if double click
+            {
+                Vector2 mousePos2D = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                RaycastHit2D hit = Physics2D.Raycast(mousePos2D, Vector2.zero);
+                if (hit.collider != null) // NEEDS SOME DETAILS IDENTIFYING THE COLLIDER
+                {
+                    Debug.Log(hit.collider.gameObject.name + " was clicked");
+                    player.SetFollowedObject(hit.collider.gameObject);
+                    player.SetMovementFollow();
+                    clickPoint.SpawnFollowArrow();
+                }
+                else /***NESTED IF STATEMENTS ARE SHITTY HACK, CHANGE AT SOME POINT***/
+                {
+                    BasicMovementProcedure();
+                }
+                Debug.Log("double clicked");
+                
+            }
+            lastClickTime = Time.unscaledTime; // SAVE THE TIME WHEN IT IS CLICKED
         }
         else if (Input.GetKey(KeyCode.C) && Input.GetKeyDown(KeyCode.H)) // HOLD C AND PRESS H TO OPEN CHEAT CODE SCREEN
         {

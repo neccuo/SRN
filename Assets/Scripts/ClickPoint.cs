@@ -11,11 +11,15 @@ public class ClickPoint : MonoBehaviour
     public GameObject crossObject;
     public float crossScale = 5f;
 
+    public GameObject followObject;
+
     public GameObject dotObject;
     public float dotScale = 1f;
 
     List<Object> dotPointers;
     Object crossPointer;
+    Object followPointer;
+
 
     float targetAngle;
 
@@ -23,30 +27,28 @@ public class ClickPoint : MonoBehaviour
     {
         dotPointers = new List<Object>();
         // origin = transform.position;
-
         crossObject.transform.localScale = new Vector2(crossScale, crossScale);
+        followObject.transform.localScale = new Vector2(crossScale, crossScale); // BEWARE, SAME AS crossScale
         dotObject.transform.localScale = new Vector2(dotScale, dotScale);
     }
 
-    // Update is called once per frame
-    /*void Update()
+    public void SpawnCrossArrow() // Spawn cross with dots
     {
-        if (Input.GetMouseButtonDown(0) || Input.GetMouseButton(0))
-        {
-            SpawnArrow();
-        }
-    }*/
+        SpawnTip("Cross");
+        SpawnDots();
+    }
 
-    public void SpawnArrow()
+    public void SpawnFollowArrow() // spawn follow with dots
     {
-        SpawnCross();
+        SpawnTip("Follow");
         SpawnDots();
     }
 
     public void DestroyArrow()
     {
-        //Debug.Log("DestroyArrow");
+        // I don't know if we are using cross or follow at the time we are deleting it.
         DestroyCross();
+        DestroyFollow();
         DestroyDots();
     }
 
@@ -66,13 +68,41 @@ public class ClickPoint : MonoBehaviour
         Destroy(crossPointer);
     }
 
+    void DestroyFollow()
+    {
+        Destroy(followPointer);
+    }
+
+    private void SpawnTip(string order) // spawn only the cursor, the pointer (whether it is cross or follow)
+    {
+        DestroyArrow();
+        target = (Vector2) Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector2 dir = Input.mousePosition - Camera.main.WorldToScreenPoint(origin);
+        targetAngle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+        switch(order)
+        {
+            case "Cross":
+            {
+                crossPointer = Instantiate(crossObject, target, Quaternion.AngleAxis(targetAngle - 90, Vector3.forward));
+                break;
+            }
+            case "Follow":
+            {
+                followPointer = Instantiate(followObject, target, Quaternion.AngleAxis(targetAngle - 45, Vector3.forward));
+                break;
+            }
+            default:
+            {
+                throw new MissingComponentException("" + order + "is not an available cursor tip.");
+            }
+        }
+    }
+
     void SpawnDots()
     {
         DestroyDots();
-
         Vector2 difference = target - origin;
         Vector2 unit = difference.normalized;
-
         int counter = 0;
         for(Vector2 parser = origin /*+ unit*/; (origin - parser).magnitude < (origin - target).magnitude; parser += unit)
         {
@@ -83,16 +113,4 @@ public class ClickPoint : MonoBehaviour
         }
     }
 
-    void SpawnCross()
-    {
-        DestroyCross();
-        target = (Vector2) Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
-        Vector2 dir = Input.mousePosition - Camera.main.WorldToScreenPoint(origin);
-        targetAngle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-
-        crossPointer = Instantiate(crossObject, target, Quaternion.AngleAxis(targetAngle - 90, Vector3.forward));
-        //Debug.Log("" + crossPointer.ToString() + " is created at " + target);
-
-    }
 }

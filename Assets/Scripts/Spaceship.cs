@@ -7,7 +7,7 @@ public class Spaceship : MonoBehaviour
     // stats realm
     public float maxHealth = 100;
     public float currentHealth;
-    public float speed = 10;
+    public float speed = 10f;
 
     // Rotation realm (work in progress)
     public float rotationBounds = 30; // 150 - 180 - 210

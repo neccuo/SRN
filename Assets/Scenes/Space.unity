@@ -400,10 +400,27 @@ PrefabInstance:
       propertyPath: crossScale
       value: 0.75
       objectReference: {fileID: 0}
+    - target: {fileID: 640430864312092280, guid: a33e7b16cdc4d6247ac954c3bb692bc8,
+        type: 3}
+      propertyPath: crossObject
+      value: 
+      objectReference: {fileID: 1145463933025941341, guid: e0ef4d4ed56b93449890dfaeff818af4,
+        type: 3}
+    - target: {fileID: 640430864312092280, guid: a33e7b16cdc4d6247ac954c3bb692bc8,
+        type: 3}
+      propertyPath: followObject
+      value: 
+      objectReference: {fileID: 6152545982969157262, guid: ca347bf7eea6ec94e990d5194eab5ca7,
+        type: 3}
     - target: {fileID: 640430864312092281, guid: a33e7b16cdc4d6247ac954c3bb692bc8,
         type: 3}
       propertyPath: m_Name
       value: ClickPoint
+      objectReference: {fileID: 0}
+    - target: {fileID: 640430864312092281, guid: a33e7b16cdc4d6247ac954c3bb692bc8,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 640430864312092283, guid: a33e7b16cdc4d6247ac954c3bb692bc8,
         type: 3}
@@ -634,10 +651,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1193091450}
-  playerTargetLocation: {x: 0, y: 0}
-  playerCurrentLocation: {x: 0, y: 0}
   clickPoint: {fileID: 740563602}
   cheatCodeBar: {fileID: 1315986298}
+  clickedObject: {fileID: 0}
 --- !u!114 &375930918
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -664,6 +680,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   creditManager: {fileID: 375930918}
+  player: {fileID: 1193091450}
 --- !u!1 &437116781
 GameObject:
   m_ObjectHideFlags: 0
@@ -1294,6 +1311,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 8994337465208505312, guid: f8f67eeb31d53534897658337c27c48c,
+        type: 3}
+      propertyPath: m_TagString
+      value: Ship
+      objectReference: {fileID: 0}
     - target: {fileID: 8994337465208505313, guid: f8f67eeb31d53534897658337c27c48c,
         type: 3}
       propertyPath: m_Sprite
@@ -1851,6 +1873,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: spaceship-5
       objectReference: {fileID: 0}
+    - target: {fileID: 8994337465208505312, guid: f8f67eeb31d53534897658337c27c48c,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8994337465208505312, guid: f8f67eeb31d53534897658337c27c48c,
+        type: 3}
+      propertyPath: m_TagString
+      value: Ship
+      objectReference: {fileID: 0}
     - target: {fileID: 8994337465208505313, guid: f8f67eeb31d53534897658337c27c48c,
         type: 3}
       propertyPath: m_Sprite
@@ -2134,13 +2166,14 @@ GameObject:
   m_Component:
   - component: {fileID: 1592828224}
   - component: {fileID: 1592828225}
-  m_Layer: 0
+  - component: {fileID: 1592828226}
+  m_Layer: 7
   m_Name: NPC
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1592828224
 Transform:
   m_ObjectHideFlags: 0
@@ -2168,10 +2201,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc42632275c1e944abf9af03ddf3f7ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objective: 0
+  objective: 1
   ship: {fileID: 1530002771}
   player: {fileID: 1193091449}
   patrolRange: 10
+--- !u!58 &1592828226
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1592828223}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 3.4
 --- !u!1 &1818441552
 GameObject:
   m_ObjectHideFlags: 0

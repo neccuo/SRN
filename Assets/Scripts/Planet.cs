@@ -8,6 +8,8 @@ public class Planet : MonoBehaviour
     // float scaleBase;
     float scaleRange;
 
+    Controller controller;
+
     #endregion
 
     #region movement realm
@@ -23,8 +25,8 @@ public class Planet : MonoBehaviour
     {
         //scaleBase = 1f;
         scaleRange = 0.6f;
-        speedBase = 10f;
-        speedRange = 100f;
+        speedBase = 5f;
+        speedRange = 20f;
         angularSpeed = 0f;
 
         InitScale();
@@ -36,10 +38,10 @@ public class Planet : MonoBehaviour
         OrbitSun(sunLocation.position, angularSpeed * Time.deltaTime);
     }
 
-    void OnMouseDown() // TO BE CONTINUED
+    /*void OnMouseDown() // TO BE CONTINUED
     {
         Debug.Log("You just clicked " + this.name);
-    }
+    }*/
 
     void InitScale() // inits scale with random numbers (using designated range)
     {

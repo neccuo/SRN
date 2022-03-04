@@ -48,6 +48,8 @@ MonoBehaviour:
   crossObject: {fileID: 1145463933025941341, guid: e0ef4d4ed56b93449890dfaeff818af4,
     type: 3}
   crossScale: 1
+  followObject: {fileID: 6152545982969157262, guid: ca347bf7eea6ec94e990d5194eab5ca7,
+    type: 3}
   dotObject: {fileID: 5546117850442239194, guid: 7026b91f5463c1141868a1b7394c188c,
     type: 3}
   dotScale: 0.5

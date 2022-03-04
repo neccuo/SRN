@@ -8,8 +8,9 @@ public class Player : MonoBehaviour
     public Spaceship ship;
     public HealthBar hpBar;
     public Camera cam;
-
     public CreditManager creditManager;
+
+    private GameObject _followedObject;
 
     // cam realm
     private float _minimumZoom = 10;
@@ -41,7 +42,7 @@ public class Player : MonoBehaviour
         // HandleGameState();
     }
 
-    void HandleGameState()
+    /*void HandleGameState()
     {
         switch (currentGameInstance.state)
         {
@@ -78,7 +79,7 @@ public class Player : MonoBehaviour
             default:
                 throw new MissingComponentException("" + currentGameInstance.ToString() + "is not an available state.");
         }
-    }
+    }*/
 
     public void ResetTarget()
     {
@@ -90,12 +91,31 @@ public class Player : MonoBehaviour
         return _target;
     }
 
-    ///public void
-
-    public Vector2 SetMovement()
+    public void SetFollowedObject(GameObject obj)
     {
+        _followedObject = obj;
+    }
+
+    public GameObject GetFollowedObject()
+    {
+        return _followedObject;
+    }
+
+    public Vector2 SetMovementBasic()
+    {
+        SetFollowedObject(null);
         _target = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         _dir = Input.mousePosition - Camera.main.WorldToScreenPoint(transform.position);
+        _angle = Mathf.Atan2(_dir.y, _dir.x) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.AngleAxis(_angle - 90, Vector3.forward);
+        return _target;
+    }
+
+    public Vector2 SetMovementFollow()
+    {
+        // NOTHING TO DO WITH THE CAMERA
+        _target = _followedObject.transform.position;
+        _dir = _followedObject.transform.position - transform.position;
         _angle = Mathf.Atan2(_dir.y, _dir.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.AngleAxis(_angle - 90, Vector3.forward);
         return _target;
