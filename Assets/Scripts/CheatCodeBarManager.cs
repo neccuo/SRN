@@ -12,14 +12,24 @@ public class CheatCodeBarManager : MonoBehaviour
 
     private GameState _previousState;
 
-    private GameState _menuState = GameState.MenuState;
+    // private GameState _ourState = GameState.CheatBarState;
+
+    public void SetPreviousState(GameState state)
+    {
+        if(state == GameState.CheatBarState)
+        {
+            throw new UnityException("HOW DID YOU CAME FROM CHEATBAR TO CHEATBAR");
+        }
+        _previousState = state;
+    }
 
     void OnEnable()
     {
         //Debug.Log("PrintOnEnable: script was enabled");
         //Debug.Log(Controller.ControllerGod.ToString());
-        _previousState = GameManager.Instance.state;
-        Controller.ControllerGod.ChangeState(_menuState);
+        // _previousState = GameManager.Instance.GetCurrentState();
+        //Controller.ControllerGod.ChangeState(_ourState);
+        Debug.Log("Cheat Code Bar is Enabled");
     }
 
     void OnDisable()
@@ -28,8 +38,6 @@ public class CheatCodeBarManager : MonoBehaviour
         //Debug.Log(_previousState.ToString());
         Controller.ControllerGod.ChangeState(_previousState);
     }
-
-    
 
     public void ClosePopup()
     {

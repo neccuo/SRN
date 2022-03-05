@@ -64,7 +64,7 @@ public class Controller : MonoBehaviour
 
     void HandleGameState()
     {
-        switch (gameInstance.state)
+        switch (gameInstance.GetCurrentState())
         {
             case GameState.PlanMovement:
                 TakePlanMovementInput(); // where state changes may happen
@@ -76,21 +76,25 @@ public class Controller : MonoBehaviour
                     player.SetMovementFollow();
                 }
                 player.HandleMovement();
-                TakeDuringMovementInput(); // where state changes may happen
+                // TakeDuringMovementInput(); // where state changes may happen
+                DuringMovementEndConditions();
                 break;
 
-            case GameState.MenuState:
+            case GameState.CheatBarState:
+                break;
+            
+            case GameState.ShopState:
                 break;
 
             default:
                 throw new MissingComponentException("" + gameInstance.ToString() + "is not an available state.");
         }
-        FinalStateChecker();
+        // FinalStateChecker();
     }
 
     public void ChangeState(GameState newState) // DEFINITELY CLEAN IT IN THE FUTURE
     {
-        GameState stateToBeChanged = gameInstance.state;
+        GameState stateToBeChanged = gameInstance.GetCurrentState();
         if(stateToBeChanged == GameState.PlanMovement) // if you are going from PlanMovement, destroy arrow
         {
             clickPoint.DestroyArrow();
@@ -137,25 +141,37 @@ public class Controller : MonoBehaviour
                     BasicMovementProcedure();
                 }
                 Debug.Log("double clicked");
-                
             }
             lastClickTime = Time.unscaledTime; // SAVE THE TIME WHEN IT IS CLICKED
         }
         else if (Input.GetKey(KeyCode.C) && Input.GetKeyDown(KeyCode.H)) // HOLD C AND PRESS H TO OPEN CHEAT CODE SCREEN
         {
-            Debug.Log("Cheat code screen");
-            OpenCheatCodeScreen();
+            ChangeState(GameState.CheatBarState);
         }
     }
 
-    void OpenCheatCodeScreen()
+    void DuringMovementEndConditions()
     {
-        // Debug.Log(cheatCodeBar.ToString());
-        // GameObject.Find("CheatCodeBar").SetActive(true);
-        // ChangeState(GameState.MenuState);
-        cheatCodeBar.SetActive(true);
+        if (Input.GetKeyDown(KeyCode.Space)) // SPACE IS CLICKED: normal pause
+            ChangeState(GameState.PlanMovement); // stop game
+        else if(player.GetTarget() == (Vector2) player.transform.position) // REACHED TO THE DESTINATION
+        {
+            if(player.GetFollowedObject()?.tag == "Planet") // REACHED A PLANET (FOLLOW CLICKPOINT): change to ShopState
+            {
+                Debug.Log("yes");
+                ChangeState(GameState.ShopState);
+            }
+            else // REACHED NON-OBJECT DESTINATION (DEFAULT CLICKPOINT) OR NON-PLANET OBJECT (FOLLOW CLICKPOINT): return to PlanMovement state
+            {
+                ChangeState(GameState.PlanMovement);
+            }
+            /*else if(player.GetFollowedObject() == null) 
+            {
+                ChangeState(GameState.PlanMovement);
+            }*/
+        }
     }
-
+/*
     void TakeDuringMovementInput()
     {
         if (Input.GetKeyDown(KeyCode.Space))
@@ -165,8 +181,8 @@ public class Controller : MonoBehaviour
 
     void FinalStateChecker()
     {
-        if(player.GetTarget() == (Vector2) player.transform.position && gameInstance.state == GameState.DuringMovement /*!= GameState.PlanMovement*/)
+        if(player.GetTarget() == (Vector2) player.transform.position && gameInstance.GetCurrentState() == GameState.DuringMovement)
             ChangeState(GameState.PlanMovement); // stop game
     }
-
+*/
 }

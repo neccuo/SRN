@@ -8,14 +8,18 @@ public enum GameState
     DuringMovement,
     Combat,
     TurnEvaluation,
-    MenuState
+    CheatBarState,
+    ShopState
 }
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
-    public GameState state;
+    public GameObject cheatCodeBar;
+    public GameObject shopBar;
+
+    private GameState _state;
 
     private void Awake()
     {
@@ -23,19 +27,23 @@ public class GameManager : MonoBehaviour
         UpdateGameState(GameState.PlanMovement);
     }
 
-    public void UpdateGameState(GameState newState)
+    public GameState GetCurrentState()
+    {
+        return _state;
+    }
+
+    public void UpdateGameState(GameState newState) //
     {
         /// MAY NEED OPTIMIZATION, BUT NOT TODAY :3
         
-        /*if(newState == state)
-        {
-            Debug.Log("Already in the state: (" + state.ToString() + ")");
-            return;
-        }*/
 
-        if(newState != state)
-            Debug.Log("Changing from state: " + state.ToString() + " to state: " + newState.ToString());
-        state = newState;
+        if(newState != _state)
+        {
+            Debug.Log("Changing from state: " + _state.ToString() + " to state: " + newState.ToString());
+        }
+
+        GameState oldState = _state;
+        _state = newState;
 
         switch (newState)
         {
@@ -49,7 +57,15 @@ public class GameManager : MonoBehaviour
                 break;
             case GameState.TurnEvaluation:
                 break;
-            case GameState.MenuState:
+            case GameState.CheatBarState: // first, tell the cheat code the previous state. so, at the time of termination, return the state to it.
+                cheatCodeBar.GetComponent<CheatCodeBarManager>().SetPreviousState(oldState); // reached its script
+                cheatCodeBar.SetActive(true);
+                break;
+            case GameState.ShopState:
+                Time.timeScale = 0; // BE CAREFUL ABOUT IT...!!!!
+                shopBar.SetActive(true);
+
+                // OpenShopMenu(Planet planet)
                 break;
             default:
                 throw new MissingComponentException("" + newState.ToString() + "is not an available state.");
