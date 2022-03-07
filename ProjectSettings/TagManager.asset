@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Planet
   - Ship
+  - Portal
   layers:
   - Default
   - TransparentFX
@@ -45,6 +46,9 @@ TagManager:
     locked: 0
   - name: Planets
     uniqueID: 1968533339
+    locked: 0
+  - name: Portal
+    uniqueID: 967770525
     locked: 0
   - name: ClickPoint
     uniqueID: 486408587

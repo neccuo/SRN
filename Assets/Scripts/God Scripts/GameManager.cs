@@ -9,7 +9,8 @@ public enum GameState
     Combat,
     TurnEvaluation,
     CheatBarState,
-    ShopState
+    ShopState,
+    SpaceSystemLoad
 }
 
 public class GameManager : MonoBehaviour
@@ -19,7 +20,11 @@ public class GameManager : MonoBehaviour
     public GameObject cheatCodeBar;
     public GameObject shopBar;
 
+    // public GameObject portalManager;
+
     private GameState _state;
+
+    public PortalLogic _portalLogic;
 
     private void Awake()
     {
@@ -51,6 +56,7 @@ public class GameManager : MonoBehaviour
                 Time.timeScale = 0;
                 break;
             case GameState.DuringMovement:
+                // YOU CAN ONLY ENTER GameState.DuringMovement from GameState.PlanMovement and vice versa.
                 Time.timeScale = 1;
                 break;
             case GameState.Combat:
@@ -64,8 +70,10 @@ public class GameManager : MonoBehaviour
             case GameState.ShopState:
                 Time.timeScale = 0; // BE CAREFUL ABOUT IT...!!!!
                 shopBar.SetActive(true);
-
                 // OpenShopMenu(Planet planet)
+                break;
+            case GameState.SpaceSystemLoad:
+                _portalLogic.CreateSystemToTravel();
                 break;
             default:
                 throw new MissingComponentException("" + newState.ToString() + "is not an available state.");

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ShopBarManager : MonoBehaviour
 {
+
     void OnEnable()
     {
         Debug.Log("Shop Bar is Enabled");
@@ -12,5 +13,11 @@ public class ShopBarManager : MonoBehaviour
     void OnDisable()
     {
         Debug.Log("Shop Bar is Disabled");
+        Controller.ControllerGod.ChangeState(GameState.PlanMovement);
+    }
+
+    public void ClosePopup()
+    {
+        gameObject.SetActive(false);
     }
 }

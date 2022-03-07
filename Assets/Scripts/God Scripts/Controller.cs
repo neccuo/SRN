@@ -86,6 +86,9 @@ public class Controller : MonoBehaviour
             case GameState.ShopState:
                 break;
 
+            case GameState.SpaceSystemLoad:
+                break;
+
             default:
                 throw new MissingComponentException("" + gameInstance.ToString() + "is not an available state.");
         }
@@ -160,6 +163,11 @@ public class Controller : MonoBehaviour
             {
                 Debug.Log("yes");
                 ChangeState(GameState.ShopState);
+            }
+            else if(player.GetFollowedObject()?.tag == "Portal")
+            {
+                Debug.Log("portal");
+                ChangeState(GameState.SpaceSystemLoad);
             }
             else // REACHED NON-OBJECT DESTINATION (DEFAULT CLICKPOINT) OR NON-PLANET OBJECT (FOLLOW CLICKPOINT): return to PlanMovement state
             {
