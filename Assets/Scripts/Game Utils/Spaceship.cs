@@ -16,8 +16,8 @@ public class Spaceship : MonoBehaviour
     private int rotationUpOrDown = 1; // 1 up, -1 down
 
     // Sprite realm
-    public Sprite sprite;
-    private SpriteRenderer spriteRenderer;
+    // public Sprite sprite;
+    private SpriteRenderer _spriteRenderer;
 
     float GetScaleFromMaxHealth()
     {
@@ -29,11 +29,12 @@ public class Spaceship : MonoBehaviour
 
     void Start()
     {
+        _spriteRenderer = GetComponent<SpriteRenderer>();
         //float shipScale = GetScaleFromMaxHealth();
         //transform.localScale = new Vector3(shipScale, shipScale, 1);
 
-        spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
-        spriteRenderer.sprite = sprite;
+        //spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
+        //spriteRenderer.sprite = sprite;
 
         //transform.rotation.Set(transform.rotation.x, initialRotationY, transform.rotation.z, 0);
         transform.rotation = new Quaternion(0, initialRotationY, transform.rotation.z, 0);
@@ -48,6 +49,11 @@ public class Spaceship : MonoBehaviour
         {
             TakeDamage(20);
         }*/
+    }
+
+    public void ChangeHull(Sprite newSprite)
+    {
+        _spriteRenderer.sprite = newSprite;
     }
 
     public void TakeDamage(float dmg)

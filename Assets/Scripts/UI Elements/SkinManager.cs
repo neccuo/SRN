@@ -6,19 +6,21 @@ using UnityEditor;
 
 public class SkinManager : MonoBehaviour
 {
-    public SpriteRenderer spriteRenderer;
+    // public SpriteRenderer spriteRenderer;
     public List<Sprite> skinList = new List<Sprite>();
     private int selectedSkinIndex = 0;
     public GameObject playerShip;
+    private Spaceship ship;
+    public SpriteRenderer spriteRenderer;
 
     void Start()
     {
+        ship = playerShip.GetComponent<Spaceship>();
         if(skinList.Count == 0)
         {
             Debug.LogError("There is no available skin, it's bad.");
         }
     }
-
 
     public void NextOption()
     {
@@ -34,9 +36,8 @@ public class SkinManager : MonoBehaviour
 
     public void Confirm()
     {
-        // playerShip.transform.localScale = new Vector3(1.5f, 1.5f, 1); // CHANGE IF YOU DON'T LIKE IT, I KNOW IT'S MESSY
-
-        // PrefabUtility.SaveAsPrefabAsset(playerShip, "Assets/Prefabs/PlayerShip.prefab");
+        ship.ChangeHull(spriteRenderer.sprite);
+        PrefabUtility.SaveAsPrefabAsset(playerShip, "Assets/Prefabs/PlayerShip.prefab");
         SceneManager.LoadScene("Space");
     }
 

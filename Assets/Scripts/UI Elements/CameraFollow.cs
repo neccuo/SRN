@@ -14,7 +14,6 @@ public class CameraFollow : MonoBehaviour
         _zOffSet = transform.position.z; // originally assigned value (-10)
     }
 
-
     void LateUpdate()
     {
         transform.position = target.position + new Vector3(0, 0, _zOffSet);

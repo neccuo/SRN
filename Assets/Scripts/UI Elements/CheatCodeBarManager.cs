@@ -47,6 +47,8 @@ public class CheatCodeBarManager : MonoBehaviour
 
     public void ConfirmPopup()
     {
+        ClosePopup();
+        
         cheatCode = inputField.GetComponent<InputField>().text;
         switch(cheatCode)
         {

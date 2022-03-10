@@ -14,17 +14,20 @@ public class TextRainbow : MonoBehaviour
 
     byte colorChangeRate = 17;
 
+    float time = 0.0f;
+
 
     void Awake()
     {
         text = GetComponent<Text>();
         nextChange = 0.0f;
-        changeRate = 0.001f;
+        changeRate = 0.004f;
     }
 
     void Update()
     {
-        if(CheckTime())
+        time += Time.unscaledDeltaTime;
+        if(CheckTime2())
         {
             ColorAdjustTick();
             SetColor();
@@ -36,6 +39,19 @@ public class TextRainbow : MonoBehaviour
         if(Time.unscaledTime > nextChange)
         {
             nextChange = Time.unscaledTime + changeRate;
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    bool CheckTime2()
+    {
+        if(time > changeRate)
+        {
+            time = 0.0f;
             return true;
         }
         else
