@@ -5,7 +5,8 @@ using UnityEngine;
 public enum Objective
 {
     Follow,
-    Patrol
+    Patrol,
+    SeekPortal
 }
 
 public class NPC : MonoBehaviour
@@ -25,6 +26,11 @@ public class NPC : MonoBehaviour
     private Vector2[] directions;
     private int index;
     private GameManager currentGameInstance;
+
+
+    // PORTAL SEEK REALM
+    public bool teleportReady = false;
+    private GameObject _chosenPortal;
 
     void Start()
     {
@@ -61,6 +67,13 @@ public class NPC : MonoBehaviour
             case Objective.Patrol:
                 HandlePatrol();
                 break;
+
+            case Objective.SeekPortal:
+                HandleSeekPortal();
+                break;
+
+            default:
+                throw new MissingComponentException("Shit sn");
         }
     }
 
@@ -78,6 +91,46 @@ public class NPC : MonoBehaviour
             index++;
         }
         HandleMovement();
+    }
+
+    void HandleSeekPortal()
+    {
+        // BURADA HİÇ PORTAL YOKSA OLACAKLARI DÜŞÜN
+        if(!teleportReady)
+        {
+            GameObject[] portals;
+            portals = GameObject.FindGameObjectsWithTag("Portal");
+            if(portals.Length == 0)
+            {
+                Debug.LogWarning("NO PORTAL AVAILABLE, BEWARE");
+                return;
+            }
+            float closestPos = -1f;
+            float temp;
+            foreach (GameObject portal in portals)
+            {
+                temp = _GetDistanceToPos((Vector2)portal.transform.position);
+                if(temp < closestPos || closestPos == -1f)
+                {
+                    closestPos = temp;
+                    _chosenPortal = portal;
+                }
+            }
+            _SetTarget((Vector2)_chosenPortal.transform.position);
+            teleportReady = true;
+        }
+        HandleMovement();
+
+    }
+
+    private float _GetDistanceToPos(Vector2 loc)
+    {
+        return (loc - (Vector2) transform.position).magnitude;
+    }
+
+    private void _SetTarget(Vector2 loc)
+    {
+        _target = loc;
     }
 
     public Vector2 SetPatrolTarget(Vector2 direction)

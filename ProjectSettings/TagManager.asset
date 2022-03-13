@@ -7,6 +7,8 @@ TagManager:
   - Planet
   - Ship
   - Portal
+  - Manager
+  - NPC
   layers:
   - Default
   - TransparentFX
@@ -52,6 +54,9 @@ TagManager:
     locked: 0
   - name: ClickPoint
     uniqueID: 486408587
+    locked: 0
+  - name: NPC
+    uniqueID: 3831224489
     locked: 0
   - name: Player
     uniqueID: 3647113057

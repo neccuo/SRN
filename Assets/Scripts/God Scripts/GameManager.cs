@@ -22,9 +22,9 @@ public class GameManager : MonoBehaviour
 
     // public GameObject portalManager;
 
-    private GameState _state;
+    public PortalManager portalManager;
 
-    public PortalLogic _portalLogic;
+    private GameState _state;
 
     private void Awake()
     {
@@ -73,7 +73,7 @@ public class GameManager : MonoBehaviour
                 // OpenShopMenu(Planet planet)
                 break;
             case GameState.SpaceSystemLoad:
-                _portalLogic.CreateSystemToTravel();
+                portalManager.CreateSystemToTravel();
                 break;
             default:
                 throw new MissingComponentException("" + newState.ToString() + "is not an available state.");
