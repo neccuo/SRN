@@ -29,6 +29,11 @@ public class Planet : MonoBehaviour
         speedRange = 20f;
         angularSpeed = 0f;
 
+        if(sunLocation == null)
+        {
+            sunLocation = GameObject.Find("Sun").transform;
+        }
+
         InitScale();
         InitAngularSpeed();
     }

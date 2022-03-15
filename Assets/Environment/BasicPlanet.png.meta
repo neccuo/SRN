@@ -1,0 +1,1458 @@
+fileFormatVersion: 2
+guid: 37a072b78a200cf49a603f1f5dd48c43
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 3385493748749432465
+    second: 73498620_0
+  - first:
+      213: -9156334565312148163
+    second: 73498620_1
+  - first:
+      213: -2302945879909922759
+    second: 73498620_2
+  - first:
+      213: 3929256108716064544
+    second: 73498620_3
+  - first:
+      213: 8655345518084013487
+    second: 73498620_4
+  - first:
+      213: 4717423147260755166
+    second: 73498620_5
+  - first:
+      213: 5996456436055479742
+    second: 73498620_6
+  - first:
+      213: -1859763476138545524
+    second: 73498620_7
+  - first:
+      213: 6284748326834848272
+    second: 73498620_8
+  - first:
+      213: -4604868360453165078
+    second: 73498620_9
+  - first:
+      213: -2419466983113689493
+    second: 73498620_10
+  - first:
+      213: 4778299444858272901
+    second: 73498620_11
+  - first:
+      213: -2687280925735906916
+    second: 73498620_12
+  - first:
+      213: 2148897260561519466
+    second: 73498620_13
+  - first:
+      213: 3771358680836872381
+    second: 73498620_14
+  - first:
+      213: -5167819967916982390
+    second: 73498620_15
+  - first:
+      213: -9102845347474380490
+    second: 73498620_16
+  - first:
+      213: -1294140561945830023
+    second: 73498620_17
+  - first:
+      213: 2996093638111109470
+    second: 73498620_18
+  - first:
+      213: -8090139266484002426
+    second: 73498620_19
+  - first:
+      213: 8055305694823860907
+    second: 73498620_20
+  - first:
+      213: -7511262207891546917
+    second: 73498620_21
+  - first:
+      213: -5682589421170552964
+    second: 73498620_22
+  - first:
+      213: 4510233301993213006
+    second: 73498620_23
+  - first:
+      213: 3976860722927968080
+    second: 73498620_24
+  - first:
+      213: -4087798589055608007
+    second: 73498620_25
+  - first:
+      213: -5821207387568279666
+    second: 73498620_26
+  - first:
+      213: 1584164150068330700
+    second: 73498620_27
+  - first:
+      213: 9057054791061878670
+    second: 73498620_28
+  - first:
+      213: -7944532309759817130
+    second: 73498620_29
+  - first:
+      213: -8038111690468843771
+    second: 73498620_30
+  - first:
+      213: -7502586440071955092
+    second: 73498620_31
+  - first:
+      213: 333595350128728144
+    second: 73498620_32
+  - first:
+      213: -3187763045733875700
+    second: 73498620_33
+  - first:
+      213: 531283607056530364
+    second: 73498620_34
+  - first:
+      213: 6216151932948318447
+    second: 73498620_35
+  - first:
+      213: -6625305978480511533
+    second: 73498620_36
+  - first:
+      213: -2146718927841619784
+    second: 73498620_37
+  - first:
+      213: -6863366030401026256
+    second: 73498620_38
+  - first:
+      213: -6172475522143453780
+    second: 73498620_39
+  - first:
+      213: 7379908728619453641
+    second: 73498620_40
+  - first:
+      213: -4013778944851834524
+    second: 73498620_41
+  - first:
+      213: -3778170524711572284
+    second: 73498620_42
+  - first:
+      213: -1265058479371588185
+    second: 73498620_43
+  - first:
+      213: 6876484358926287848
+    second: 73498620_44
+  - first:
+      213: -2947270834637115369
+    second: 73498620_45
+  - first:
+      213: -2516567668520418707
+    second: 73498620_46
+  - first:
+      213: -4150791921221836321
+    second: 73498620_47
+  - first:
+      213: 1436379941441698667
+    second: 73498620_48
+  - first:
+      213: -2624923144128909184
+    second: 73498620_49
+  - first:
+      213: -2936147135786725492
+    second: BasicPlanet_0
+  - first:
+      213: 2299621677146648864
+    second: BasicPlanet_1
+  - first:
+      213: 4133021597550322173
+    second: BasicPlanet_2
+  - first:
+      213: 17003990224140494
+    second: BasicPlanet_3
+  - first:
+      213: -4519527960963435961
+    second: BasicPlanet_4
+  - first:
+      213: -329203707363206296
+    second: BasicPlanet_5
+  - first:
+      213: 2881413661322870231
+    second: BasicPlanet_6
+  - first:
+      213: 3957805137768062743
+    second: BasicPlanet_7
+  - first:
+      213: -7211270584629150927
+    second: BasicPlanet_8
+  - first:
+      213: -8090815059804314937
+    second: BasicPlanet_9
+  - first:
+      213: 182884278916389438
+    second: BasicPlanet_10
+  - first:
+      213: 5181320537973107133
+    second: BasicPlanet_11
+  - first:
+      213: -4925960176604427185
+    second: BasicPlanet_12
+  - first:
+      213: 4937413090607500413
+    second: BasicPlanet_13
+  - first:
+      213: 1322598711503584780
+    second: BasicPlanet_14
+  - first:
+      213: -1013624084058922215
+    second: BasicPlanet_15
+  - first:
+      213: 606309706066713178
+    second: BasicPlanet_16
+  - first:
+      213: -5168774518336332002
+    second: BasicPlanet_17
+  - first:
+      213: -6745677906060638642
+    second: BasicPlanet_18
+  - first:
+      213: -1750847735232319904
+    second: BasicPlanet_19
+  - first:
+      213: -7108975403205063760
+    second: BasicPlanet_20
+  - first:
+      213: 400101241987604884
+    second: BasicPlanet_21
+  - first:
+      213: 8566068417504837305
+    second: BasicPlanet_22
+  - first:
+      213: 90066180754319042
+    second: BasicPlanet_23
+  - first:
+      213: 3265228501737665340
+    second: BasicPlanet_24
+  - first:
+      213: -3347522959361814011
+    second: BasicPlanet_25
+  - first:
+      213: -6663258859017653207
+    second: BasicPlanet_26
+  - first:
+      213: 8281946740584900370
+    second: BasicPlanet_27
+  - first:
+      213: 3218224631852021032
+    second: BasicPlanet_28
+  - first:
+      213: -698947004153848518
+    second: BasicPlanet_29
+  - first:
+      213: 7418242425302296024
+    second: BasicPlanet_30
+  - first:
+      213: 6746401078159753408
+    second: BasicPlanet_31
+  - first:
+      213: -573111330246754158
+    second: BasicPlanet_32
+  - first:
+      213: 2211752879831171499
+    second: BasicPlanet_33
+  - first:
+      213: -8576029626400542450
+    second: BasicPlanet_34
+  - first:
+      213: -1835725680414101656
+    second: BasicPlanet_35
+  - first:
+      213: -3911158610088533983
+    second: BasicPlanet_36
+  - first:
+      213: -2057721736119324262
+    second: BasicPlanet_37
+  - first:
+      213: 556515776826265346
+    second: BasicPlanet_38
+  - first:
+      213: 1892167999440302079
+    second: BasicPlanet_39
+  - first:
+      213: 2337456409220744745
+    second: BasicPlanet_40
+  - first:
+      213: 3060256944277398994
+    second: BasicPlanet_41
+  - first:
+      213: 1234183098502760158
+    second: BasicPlanet_42
+  - first:
+      213: 1082136336331695281
+    second: BasicPlanet_43
+  - first:
+      213: -8212053194331329322
+    second: BasicPlanet_44
+  - first:
+      213: 6121188831605033993
+    second: BasicPlanet_45
+  - first:
+      213: 4204762393648090034
+    second: BasicPlanet_46
+  - first:
+      213: 8744315864297127068
+    second: BasicPlanet_47
+  - first:
+      213: -4273030680420632850
+    second: BasicPlanet_48
+  - first:
+      213: -7391484032510749871
+    second: BasicPlanet_49
+  externalObjects: {}
+  serializedVersion: 11
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 16
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 16384
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 16384
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: BasicPlanet_0
+      rect:
+        serializedVersion: 2
+        x: 11
+        y: 10
+        width: 99
+        height: 99
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c8fc6238cb5b047d0800000000000000
+      internalID: -2936147135786725492
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BasicPlanet_1
+      rect:
+        serializedVersion: 2
+        x: 121
+        y: 10
+        width: 99
+        height: 99
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0213d104bb5e9ef10800000000000000
+      internalID: 2299621677146648864
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BasicPlanet_2
+      rect:
+        serializedVersion: 2
+        x: 231
+        y: 10
+        width: 99
+        height: 99
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: df1210bce317b5930800000000000000
+      internalID: 4133021597550322173
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BasicPlanet_3
+      rect:
+        serializedVersion: 2
+        x: 341
+        y: 10
+        width: 99
+        height: 99
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ec8f21df9096c3000800000000000000
+      internalID: 17003990224140494
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BasicPlanet_4
+      rect:
+        serializedVersion: 2
+        x: 451
+        y: 10
+        width: 99
+        height: 99
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7423456d3496741c0800000000000000
+      internalID: -4519527960963435961
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BasicPlanet_5
+      rect:
+        serializedVersion: 2
+        x: 561
+        y: 10
+        width: 99
+        height: 99
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 86bdfdbe8fe6e6bf0800000000000000
+      internalID: -329203707363206296
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BasicPlanet_6
+      rect:
+        serializedVersion: 2
+        x: 671
+        y: 10
+        width: 99
+        height: 99
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7dd7b166576dcf720800000000000000
+      internalID: 2881413661322870231
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BasicPlanet_7
+      rect:
+        serializedVersion: 2
+        x: 781
+        y: 10
+        width: 99
+        height: 99
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 71f91eeadc2fce630800000000000000
+      internalID: 3957805137768062743
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BasicPlanet_8
+      rect:
+        serializedVersion: 2
+        x: 891
+        y: 10
+        width: 99
+        height: 99
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 13bb4f73c9b6ceb90800000000000000
+      internalID: -7211270584629150927
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BasicPlanet_9
+      rect:
+        serializedVersion: 2
+        x: 1001
+        y: 10
+        width: 99
+        height: 99
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7c2abf0f196a7bf80800000000000000
+      internalID: -8090815059804314937
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BasicPlanet_10
+      rect:
+        serializedVersion: 2
+        x: 1111
+        y: 10
+        width: 99
+        height: 99
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e3a90df584cb98200800000000000000
+      internalID: 182884278916389438
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BasicPlanet_11
+      rect:
+        serializedVersion: 2
+        x: 1221
+        y: 10
+        width: 99
+        height: 99
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: db9a255d39fb7e740800000000000000
+      internalID: 5181320537973107133
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BasicPlanet_12
+      rect:
+        serializedVersion: 2
+        x: 1331
+        y: 10
+        width: 99
+        height: 99
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f4cc5c7715973abb0800000000000000
+      internalID: -4925960176604427185
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BasicPlanet_13
+      rect:
+        serializedVersion: 2
+        x: 1440
+        y: 10
+        width: 100
+        height: 99
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d7c060fdb07358440800000000000000
+      internalID: 4937413090607500413
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BasicPlanet_14
+      rect:
+        serializedVersion: 2
+        x: 1550
+        y: 10
+        width: 100
+        height: 99
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c0e7f8b4580da5210800000000000000
+      internalID: 1322598711503584780
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BasicPlanet_15
+      rect:
+        serializedVersion: 2
+        x: 1661
+        y: 10
+        width: 99
+        height: 99
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 91323e51442eee1f0800000000000000
+      internalID: -1013624084058922215
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BasicPlanet_16
+      rect:
+        serializedVersion: 2
+        x: 1771
+        y: 10
+        width: 99
+        height: 99
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a5a5afd177b0a6800800000000000000
+      internalID: 606309706066713178
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BasicPlanet_17
+      rect:
+        serializedVersion: 2
+        x: 1881
+        y: 10
+        width: 99
+        height: 99
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e1fd87ef5f2d448b0800000000000000
+      internalID: -5168774518336332002
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BasicPlanet_18
+      rect:
+        serializedVersion: 2
+        x: 1991
+        y: 10
+        width: 99
+        height: 99
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e460e004fa98262a0800000000000000
+      internalID: -6745677906060638642
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BasicPlanet_19
+      rect:
+        serializedVersion: 2
+        x: 2101
+        y: 10
+        width: 99
+        height: 99
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 06e2eadd24db3b7e0800000000000000
+      internalID: -1750847735232319904
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BasicPlanet_20
+      rect:
+        serializedVersion: 2
+        x: 2211
+        y: 10
+        width: 99
+        height: 99
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0bb09f62988d75d90800000000000000
+      internalID: -7108975403205063760
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BasicPlanet_21
+      rect:
+        serializedVersion: 2
+        x: 2321
+        y: 10
+        width: 99
+        height: 99
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4912dd2b5f17d8500800000000000000
+      internalID: 400101241987604884
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BasicPlanet_22
+      rect:
+        serializedVersion: 2
+        x: 2431
+        y: 10
+        width: 99
+        height: 99
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9be711b37d9c0e670800000000000000
+      internalID: 8566068417504837305
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BasicPlanet_23
+      rect:
+        serializedVersion: 2
+        x: 2541
+        y: 10
+        width: 99
+        height: 99
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2c62326d6baff3100800000000000000
+      internalID: 90066180754319042
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BasicPlanet_24
+      rect:
+        serializedVersion: 2
+        x: 2651
+        y: 10
+        width: 99
+        height: 99
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c33fd8cb50c605d20800000000000000
+      internalID: 3265228501737665340
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BasicPlanet_25
+      rect:
+        serializedVersion: 2
+        x: 2761
+        y: 10
+        width: 99
+        height: 99
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 50256c9ba953b81d0800000000000000
+      internalID: -3347522959361814011
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BasicPlanet_26
+      rect:
+        serializedVersion: 2
+        x: 2871
+        y: 10
+        width: 99
+        height: 99
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 92437c50f595783a0800000000000000
+      internalID: -6663258859017653207
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BasicPlanet_27
+      rect:
+        serializedVersion: 2
+        x: 2981
+        y: 10
+        width: 99
+        height: 99
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 21764415ea26fe270800000000000000
+      internalID: 8281946740584900370
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BasicPlanet_28
+      rect:
+        serializedVersion: 2
+        x: 3091
+        y: 10
+        width: 99
+        height: 100
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 825b3f4704e69ac20800000000000000
+      internalID: 3218224631852021032
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BasicPlanet_29
+      rect:
+        serializedVersion: 2
+        x: 3201
+        y: 10
+        width: 99
+        height: 100
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a3d16942767dc46f0800000000000000
+      internalID: -698947004153848518
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BasicPlanet_30
+      rect:
+        serializedVersion: 2
+        x: 3311
+        y: 10
+        width: 99
+        height: 100
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8d520e9ae24e2f660800000000000000
+      internalID: 7418242425302296024
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BasicPlanet_31
+      rect:
+        serializedVersion: 2
+        x: 3421
+        y: 10
+        width: 99
+        height: 99
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0c04600690800ad50800000000000000
+      internalID: 6746401078159753408
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BasicPlanet_32
+      rect:
+        serializedVersion: 2
+        x: 3531
+        y: 10
+        width: 99
+        height: 99
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 29004e71846eb08f0800000000000000
+      internalID: -573111330246754158
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BasicPlanet_33
+      rect:
+        serializedVersion: 2
+        x: 3641
+        y: 10
+        width: 99
+        height: 99
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ba1c84d9689b1be10800000000000000
+      internalID: 2211752879831171499
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BasicPlanet_34
+      rect:
+        serializedVersion: 2
+        x: 3751
+        y: 10
+        width: 99
+        height: 99
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e017b271e72dbf880800000000000000
+      internalID: -8576029626400542450
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BasicPlanet_35
+      rect:
+        serializedVersion: 2
+        x: 3861
+        y: 10
+        width: 99
+        height: 99
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 86fead148313686e0800000000000000
+      internalID: -1835725680414101656
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BasicPlanet_36
+      rect:
+        serializedVersion: 2
+        x: 3971
+        y: 10
+        width: 99
+        height: 99
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 120667167f5c8b9c0800000000000000
+      internalID: -3911158610088533983
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BasicPlanet_37
+      rect:
+        serializedVersion: 2
+        x: 4081
+        y: 10
+        width: 99
+        height: 99
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a91f108bbf08173e0800000000000000
+      internalID: -2057721736119324262
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BasicPlanet_38
+      rect:
+        serializedVersion: 2
+        x: 4191
+        y: 10
+        width: 99
+        height: 99
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 20f41a5862429b700800000000000000
+      internalID: 556515776826265346
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BasicPlanet_39
+      rect:
+        serializedVersion: 2
+        x: 4301
+        y: 10
+        width: 99
+        height: 99
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fff200635c4524a10800000000000000
+      internalID: 1892167999440302079
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BasicPlanet_40
+      rect:
+        serializedVersion: 2
+        x: 4411
+        y: 10
+        width: 99
+        height: 99
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 92600954830507020800000000000000
+      internalID: 2337456409220744745
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BasicPlanet_41
+      rect:
+        serializedVersion: 2
+        x: 4521
+        y: 10
+        width: 99
+        height: 99
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2d5a3151a77387a20800000000000000
+      internalID: 3060256944277398994
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BasicPlanet_42
+      rect:
+        serializedVersion: 2
+        x: 4631
+        y: 10
+        width: 99
+        height: 99
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ed64c063df2b02110800000000000000
+      internalID: 1234183098502760158
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BasicPlanet_43
+      rect:
+        serializedVersion: 2
+        x: 4741
+        y: 10
+        width: 99
+        height: 99
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1b4e795b345840f00800000000000000
+      internalID: 1082136336331695281
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BasicPlanet_44
+      rect:
+        serializedVersion: 2
+        x: 4851
+        y: 10
+        width: 99
+        height: 99
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6dce44b012de80e80800000000000000
+      internalID: -8212053194331329322
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BasicPlanet_45
+      rect:
+        serializedVersion: 2
+        x: 4961
+        y: 10
+        width: 99
+        height: 99
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 90c08e69fc4d2f450800000000000000
+      internalID: 6121188831605033993
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BasicPlanet_46
+      rect:
+        serializedVersion: 2
+        x: 5071
+        y: 10
+        width: 99
+        height: 99
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2bbc0568e115a5a30800000000000000
+      internalID: 4204762393648090034
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BasicPlanet_47
+      rect:
+        serializedVersion: 2
+        x: 5181
+        y: 10
+        width: 99
+        height: 99
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c9c3e3ff2fc0a5970800000000000000
+      internalID: 8744315864297127068
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BasicPlanet_48
+      rect:
+        serializedVersion: 2
+        x: 5291
+        y: 10
+        width: 99
+        height: 99
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ee6be235c3523b4c0800000000000000
+      internalID: -4273030680420632850
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BasicPlanet_49
+      rect:
+        serializedVersion: 2
+        x: 5401
+        y: 10
+        width: 99
+        height: 99
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 15399372f6c2c6990800000000000000
+      internalID: -7391484032510749871
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
