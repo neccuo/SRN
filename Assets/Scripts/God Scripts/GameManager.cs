@@ -20,6 +20,11 @@ public class GameManager : MonoBehaviour
     public GameObject cheatCodeBar;
     public GameObject shopBar;
 
+    public Player player;
+
+    private Controller _controllerGod;
+
+
     // public GameObject portalManager;
 
     public PortalManager portalManager;
@@ -29,7 +34,17 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-        UpdateGameState(GameState.PlanMovement);
+        ChangeGameState(GameState.PlanMovement);
+    }
+
+    void Start()
+    {
+        _controllerGod = Controller.ControllerGod;
+    }
+
+    void Update()
+    {
+        HandleGameState();
     }
 
     public GameState GetCurrentState()
@@ -37,7 +52,40 @@ public class GameManager : MonoBehaviour
         return _state;
     }
 
-    public void UpdateGameState(GameState newState) //
+    void HandleGameState()
+    {
+        switch (GetCurrentState())
+        {
+            case GameState.PlanMovement:
+                _controllerGod.TakePlanMovementInput(); // where state changes may happen
+                break;
+
+            case GameState.DuringMovement:
+                if(player.GetFollowedObject() != null)
+                {
+                    player.SetMovementFollow();
+                }
+                player.HandleMovement();
+                // TakeDuringMovementInput(); // where state changes may happen
+                _controllerGod.DuringMovementEndConditions();
+                break;
+
+            case GameState.CheatBarState:
+                break;
+            
+            case GameState.ShopState:
+                break;
+
+            case GameState.SpaceSystemLoad:
+                break;
+
+            default:
+                throw new MissingComponentException("" + GetCurrentState().ToString() + "is not an available state.");
+        }
+        // FinalStateChecker();
+    }
+
+    public void ChangeGameState(GameState newState) //
     {
         /// MAY NEED OPTIMIZATION, BUT NOT TODAY :3
         

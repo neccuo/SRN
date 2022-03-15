@@ -40,7 +40,7 @@ public class Controller : MonoBehaviour
 
     void Update()
     {
-        HandleGameState();
+        // HandleGameState();
         clickPoint.origin = (Vector2) player.transform.position;
         clickPoint.target = player.GetTarget();
     }
@@ -62,7 +62,7 @@ public class Controller : MonoBehaviour
         lastClickTime = Time.unscaledTime;
     }
 
-    void HandleGameState()
+    /* void HandleGameState()
     {
         switch (gameInstance.GetCurrentState())
         {
@@ -93,7 +93,7 @@ public class Controller : MonoBehaviour
                 throw new MissingComponentException("" + gameInstance.ToString() + "is not an available state.");
         }
         // FinalStateChecker();
-    }
+    } */
 
     public void ChangeState(GameState newState) // DEFINITELY CLEAN IT IN THE FUTURE
     {
@@ -107,7 +107,7 @@ public class Controller : MonoBehaviour
             player.ResetTarget();
             player.SetFollowedObject(null);
         }
-        gameInstance.UpdateGameState(newState);
+        gameInstance.ChangeGameState(newState);
     }
 
     void BasicMovementProcedure()
@@ -116,7 +116,7 @@ public class Controller : MonoBehaviour
         clickPoint.SpawnCrossArrow();
     }
 
-    void TakePlanMovementInput()
+    public void TakePlanMovementInput()
     {
         if (Input.GetKeyDown(KeyCode.Space))
             ChangeState(GameState.DuringMovement); // continue game
@@ -153,7 +153,7 @@ public class Controller : MonoBehaviour
         }
     }
 
-    void DuringMovementEndConditions()
+    public void DuringMovementEndConditions()
     {
         if (Input.GetKeyDown(KeyCode.Space)) // SPACE IS CLICKED: normal pause
             ChangeState(GameState.PlanMovement); // stop game

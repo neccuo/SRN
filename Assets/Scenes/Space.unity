@@ -371,6 +371,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cheatCodeBar: {fileID: 1315986298}
   shopBar: {fileID: 2159099622301821301}
+  player: {fileID: 1193091450}
   portalManager: {fileID: 1896863594}
 --- !u!4 &375930916
 Transform:

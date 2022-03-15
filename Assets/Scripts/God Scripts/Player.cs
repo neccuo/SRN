@@ -53,7 +53,7 @@ public class Player : MonoBehaviour
                 }
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
-                    currentGameInstance.UpdateGameState(GameState.DuringMovement);
+                    currentGameInstance.ChangeGameState(GameState.DuringMovement);
                 }
                 if(Input.GetKeyDown(KeyCode.Alpha9))
                 {
@@ -69,7 +69,7 @@ public class Player : MonoBehaviour
                 HandleMovement();
                 if ((Vector2)transform.position == _target)
                 {
-                    currentGameInstance.UpdateGameState(GameState.PlanMovement);
+                    currentGameInstance.ChangeGameState(GameState.PlanMovement);
                 }
                 break;
             case GameState.TurnEvaluation:
