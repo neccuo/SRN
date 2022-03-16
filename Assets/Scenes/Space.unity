@@ -527,7 +527,7 @@ Animator:
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 0e0faa8cf5bb3684ea909b08e93c4252, type: 2}
   m_CullingMode: 0
-  m_UpdateMode: 0
+  m_UpdateMode: 2
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_WarningMessage: 
@@ -1370,7 +1370,7 @@ Animator:
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 56205ce1b011bb74589719097a291782, type: 2}
   m_CullingMode: 0
-  m_UpdateMode: 0
+  m_UpdateMode: 2
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_WarningMessage: 
@@ -2207,6 +2207,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 720108139}
     m_Modifications:
+    - target: {fileID: 1408117659, guid: 7c88a7c552b102342b23fbd49df5849c, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 33.1256
+      objectReference: {fileID: 0}
+    - target: {fileID: 1408117659, guid: 7c88a7c552b102342b23fbd49df5849c, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 33.1746
+      objectReference: {fileID: 0}
+    - target: {fileID: 1408117659, guid: 7c88a7c552b102342b23fbd49df5849c, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 372.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1408117659, guid: 7c88a7c552b102342b23fbd49df5849c, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 161
+      objectReference: {fileID: 0}
     - target: {fileID: 323739795781124097, guid: 7c88a7c552b102342b23fbd49df5849c,
         type: 3}
       propertyPath: m_Pivot.x
@@ -2311,6 +2327,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1091881124243719550, guid: 7c88a7c552b102342b23fbd49df5849c,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 833.3168
+      objectReference: {fileID: 0}
+    - target: {fileID: 1091881124243719550, guid: 7c88a7c552b102342b23fbd49df5849c,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 444.4579
+      objectReference: {fileID: 0}
+    - target: {fileID: 1091881124243719550, guid: 7c88a7c552b102342b23fbd49df5849c,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -5.5591
+      objectReference: {fileID: 0}
+    - target: {fileID: 1091881124243719550, guid: 7c88a7c552b102342b23fbd49df5849c,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -22.2265
       objectReference: {fileID: 0}
     - target: {fileID: 2730745883593692129, guid: 7c88a7c552b102342b23fbd49df5849c,
         type: 3}
