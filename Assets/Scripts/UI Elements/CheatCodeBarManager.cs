@@ -12,6 +12,8 @@ public class CheatCodeBarManager : MonoBehaviour
 
     private GameState _previousState;
 
+    public GameState officialState = GameState.CheatBarState;
+
     // private GameState _ourState = GameState.CheatBarState;
 
     public void SetPreviousState(GameState state)
@@ -25,10 +27,11 @@ public class CheatCodeBarManager : MonoBehaviour
 
     void OnEnable()
     {
-        //Debug.Log("PrintOnEnable: script was enabled");
-        //Debug.Log(Controller.ControllerGod.ToString());
-        // _previousState = GameManager.Instance.GetCurrentState();
-        //Controller.ControllerGod.ChangeState(_ourState);
+        // TODO: CHANGE STATES ACCORDINGLY IF IT IS ENABLED AT THE START OF THE GAME
+        if(GameManager.Instance.GetCurrentState() != officialState)
+        {
+            Controller.ControllerGod.ChangeState(officialState);
+        }
         Debug.Log("Cheat Code Bar is Enabled");
     }
 

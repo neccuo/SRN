@@ -7,6 +7,7 @@ public class PortalLogic : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D col)
     {
         GameObject collidedObject = col.gameObject;
+        Debug.Log("" + collidedObject.name + " collided with " + this.name);
         if(collidedObject.tag == "NPC" && collidedObject.GetComponent<NPC>().teleportReady)
         {
             Debug.Log("You can teleport");

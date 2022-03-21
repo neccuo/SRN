@@ -132,7 +132,7 @@ public class Controller : MonoBehaviour
             {
                 Vector2 mousePos2D = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 RaycastHit2D hit = Physics2D.Raycast(mousePos2D, Vector2.zero);
-                if (hit.collider != null) // NEEDS SOME DETAILS IDENTIFYING THE COLLIDER
+                if (hit.collider != null && hit.collider.gameObject.tag == "Planet") // NEEDS SOME DETAILS IDENTIFYING THE COLLIDER
                 {
                     Debug.Log(hit.collider.gameObject.name + " was clicked");
                     player.SetFollowedObject(hit.collider.gameObject);
