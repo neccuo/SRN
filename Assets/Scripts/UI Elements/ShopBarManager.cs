@@ -7,16 +7,15 @@ public class ShopBarManager : MonoBehaviour
 {
     public static ShopBarManager ShopManager;
 
-    public ShopBarManager()
-    {
-        ShopManager = this;
-        officialState = GameState.ShopState;
-    }
-
     List<GameObject> items = new List<GameObject>();
     public GameState officialState;
 
     ShopStock currentShopStockPointer;
+
+    public ShopBarManager()
+    {
+        ShopManager = this;
+    }
 
     public void SetCurrentShopStockPointer(ShopStock stock)
     {
@@ -41,6 +40,11 @@ public class ShopBarManager : MonoBehaviour
         ShopManager = this;
         officialState = GameState.ShopState;
     }*/
+
+    void Awake()
+    {
+        officialState = GameState.ShopState;
+    }
 
 
     private void _SetItemPrices()
