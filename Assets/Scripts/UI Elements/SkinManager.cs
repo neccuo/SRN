@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEditor;
+// using UnityEditor;
 
 public class SkinManager : MonoBehaviour
 {
@@ -37,7 +37,8 @@ public class SkinManager : MonoBehaviour
     public void Confirm()
     {
         ship.ChangeHull(spriteRenderer.sprite);
-        PrefabUtility.SaveAsPrefabAsset(playerShip, "Assets/Prefabs/PlayerShip.prefab");
+        // TODO: GIVE IT BACK!!!
+        // PrefabUtility.SaveAsPrefabAsset(playerShip, "Assets/Prefabs/PlayerShip.prefab");
         SceneManager.LoadScene("Space");
     }
 

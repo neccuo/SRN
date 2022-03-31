@@ -21,8 +21,12 @@ public class Planet : MonoBehaviour
 
     public Transform sunLocation;
 
+    ShopStock shopStock;
+
     void Start()
     {
+        shopStock = GetComponent<ShopStock>();
+        
         //scaleBase = 1f;
         scaleRange = 0.6f;
         speedBase = 5f;
@@ -47,6 +51,16 @@ public class Planet : MonoBehaviour
     {
         Debug.Log("You just clicked " + this.name);
     }*/
+
+    private void OnTriggerEnter2D(Collider2D col)
+    {
+        GameObject collidedObject = col.gameObject;
+        Debug.Log("" + collidedObject.name + " collided with " + this.name);
+        if(collidedObject.tag == "Player")
+        {
+            shopStock.PrintStock();
+        }
+    }
 
     void InitScale() // inits scale with random numbers (using designated range)
     {

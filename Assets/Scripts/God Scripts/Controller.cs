@@ -161,7 +161,10 @@ public class Controller : MonoBehaviour
         {
             if(player.GetFollowedObject()?.tag == "Planet") // REACHED A PLANET (FOLLOW CLICKPOINT): change to ShopState
             {
-                Debug.Log("yes");
+                GameObject planet = player.GetFollowedObject();
+                ShopStock currentStock = planet.GetComponent<ShopStock>();
+                ShopBarManager.ShopManager.SetCurrentShopStockPointer(currentStock);
+
                 ChangeState(GameState.ShopState);
             }
             else if(player.GetFollowedObject()?.tag == "Portal")

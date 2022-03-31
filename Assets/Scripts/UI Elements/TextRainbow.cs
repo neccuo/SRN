@@ -17,7 +17,7 @@ public class TextRainbow : MonoBehaviour
     float time = 0.0f;
 
 
-    void Awake()
+    void Start()
     {
         text = GetComponent<Text>();
         nextChange = 0.0f;
