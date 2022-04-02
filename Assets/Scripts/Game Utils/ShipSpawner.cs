@@ -6,6 +6,9 @@ public class ShipSpawner : MonoBehaviour
 {
     public GameObject npcPrefab;
     public GameObject planets;
+    public GameObject npcs;
+
+    public static int npcSpawned = 0;
 
     private GameObject _npcObjectPointer;
 
@@ -28,7 +31,7 @@ public class ShipSpawner : MonoBehaviour
     void Update()
     {
         _timer += Time.deltaTime;
-        if(_timer > 1.5f)
+        if(_timer > 1.5f && planets.transform.childCount > 0)
         {
             DefineNpc();
             _timer = 0.0f;
@@ -55,16 +58,18 @@ public class ShipSpawner : MonoBehaviour
 
         // POINTER ASSIGNMENT REALM
         _npcObjectPointer = npcPrefab;
+
+
         // TRANSFORM ASSIGNMENT REALM
         Transform transformRef = _npcObjectPointer.transform; // EXPERIMENTAL
 
         Vector3 loc = PickRandomPlanetPos(); // ASSUMING WE ARE WORKING WITH PLANETS NOW
         transformRef.position = loc; // temp
-        transformRef.localScale = new Vector3(1, 1, 1);
+        transformRef.localScale = new Vector3(0.5f, 0.5f, 1);
 
         // NPC SCRIPT REALM
         NPC npcRef = _npcObjectPointer.GetComponent<NPC>();
-        npcRef.objective = Objective.Follow;
+        npcRef.objective = Objective.SeekPortal;
         npcRef.patrolRange = 10;
 
         // SPACESHIP SPRITE RENDERER REALM
@@ -78,10 +83,19 @@ public class ShipSpawner : MonoBehaviour
         Spaceship spaceship = _npcObjectPointer.GetComponentInChildren<Spaceship>();
         spaceship.maxHealth = 100;
         spaceship.currentHealth = 100;
-        spaceship.speed = 3;
+        spaceship.speed = 25;
 
-        Instantiate(_npcObjectPointer);
+
+        _npcObjectPointer = Instantiate(_npcObjectPointer);
+        _npcObjectPointer.transform.SetParent(npcs.transform);
+        _NamingNpcs(_npcObjectPointer);
+        npcSpawned++;
+        Debug.Log("SPAWNED SHIP: " + _npcObjectPointer.name + " @ " + _npcObjectPointer.transform.position.ToString());
     }
 
-    // public void GetPlanets()
+    private void _NamingNpcs(GameObject newNpc) // names are given as: "NPC_" + npcSpawned
+    {
+        // int npcID = npcs.transform.childCount;
+        newNpc.name = "NPC_" + npcSpawned;
+    }
 }

@@ -10,7 +10,8 @@ public class PortalLogic : MonoBehaviour
         Debug.Log("" + collidedObject.name + " collided with " + this.name);
         if(collidedObject.tag == "NPC" && collidedObject.GetComponent<NPC>().teleportReady)
         {
-            Debug.Log("You can teleport");
+            // Debug.Log("You can teleport");
+            
             // MAKE SURE TO ADD SOMETHING USEFUL HERE
             Destroy(collidedObject);
             // ALSO, MAKE SURE TO DEACTIVATE THE TELEPORT PERMISSION SWITCH

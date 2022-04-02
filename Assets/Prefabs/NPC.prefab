@@ -27,8 +27,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2409782443382836827}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.9514313, y: -49.754223, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -14.313659, y: -13.968557, z: 0}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_Children:
   - {fileID: 2553247402552559786}
   m_Father: {fileID: 0}
@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc42632275c1e944abf9af03ddf3f7ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objective: 0
+  objective: 2
   ship: {fileID: 2553247402552559788}
   player: {fileID: 0}
   patrolRange: 10
@@ -149,7 +149,7 @@ PrefabInstance:
     - target: {fileID: 8994337465208505314, guid: f8f67eeb31d53534897658337c27c48c,
         type: 3}
       propertyPath: speed
-      value: 3
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 8994337465208505314, guid: f8f67eeb31d53534897658337c27c48c,
         type: 3}

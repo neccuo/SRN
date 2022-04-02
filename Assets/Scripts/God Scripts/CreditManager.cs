@@ -14,7 +14,7 @@ public class CreditManager : MonoBehaviour
 
         _credit = PlayerPrefs.GetInt("playerMoney", 1000); // init credits
         UpdateText();
-        Debug.Log("Money is " + _credit);
+        // Debug.Log("Money is " + _credit);
 
     }
 

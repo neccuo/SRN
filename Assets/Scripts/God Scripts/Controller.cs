@@ -119,7 +119,7 @@ public class Controller : MonoBehaviour
     // hopefully will use algorithms at some point :P
     private bool _CheckDoubleClickWhiteList(string tag)
     {
-        if(tag == "Planet" || tag == "Portal")
+        if(tag == "Planet" || tag == "Portal" || tag == "NPC")
         {
             return true;
         }
@@ -168,7 +168,11 @@ public class Controller : MonoBehaviour
             ChangeState(GameState.PlanMovement); // stop game
         else if(player.GetTarget() == (Vector2) player.transform.position) // REACHED TO THE DESTINATION
         {
-            if(player.GetFollowedObject()?.tag == "Planet") // REACHED A PLANET (FOLLOW CLICKPOINT): change to ShopState
+            if(player.GetFollowedObject() == null)
+            {
+                ChangeState(GameState.PlanMovement);
+            }
+            else if(player.GetFollowedObject().tag == "Planet") // REACHED A PLANET (FOLLOW CLICKPOINT): change to ShopState
             {
                 GameObject planet = player.GetFollowedObject();
                 ShopStock currentStock = planet.GetComponent<ShopStock>();
@@ -176,7 +180,7 @@ public class Controller : MonoBehaviour
 
                 ChangeState(GameState.ShopState);
             }
-            else if(player.GetFollowedObject()?.tag == "Portal")
+            else if(player.GetFollowedObject().tag == "Portal")
             {
                 Debug.Log("portal");
                 ChangeState(GameState.SpaceSystemLoad);

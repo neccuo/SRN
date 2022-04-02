@@ -92,7 +92,7 @@ public class GameManager : MonoBehaviour
 
         if(newState != _state)
         {
-            Debug.Log("Changing from state: " + _state.ToString() + " to state: " + newState.ToString());
+            // Debug.Log("Changing from state: " + _state.ToString() + " to state: " + newState.ToString());
         }
 
         GameState oldState = _state;
