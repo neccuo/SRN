@@ -1,0 +1,1371 @@
+fileFormatVersion: 2
+guid: 1cceecb33c1c23040bb8c6aea8056f93
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -119213928601622100
+    second: BlueSun_0
+  - first:
+      213: 8329443981445382703
+    second: BlueSun_1
+  - first:
+      213: -6340699240470947493
+    second: BlueSun_2
+  - first:
+      213: -2758152049203234577
+    second: BlueSun_3
+  - first:
+      213: 3503230237378993736
+    second: BlueSun_4
+  - first:
+      213: 2613115623157025455
+    second: BlueSun_5
+  - first:
+      213: 2341373991550238337
+    second: BlueSun_6
+  - first:
+      213: 2390206134757858192
+    second: BlueSun_7
+  - first:
+      213: -371900545865137612
+    second: BlueSun_8
+  - first:
+      213: 6066713159809696701
+    second: BlueSun_9
+  - first:
+      213: 3935383511953333458
+    second: BlueSun_10
+  - first:
+      213: 414584739176365456
+    second: BlueSun_11
+  - first:
+      213: 1769494437749173529
+    second: BlueSun_12
+  - first:
+      213: -72233126140119644
+    second: BlueSun_13
+  - first:
+      213: 1268041622710830150
+    second: BlueSun_14
+  - first:
+      213: 1109453695894299863
+    second: BlueSun_15
+  - first:
+      213: -2353777334905456336
+    second: BlueSun_16
+  - first:
+      213: -6050130793068272762
+    second: BlueSun_17
+  - first:
+      213: -7291453020960144036
+    second: BlueSun_18
+  - first:
+      213: 9103349975889090187
+    second: BlueSun_19
+  - first:
+      213: -6961716922590086093
+    second: BlueSun_20
+  - first:
+      213: 2622655771044327337
+    second: BlueSun_21
+  - first:
+      213: 8800068279381184988
+    second: BlueSun_22
+  - first:
+      213: -6880172285897108645
+    second: BlueSun_23
+  - first:
+      213: -2436795688509194422
+    second: BlueSun_24
+  - first:
+      213: 3353765256155446424
+    second: BlueSun_25
+  - first:
+      213: 4441551059475590417
+    second: BlueSun_26
+  - first:
+      213: -6699195360531038121
+    second: BlueSun_27
+  - first:
+      213: 6161546608420459929
+    second: BlueSun_28
+  - first:
+      213: -6865799874620652689
+    second: BlueSun_29
+  - first:
+      213: -3154528513161326595
+    second: BlueSun_30
+  - first:
+      213: -9026548976892072419
+    second: BlueSun_31
+  - first:
+      213: 3961677238690135160
+    second: BlueSun_32
+  - first:
+      213: -7428869723690309778
+    second: BlueSun_33
+  - first:
+      213: 3268402860060945708
+    second: BlueSun_34
+  - first:
+      213: -5595665491956906726
+    second: BlueSun_35
+  - first:
+      213: 5990309379921092149
+    second: BlueSun_36
+  - first:
+      213: -938242913630867970
+    second: BlueSun_37
+  - first:
+      213: -4501930430941098213
+    second: BlueSun_38
+  - first:
+      213: 7015443565311922478
+    second: BlueSun_39
+  - first:
+      213: -7882571924056988007
+    second: BlueSun_40
+  - first:
+      213: 3501630549186990730
+    second: BlueSun_41
+  - first:
+      213: 1456299949963732120
+    second: BlueSun_42
+  - first:
+      213: -5624612242772290855
+    second: BlueSun_43
+  - first:
+      213: 7329417968043555770
+    second: BlueSun_44
+  - first:
+      213: -5575748314518435497
+    second: BlueSun_45
+  - first:
+      213: -7266445819010035734
+    second: BlueSun_46
+  - first:
+      213: -2298690908863702520
+    second: BlueSun_47
+  - first:
+      213: -6533285316043809604
+    second: BlueSun_48
+  - first:
+      213: -6405876029713040576
+    second: BlueSun_49
+  - first:
+      213: 7672049500791935722
+    second: BlueSun_50
+  - first:
+      213: 8817337676823425752
+    second: BlueSun_51
+  - first:
+      213: 797367693647494847
+    second: BlueSun_52
+  - first:
+      213: -2000791295546824014
+    second: BlueSun_53
+  - first:
+      213: 8548159383468266163
+    second: BlueSun_54
+  - first:
+      213: 6985601819105458224
+    second: BlueSun_55
+  - first:
+      213: -1433363908903419486
+    second: BlueSun_56
+  - first:
+      213: 4261996992649881752
+    second: BlueSun_57
+  - first:
+      213: 4520790631343010239
+    second: BlueSun_58
+  - first:
+      213: 4624117590570084077
+    second: BlueSun_59
+  - first:
+      213: -7401333703325788249
+    second: BlueSun_60
+  - first:
+      213: -2425949826733553517
+    second: BlueSun_61
+  - first:
+      213: 6960421647089579242
+    second: BlueSun_62
+  - first:
+      213: -7921505483478990117
+    second: BlueSun_63
+  - first:
+      213: -2079532376855523031
+    second: BlueSun_64
+  - first:
+      213: -6302073950358198053
+    second: BlueSun_65
+  - first:
+      213: -3925112639505471010
+    second: BlueSun_66
+  - first:
+      213: 6928260436656975843
+    second: BlueSun_67
+  - first:
+      213: -6322615421138690450
+    second: BlueSun_68
+  - first:
+      213: -7877940690615153154
+    second: BlueSun_69
+  - first:
+      213: -5997851526077295269
+    second: BlueSun_70
+  externalObjects: {}
+  serializedVersion: 11
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 16
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 16384
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 16384
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: BlueSun_0
+      rect:
+        serializedVersion: 2
+        x: 40
+        y: 40
+        width: 120
+        height: 120
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ca9eb654097785ef0800000000000000
+      internalID: -119213928601622100
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BlueSun_1
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 40
+        width: 120
+        height: 120
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f22419a7b21289370800000000000000
+      internalID: 8329443981445382703
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BlueSun_2
+      rect:
+        serializedVersion: 2
+        x: 440
+        y: 40
+        width: 120
+        height: 120
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b59d320a2af4108a0800000000000000
+      internalID: -6340699240470947493
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BlueSun_3
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 40
+        width: 120
+        height: 120
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fe8b9b6135319b9d0800000000000000
+      internalID: -2758152049203234577
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BlueSun_4
+      rect:
+        serializedVersion: 2
+        x: 840
+        y: 40
+        width: 120
+        height: 120
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 84ed1690759fd9030800000000000000
+      internalID: 3503230237378993736
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BlueSun_5
+      rect:
+        serializedVersion: 2
+        x: 1040
+        y: 40
+        width: 120
+        height: 120
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: faa4c4b70d6a34420800000000000000
+      internalID: 2613115623157025455
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BlueSun_6
+      rect:
+        serializedVersion: 2
+        x: 1240
+        y: 40
+        width: 120
+        height: 120
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 18eb0bc7d3b3e7020800000000000000
+      internalID: 2341373991550238337
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BlueSun_7
+      rect:
+        serializedVersion: 2
+        x: 1440
+        y: 40
+        width: 120
+        height: 120
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 09b9332d0d7bb2120800000000000000
+      internalID: 2390206134757858192
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BlueSun_8
+      rect:
+        serializedVersion: 2
+        x: 1640
+        y: 40
+        width: 120
+        height: 120
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4324fe78c6eb6daf0800000000000000
+      internalID: -371900545865137612
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BlueSun_9
+      rect:
+        serializedVersion: 2
+        x: 1840
+        y: 40
+        width: 120
+        height: 120
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: db305acd97b413450800000000000000
+      internalID: 6066713159809696701
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BlueSun_10
+      rect:
+        serializedVersion: 2
+        x: 2040
+        y: 40
+        width: 120
+        height: 120
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2dc58ec147a4d9630800000000000000
+      internalID: 3935383511953333458
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BlueSun_11
+      rect:
+        serializedVersion: 2
+        x: 2240
+        y: 40
+        width: 120
+        height: 120
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 09db7ebaf96e0c500800000000000000
+      internalID: 414584739176365456
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BlueSun_12
+      rect:
+        serializedVersion: 2
+        x: 2440
+        y: 40
+        width: 120
+        height: 120
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 91da112e0d18e8810800000000000000
+      internalID: 1769494437749173529
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BlueSun_13
+      rect:
+        serializedVersion: 2
+        x: 2640
+        y: 40
+        width: 120
+        height: 120
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4a5f66fba506ffef0800000000000000
+      internalID: -72233126140119644
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BlueSun_14
+      rect:
+        serializedVersion: 2
+        x: 2840
+        y: 40
+        width: 120
+        height: 120
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 644c612332df89110800000000000000
+      internalID: 1268041622710830150
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BlueSun_15
+      rect:
+        serializedVersion: 2
+        x: 3040
+        y: 40
+        width: 120
+        height: 120
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7d4268e1242956f00800000000000000
+      internalID: 1109453695894299863
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BlueSun_16
+      rect:
+        serializedVersion: 2
+        x: 3240
+        y: 40
+        width: 120
+        height: 120
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 03938981cf3b55fd0800000000000000
+      internalID: -2353777334905456336
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BlueSun_17
+      rect:
+        serializedVersion: 2
+        x: 3440
+        y: 40
+        width: 120
+        height: 120
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6836382491e990ca0800000000000000
+      internalID: -6050130793068272762
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BlueSun_18
+      rect:
+        serializedVersion: 2
+        x: 3640
+        y: 40
+        width: 120
+        height: 120
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c55c835fb1e8fca90800000000000000
+      internalID: -7291453020960144036
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BlueSun_19
+      rect:
+        serializedVersion: 2
+        x: 3840
+        y: 40
+        width: 120
+        height: 120
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b861eea4298955e70800000000000000
+      internalID: 9103349975889090187
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BlueSun_20
+      rect:
+        serializedVersion: 2
+        x: 4040
+        y: 40
+        width: 120
+        height: 120
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 33c313af753036f90800000000000000
+      internalID: -6961716922590086093
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BlueSun_21
+      rect:
+        serializedVersion: 2
+        x: 4240
+        y: 40
+        width: 120
+        height: 120
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9afa931478b856420800000000000000
+      internalID: 2622655771044327337
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BlueSun_22
+      rect:
+        serializedVersion: 2
+        x: 4440
+        y: 40
+        width: 120
+        height: 120
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cd1d2bfa97f102a70800000000000000
+      internalID: 8800068279381184988
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BlueSun_23
+      rect:
+        serializedVersion: 2
+        x: 4640
+        y: 40
+        width: 120
+        height: 120
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b539d9932c7b480a0800000000000000
+      internalID: -6880172285897108645
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BlueSun_24
+      rect:
+        serializedVersion: 2
+        x: 4840
+        y: 40
+        width: 120
+        height: 120
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a4fb4346b33ce2ed0800000000000000
+      internalID: -2436795688509194422
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BlueSun_25
+      rect:
+        serializedVersion: 2
+        x: 5040
+        y: 40
+        width: 120
+        height: 120
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 89c31314bb7fa8e20800000000000000
+      internalID: 3353765256155446424
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BlueSun_26
+      rect:
+        serializedVersion: 2
+        x: 5240
+        y: 40
+        width: 120
+        height: 120
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 11d6dcff72f83ad30800000000000000
+      internalID: 4441551059475590417
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BlueSun_27
+      rect:
+        serializedVersion: 2
+        x: 5440
+        y: 40
+        width: 120
+        height: 120
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7504a9e305da703a0800000000000000
+      internalID: -6699195360531038121
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BlueSun_28
+      rect:
+        serializedVersion: 2
+        x: 5640
+        y: 40
+        width: 120
+        height: 120
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9951aedbef5328550800000000000000
+      internalID: 6161546608420459929
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BlueSun_29
+      rect:
+        serializedVersion: 2
+        x: 5840
+        y: 40
+        width: 120
+        height: 120
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f63805ef367c7b0a0800000000000000
+      internalID: -6865799874620652689
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BlueSun_30
+      rect:
+        serializedVersion: 2
+        x: 6040
+        y: 40
+        width: 120
+        height: 120
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dff8d2bd70dd834d0800000000000000
+      internalID: -3154528513161326595
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BlueSun_31
+      rect:
+        serializedVersion: 2
+        x: 6240
+        y: 40
+        width: 120
+        height: 120
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d1eaeacb7814bb280800000000000000
+      internalID: -9026548976892072419
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BlueSun_32
+      rect:
+        serializedVersion: 2
+        x: 6440
+        y: 40
+        width: 120
+        height: 120
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 87c30ee6574baf630800000000000000
+      internalID: 3961677238690135160
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BlueSun_33
+      rect:
+        serializedVersion: 2
+        x: 6640
+        y: 40
+        width: 120
+        height: 120
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e67e8cc985a57e890800000000000000
+      internalID: -7428869723690309778
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BlueSun_34
+      rect:
+        serializedVersion: 2
+        x: 6840
+        y: 40
+        width: 120
+        height: 120
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c2dadc0a513bb5d20800000000000000
+      internalID: 3268402860060945708
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BlueSun_35
+      rect:
+        serializedVersion: 2
+        x: 7040
+        y: 40
+        width: 120
+        height: 120
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a154ff5d1e33852b0800000000000000
+      internalID: -5595665491956906726
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BlueSun_36
+      rect:
+        serializedVersion: 2
+        x: 7240
+        y: 40
+        width: 120
+        height: 120
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 53e13ec94aad12350800000000000000
+      internalID: 5990309379921092149
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BlueSun_37
+      rect:
+        serializedVersion: 2
+        x: 7440
+        y: 40
+        width: 120
+        height: 120
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: efd21048a01baf2f0800000000000000
+      internalID: -938242913630867970
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BlueSun_38
+      rect:
+        serializedVersion: 2
+        x: 7640
+        y: 40
+        width: 120
+        height: 120
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b1f0c34102ee581c0800000000000000
+      internalID: -4501930430941098213
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BlueSun_39
+      rect:
+        serializedVersion: 2
+        x: 7840
+        y: 40
+        width: 120
+        height: 120
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e219734d0ccdb5160800000000000000
+      internalID: 7015443565311922478
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BlueSun_40
+      rect:
+        serializedVersion: 2
+        x: 8040
+        y: 40
+        width: 120
+        height: 120
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 996ad16499a7b9290800000000000000
+      internalID: -7882571924056988007
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BlueSun_41
+      rect:
+        serializedVersion: 2
+        x: 8240
+        y: 40
+        width: 120
+        height: 120
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a8252fa9e6a489030800000000000000
+      internalID: 3501630549186990730
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BlueSun_42
+      rect:
+        serializedVersion: 2
+        x: 8440
+        y: 40
+        width: 120
+        height: 120
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 894e104b611d53410800000000000000
+      internalID: 1456299949963732120
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BlueSun_43
+      rect:
+        serializedVersion: 2
+        x: 8640
+        y: 40
+        width: 120
+        height: 120
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9d29e3637fc51f1b0800000000000000
+      internalID: -5624612242772290855
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BlueSun_44
+      rect:
+        serializedVersion: 2
+        x: 8840
+        y: 40
+        width: 120
+        height: 120
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: abbf99b1fc257b560800000000000000
+      internalID: 7329417968043555770
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BlueSun_45
+      rect:
+        serializedVersion: 2
+        x: 9040
+        y: 40
+        width: 120
+        height: 120
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 75945241376fe92b0800000000000000
+      internalID: -5575748314518435497
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BlueSun_46
+      rect:
+        serializedVersion: 2
+        x: 9240
+        y: 40
+        width: 120
+        height: 120
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aefc842e606682b90800000000000000
+      internalID: -7266445819010035734
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BlueSun_47
+      rect:
+        serializedVersion: 2
+        x: 9440
+        y: 40
+        width: 120
+        height: 120
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 80a52c02cc86910e0800000000000000
+      internalID: -2298690908863702520
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BlueSun_48
+      rect:
+        serializedVersion: 2
+        x: 9640
+        y: 40
+        width: 120
+        height: 120
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cbcdee0be9b1555a0800000000000000
+      internalID: -6533285316043809604
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BlueSun_49
+      rect:
+        serializedVersion: 2
+        x: 9840
+        y: 40
+        width: 120
+        height: 120
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 04bb3c5d0b1c917a0800000000000000
+      internalID: -6405876029713040576
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

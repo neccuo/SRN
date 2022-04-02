@@ -116,13 +116,22 @@ public class Controller : MonoBehaviour
         clickPoint.SpawnCrossArrow();
     }
 
+    // hopefully will use algorithms at some point :P
+    private bool _CheckDoubleClickWhiteList(string tag)
+    {
+        if(tag == "Planet" || tag == "Portal")
+        {
+            return true;
+        }
+        return false;
+    }
+
     public void TakePlanMovementInput()
     {
         if (Input.GetKeyDown(KeyCode.Space))
             ChangeState(GameState.DuringMovement); // continue game
         else if (Input.GetMouseButtonDown(0)/* || Input.GetMouseButton(0)*/) 
         {
-
             // HOLDING MOUSE IS UNAVAILABLE FOR A WHILE
             if(!CheckDoubleClick()) // if it is first click
             {
@@ -132,9 +141,9 @@ public class Controller : MonoBehaviour
             {
                 Vector2 mousePos2D = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 RaycastHit2D hit = Physics2D.Raycast(mousePos2D, Vector2.zero);
-                if (hit.collider != null && hit.collider.gameObject.tag == "Planet") // NEEDS SOME DETAILS IDENTIFYING THE COLLIDER
+                if (hit.collider != null && _CheckDoubleClickWhiteList(hit.collider.gameObject.tag)) // NEEDS SOME DETAILS IDENTIFYING THE COLLIDER
                 {
-                    Debug.Log(hit.collider.gameObject.name + " was clicked");
+                    Debug.Log(hit.collider.gameObject.name + " was double clicked");
                     player.SetFollowedObject(hit.collider.gameObject);
                     player.SetMovementFollow();
                     clickPoint.SpawnFollowArrow();
