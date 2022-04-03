@@ -20,10 +20,6 @@ public class Controller : MonoBehaviour
     float lastClickTime;
     float doubleClickRate = 0.5f; // in seconds
 
-    public GameObject cheatCodeBar;
-
-    public GameObject clickedObject;
-
     private void Awake()
     {
         ControllerGod = this;
@@ -35,7 +31,6 @@ public class Controller : MonoBehaviour
 
         clickPoint.origin = (Vector2) player.transform.position;
 
-        // cheatCodeBar = GameObject.Find("CheatCodeBar");
     }
 
     void Update()

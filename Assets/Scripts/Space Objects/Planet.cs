@@ -55,7 +55,7 @@ public class Planet : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D col)
     {
         GameObject collidedObject = col.gameObject;
-        Debug.Log("" + collidedObject.name + " collided with " + this.name);
+        // Debug.Log("" + collidedObject.name + " collided with " + this.name);
         if(collidedObject.tag == "Player")
         {
             shopStock.PrintStock();

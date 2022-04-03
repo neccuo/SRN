@@ -52,12 +52,15 @@ TagManager:
   - name: Portal
     uniqueID: 967770525
     locked: 0
-  - name: ClickPoint
-    uniqueID: 486408587
-    locked: 0
   - name: NPC
     uniqueID: 3831224489
     locked: 0
+  - name: ClickPoint
+    uniqueID: 486408587
+    locked: 0
   - name: Player
     uniqueID: 3647113057
+    locked: 0
+  - name: Text
+    uniqueID: 3843228981
     locked: 0

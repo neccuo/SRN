@@ -16,6 +16,8 @@ public class ClickPoint : MonoBehaviour
     public GameObject dotObject;
     public float dotScale = 1f;
 
+    public GameObject text;
+
     List<Object> dotPointers;
     Object crossPointer;
     Object followPointer;
@@ -83,6 +85,9 @@ public class ClickPoint : MonoBehaviour
         {
             case "Cross":
             {
+                text.transform.position = new Vector3(target.x, target.y, 0);
+                Vector2 diff = target - origin;
+                text.GetComponent<TextMesh>().text = "" + diff.magnitude;
                 crossPointer = Instantiate(crossObject, target, Quaternion.AngleAxis(targetAngle - 90, Vector3.forward));
                 break;
             }

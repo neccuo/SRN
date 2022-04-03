@@ -41,7 +41,7 @@ public class NPC : MonoBehaviour
 
         if(player == null)
         {
-            Debug.Log("Finding Player");
+            // Debug.Log("Finding Player");
             player = GameObject.Find("Player");
         }
 
