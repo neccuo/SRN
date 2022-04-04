@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+
 
 public class ClickPoint : MonoBehaviour
 {
@@ -19,8 +21,8 @@ public class ClickPoint : MonoBehaviour
     public GameObject text;
 
     List<Object> dotPointers;
-    Object crossPointer;
-    Object followPointer;
+    private GameObject _crossPointer;
+    private GameObject _followPointer;
 
 
     float targetAngle;
@@ -49,6 +51,7 @@ public class ClickPoint : MonoBehaviour
     public void DestroyArrow()
     {
         // I don't know if we are using cross or follow at the time we are deleting it.
+        KillDistText();
         DestroyCross();
         DestroyFollow();
         DestroyDots();
@@ -67,12 +70,34 @@ public class ClickPoint : MonoBehaviour
 
     void DestroyCross()
     {
-        Destroy(crossPointer);
+        Destroy(_crossPointer);
     }
 
     void DestroyFollow()
     {
-        Destroy(followPointer);
+        Destroy(_followPointer);
+    }
+
+    void CreateDistText()
+    {
+        Vector2 newVect = Camera.main.WorldToScreenPoint(target);
+        text.transform.position = new Vector3(newVect.x, newVect.y, 0);
+        Vector2 diff = target - origin;
+        float cleanDist = FloatPrecisionSimplifier(diff.magnitude, 2);
+        text.GetComponent<Text>().text = "" + cleanDist + " NCO";
+        text.SetActive(true);
+    }
+
+    float FloatPrecisionSimplifier(float value, int degree)
+    {
+        int temp = (int) Mathf.Pow(10, degree);
+        int val = (int) (value*temp);
+        return  ((float) val / (float) temp);
+    }
+
+    void KillDistText()
+    {
+        text.SetActive(false);
     }
 
     private void SpawnTip(string order) // spawn only the cursor, the pointer (whether it is cross or follow)
@@ -81,19 +106,20 @@ public class ClickPoint : MonoBehaviour
         target = (Vector2) Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector2 dir = Input.mousePosition - Camera.main.WorldToScreenPoint(origin);
         targetAngle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+
+        CreateDistText();
         switch(order)
         {
             case "Cross":
             {
-                text.transform.position = new Vector3(target.x, target.y, 0);
-                Vector2 diff = target - origin;
-                text.GetComponent<TextMesh>().text = "" + diff.magnitude;
-                crossPointer = Instantiate(crossObject, target, Quaternion.AngleAxis(targetAngle - 90, Vector3.forward));
+                _crossPointer = Instantiate(crossObject, target, Quaternion.AngleAxis(targetAngle - 90, Vector3.forward));
+                SetChild(_crossPointer.transform);
                 break;
             }
             case "Follow":
             {
-                followPointer = Instantiate(followObject, target, Quaternion.AngleAxis(targetAngle - 45, Vector3.forward));
+                _followPointer = Instantiate(followObject, target, Quaternion.AngleAxis(targetAngle - 45, Vector3.forward));
+                SetChild(_followPointer.transform);
                 break;
             }
             default:
@@ -109,13 +135,20 @@ public class ClickPoint : MonoBehaviour
         Vector2 difference = target - origin;
         Vector2 unit = difference.normalized;
         int counter = 0;
+        GameObject temp;
         for(Vector2 parser = origin /*+ unit*/; (origin - parser).magnitude < (origin - target).magnitude; parser += unit)
         {
-            dotPointers.Add(Instantiate(dotObject, parser, Quaternion.AngleAxis(targetAngle - 90, Vector3.forward)));
+            temp = Instantiate(dotObject, parser, Quaternion.AngleAxis(targetAngle - 90, Vector3.forward));
+            dotPointers.Add(temp);
 
-            //Debug.Log("" + dotPointers[counter].ToString() + " is created at " + parser);
+            SetChild(temp.transform);
             counter++;
         }
+    }
+
+    void SetChild(Transform child) // MAKING EVERY INSTANCE A CHILD OF THIS OBJ
+    {
+        child.SetParent(transform); 
     }
 
 }
