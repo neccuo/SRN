@@ -3,11 +3,26 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+public enum VDT // speed, distance, time
+{
+    Speed,
+    Distance,
+    Time
+}
+
+enum Tip
+{
+    Cross,
+    Follow
+}
+
 
 public class ClickPoint : MonoBehaviour
 {
     public Vector2 origin;
     public Vector2 target;
+
+    public Player player;
 
 
     public GameObject crossObject;
@@ -38,13 +53,13 @@ public class ClickPoint : MonoBehaviour
 
     public void SpawnCrossArrow() // Spawn cross with dots
     {
-        SpawnTip("Cross");
+        SpawnTip(Tip.Cross);
         SpawnDots();
     }
 
     public void SpawnFollowArrow() // spawn follow with dots
     {
-        SpawnTip("Follow");
+        SpawnTip(Tip.Follow);
         SpawnDots();
     }
 
@@ -78,14 +93,33 @@ public class ClickPoint : MonoBehaviour
         Destroy(_followPointer);
     }
 
-    void CreateDistText()
+    void CreateText(VDT type) // 0: dist, 1: days
     {
         Vector2 newVect = Camera.main.WorldToScreenPoint(target);
         text.transform.position = new Vector3(newVect.x, newVect.y, 0);
         Vector2 diff = target - origin;
-        float cleanDist = FloatPrecisionSimplifier(diff.magnitude, 2);
-        text.GetComponent<Text>().text = "" + cleanDist + " NCO";
+        string txtOut = "";
+        switch(type)
+        {
+            case VDT.Distance:
+                float cleanDist = FloatPrecisionSimplifier(diff.magnitude, 2);
+                txtOut += cleanDist + " NCO";
+                break;
+            case VDT.Time:
+                int days = FloatCeil(diff.magnitude/player.GetShipSpeed());
+                txtOut += days;
+                break;
+            default:
+                Debug.LogError("Bad input");
+                break;
+        }
+        text.GetComponent<Text>().text = txtOut;
         text.SetActive(true);
+    }
+
+    int FloatCeil(float value)
+    {
+        return (int) (value+1);
     }
 
     float FloatPrecisionSimplifier(float value, int degree)
@@ -100,23 +134,23 @@ public class ClickPoint : MonoBehaviour
         text.SetActive(false);
     }
 
-    private void SpawnTip(string order) // spawn only the cursor, the pointer (whether it is cross or follow)
+    private void SpawnTip(Tip order) // spawn only the cursor, the pointer (whether it is cross or follow)
     {
         DestroyArrow();
         target = (Vector2) Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector2 dir = Input.mousePosition - Camera.main.WorldToScreenPoint(origin);
         targetAngle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
 
-        CreateDistText();
+        CreateText(VDT.Time);
         switch(order)
         {
-            case "Cross":
+            case Tip.Cross:
             {
                 _crossPointer = Instantiate(crossObject, target, Quaternion.AngleAxis(targetAngle - 90, Vector3.forward));
                 SetChild(_crossPointer.transform);
                 break;
             }
-            case "Follow":
+            case Tip.Follow:
             {
                 _followPointer = Instantiate(followObject, target, Quaternion.AngleAxis(targetAngle - 45, Vector3.forward));
                 SetChild(_followPointer.transform);

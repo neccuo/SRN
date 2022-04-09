@@ -31,6 +31,8 @@ public class GameManager : MonoBehaviour
 
     private GameState _state;
 
+    public float GAMESPEED = 1;
+
     private void Awake()
     {
         Instance = this;
@@ -105,7 +107,7 @@ public class GameManager : MonoBehaviour
                 break;
             case GameState.DuringMovement:
                 // YOU CAN ONLY ENTER GameState.DuringMovement from GameState.PlanMovement and vice versa.
-                Time.timeScale = 1;
+                Time.timeScale = GAMESPEED;
                 break;
             case GameState.Combat:
                 break;

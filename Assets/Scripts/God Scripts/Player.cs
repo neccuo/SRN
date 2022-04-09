@@ -39,47 +39,12 @@ public class Player : MonoBehaviour
     void Update()
     {
         HandleDamageInputs();
-        // HandleGameState();
     }
 
-    /*void HandleGameState()
+    public float GetShipSpeed()
     {
-        switch (currentGameInstance.state)
-        {
-            case GameState.PlanMovement:
-                if (Input.GetMouseButtonDown(0) || Input.GetMouseButton(0))
-                {
-                    SetMovement();
-                }
-                if (Input.GetKeyDown(KeyCode.Space))
-                {
-                    currentGameInstance.ChangeGameState(GameState.DuringMovement);
-                }
-                if(Input.GetKeyDown(KeyCode.Alpha9))
-                {
-                    HandleCamZoom(-1);
-                }
-                if (Input.GetKeyDown(KeyCode.Alpha0))
-                {
-                    HandleCamZoom(1);
-                }
-                break;
-            case GameState.DuringMovement:
-
-                HandleMovement();
-                if ((Vector2)transform.position == _target)
-                {
-                    currentGameInstance.ChangeGameState(GameState.PlanMovement);
-                }
-                break;
-            case GameState.TurnEvaluation:
-                break;
-            case GameState.Combat:
-                break;
-            default:
-                throw new MissingComponentException("" + currentGameInstance.ToString() + "is not an available state.");
-        }
-    }*/
+        return ship.speed;
+    }
 
     public void ResetTarget()
     {
