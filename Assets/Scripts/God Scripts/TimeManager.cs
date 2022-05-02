@@ -18,7 +18,7 @@ public class Date
     static Date()
     {
         dayOfMonth = 28;
-        month = Month.December;
+        month = Month.February;
         year = 3000;
     }
     
@@ -31,7 +31,10 @@ public class Date
                 _CheckMonthEnd(31);
                 break;
             case Month.February:
-                _CheckMonthEnd(28);
+                if(_CheckLeapYear())
+                    _CheckMonthEnd(29);
+                else
+                    _CheckMonthEnd(28);
                 break;
             case Month.March:
                 _CheckMonthEnd(31);
@@ -88,6 +91,18 @@ public class Date
     public static void PassYear()
     {
         year++;
+    }
+
+    private static bool _CheckLeapYear()
+    {
+        if(year%4 != 0)
+            return false;
+        if(year%100 != 0)
+            return true;
+        if(year%400 == 0)
+            return false;
+        else
+            return true;
     }
 }
 

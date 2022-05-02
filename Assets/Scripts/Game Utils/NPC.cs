@@ -6,7 +6,8 @@ public enum Objective
 {
     Follow,
     Patrol,
-    SeekPortal
+    SeekPortal,
+    RandomWandering
 }
 
 public class NPC : MonoBehaviour
@@ -72,9 +73,25 @@ public class NPC : MonoBehaviour
                 HandleSeekPortal();
                 break;
 
+            case Objective.RandomWandering:
+                HandleRandomWandering();
+                break;
+
             default:
                 throw new MissingComponentException("Shit sn");
         }
+    }
+
+    void HandleRandomWandering()
+    {
+        // TODO: DEAL WITH HARD CODED ELEMENTS SUCH AS WANDERING RANGE
+        int lim = 100;
+        if(_target == _currentLoc)
+        {
+            Vector2 vec = new Vector2(Random.Range(-lim, lim), Random.Range(-lim, lim));
+            _SetTarget(vec);
+        }
+        HandleMovement();
     }
 
     void HandleFollow()

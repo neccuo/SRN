@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
 public class ShipSpawner : MonoBehaviour
 {
@@ -18,6 +19,12 @@ public class ShipSpawner : MonoBehaviour
 
     // it receives a tick and works
 
+    void Awake()
+    {
+        // TODO: GET EVERY NPC OUT OF THE DB, ASSIGN THE VALUES
+        // StartCoroutine(Load());
+    }
+
     void Start()
     {
         _timer = 0.0f;
@@ -25,7 +32,6 @@ public class ShipSpawner : MonoBehaviour
         {
             Debug.LogError("NPC tag is not NPC, blueprint is flawed.");
         }
-        DefineNpc();
     }
 
     void Update()
@@ -33,8 +39,16 @@ public class ShipSpawner : MonoBehaviour
         _timer += Time.deltaTime;
         if(_timer > 1.5f && planets.transform.childCount > 0)
         {
-            DefineNpc();
+            // DefineFreshNpc();
             _timer = 0.0f;
+        }
+        if(Input.GetKeyDown(KeyCode.M))
+        {
+            DefineFreshNpc();
+        }
+        if(Input.GetKeyDown(KeyCode.N))
+        {
+            StartCoroutine(Load());
         }
     }
 
@@ -52,13 +66,12 @@ public class ShipSpawner : MonoBehaviour
         return chosenPlanet.position;
     }
 
-    public void DefineNpc()
+    public void DefineFreshNpc()
     {
         // let's say a tick just came and you have to set the attributes of the npc
 
         // POINTER ASSIGNMENT REALM
         _npcObjectPointer = npcPrefab;
-
 
         // TRANSFORM ASSIGNMENT REALM
         Transform transformRef = _npcObjectPointer.transform; // EXPERIMENTAL
@@ -69,7 +82,7 @@ public class ShipSpawner : MonoBehaviour
 
         // NPC SCRIPT REALM
         NPC npcRef = _npcObjectPointer.GetComponent<NPC>();
-        npcRef.objective = Objective.SeekPortal;
+        npcRef.objective = Objective.RandomWandering;
         npcRef.patrolRange = 10;
 
         // SPACESHIP SPRITE RENDERER REALM
@@ -89,6 +102,8 @@ public class ShipSpawner : MonoBehaviour
         _npcObjectPointer = Instantiate(_npcObjectPointer);
         _npcObjectPointer.transform.SetParent(npcs.transform);
         _NamingNpcs(_npcObjectPointer);
+
+        StartCoroutine(Register(_npcObjectPointer));
         npcSpawned++;
         Debug.Log("SPAWNED SHIP: " + _npcObjectPointer.name + " @ " + _npcObjectPointer.transform.position.ToString());
     }
@@ -97,5 +112,67 @@ public class ShipSpawner : MonoBehaviour
     {
         // int npcID = npcs.transform.childCount;
         newNpc.name = "NPC_" + npcSpawned;
+    }
+
+    /*IEnumerator Register(GameObject newNpc)
+    {
+        WWWForm form = new WWWForm();
+        form.AddField("name", newNpc.name);
+        form.AddField("credits", 1000);
+        form.AddField("race", "human");
+        form.AddField("hull_id", 0);
+        WWW www = new WWW("http://localhost/sqlconnect/register.php", form);
+        yield return www;
+        if(www.text == "0")
+        {
+            Debug.Log("success");
+        }
+        else
+        {
+            Debug.Log(www.error);
+            Debug.Log(www.text);
+        }
+    }*/
+    
+    IEnumerator Load()
+    {
+        UnityWebRequest www = UnityWebRequest.Get("http://localhost/sqlconnect/load.php");
+
+        yield return www.SendWebRequest();
+        
+        if( www.result == UnityWebRequest.Result.Success)
+        {
+            Debug.Log("load: success");
+            Debug.Log(www.downloadHandler.text);
+        }
+        else
+        {
+            Debug.Log("load: fail");
+            Debug.Log(www.error);
+            Debug.Log(www.result);
+
+        }
+
+    }
+
+    IEnumerator Register(GameObject newNpc)
+    {
+        WWWForm form = new WWWForm();
+        form.AddField("name", newNpc.name);
+        form.AddField("credits", "1000");
+        form.AddField("race", "human");
+        form.AddField("hull_id", "1");
+        UnityWebRequest www = UnityWebRequest.Post("http://localhost/sqlconnect/register.php", form);
+        yield return www.SendWebRequest();
+        if(www.result == UnityWebRequest.Result.Success)
+        {
+            Debug.Log("register: success");
+        }
+        else
+        {
+            Debug.Log("register: fail");
+            Debug.Log(www.error);
+            Debug.Log(www.result);
+        }
     }
 }
