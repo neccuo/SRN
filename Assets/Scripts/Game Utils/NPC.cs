@@ -12,6 +12,8 @@ public enum Objective
 
 public class NPC : MonoBehaviour
 {
+    [SerializeField]
+    private int npcID = -1; // Unique identifier for NPCs. Default value is -1, means empty
     public Objective objective;
     public Spaceship ship;
 
@@ -55,6 +57,21 @@ public class NPC : MonoBehaviour
     {
         _currentLoc = (Vector2) transform.position;
         HandleObjective();
+    }
+
+    public void SetNPCID(int num) // -1 is the default value
+    {
+        if(npcID == -1)
+        {
+            npcID = num;
+            return;
+        }
+        Debug.LogError("Cannot assign another NPCID to an NPC");
+    }
+
+    public int GetNPCID()
+    {
+        return npcID;
     }
 
     void HandleObjective()

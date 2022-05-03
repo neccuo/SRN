@@ -103,37 +103,20 @@ public class ShipSpawner : MonoBehaviour
         _npcObjectPointer.transform.SetParent(npcs.transform);
         _NamingNpcs(_npcObjectPointer);
 
-        StartCoroutine(Register(_npcObjectPointer));
-        npcSpawned++;
+        StartCoroutine(Register(_npcObjectPointer.GetComponent<NPC>()));
+        // npcSpawned++;
         Debug.Log("SPAWNED SHIP: " + _npcObjectPointer.name + " @ " + _npcObjectPointer.transform.position.ToString());
     }
 
     private void _NamingNpcs(GameObject newNpc) // names are given as: "NPC_" + npcSpawned
     {
         // int npcID = npcs.transform.childCount;
+        int npcSpawned = PlayerPrefs.GetInt("npcSpawned", 0);
         newNpc.name = "NPC_" + npcSpawned;
+        newNpc.GetComponent<NPC>().SetNPCID(npcSpawned);
+        PlayerPrefs.SetInt("npcSpawned", ++npcSpawned);
     }
 
-    /*IEnumerator Register(GameObject newNpc)
-    {
-        WWWForm form = new WWWForm();
-        form.AddField("name", newNpc.name);
-        form.AddField("credits", 1000);
-        form.AddField("race", "human");
-        form.AddField("hull_id", 0);
-        WWW www = new WWW("http://localhost/sqlconnect/register.php", form);
-        yield return www;
-        if(www.text == "0")
-        {
-            Debug.Log("success");
-        }
-        else
-        {
-            Debug.Log(www.error);
-            Debug.Log(www.text);
-        }
-    }*/
-    
     IEnumerator Load()
     {
         UnityWebRequest www = UnityWebRequest.Get("http://localhost/sqlconnect/load.php");
@@ -155,13 +138,16 @@ public class ShipSpawner : MonoBehaviour
 
     }
 
-    IEnumerator Register(GameObject newNpc)
+    IEnumerator Register(NPC newNpc)
     {
         WWWForm form = new WWWForm();
-        form.AddField("name", newNpc.name);
-        form.AddField("credits", "1000");
+        form.AddField("id", newNpc.GetNPCID().ToString());
+        form.AddField("name", newNpc.gameObject.name);
+        form.AddField("credits", "1500");
         form.AddField("race", "human");
         form.AddField("hull_id", "1");
+        form.AddField("x_axis", newNpc.transform.position.x.ToString());
+        form.AddField("y_axis", newNpc.transform.position.y.ToString());
         UnityWebRequest www = UnityWebRequest.Post("http://localhost/sqlconnect/register.php", form);
         yield return www.SendWebRequest();
         if(www.result == UnityWebRequest.Result.Success)
