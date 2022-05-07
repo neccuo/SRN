@@ -40,6 +40,7 @@ public class NPC : MonoBehaviour
         // objective = Objective.Patrol; // starts with patrolling for testing
 
         _currentLoc = (Vector2) transform.position;
+        // DEFINITELY CHANGE IT
         _target = _currentLoc; // exceptional situation, just for initialization
 
         if(player == null)
@@ -106,7 +107,7 @@ public class NPC : MonoBehaviour
         if(_target == _currentLoc)
         {
             Vector2 vec = new Vector2(Random.Range(-lim, lim), Random.Range(-lim, lim));
-            _SetTarget(vec);
+            SetTarget(vec);
         }
         HandleMovement();
     }
@@ -150,7 +151,7 @@ public class NPC : MonoBehaviour
                     _chosenPortal = portal;
                 }
             }
-            _SetTarget((Vector2)_chosenPortal.transform.position);
+            SetTarget((Vector2)_chosenPortal.transform.position);
             teleportReady = true;
         }
         HandleMovement();
@@ -162,7 +163,7 @@ public class NPC : MonoBehaviour
         return (loc - (Vector2) transform.position).magnitude;
     }
 
-    private void _SetTarget(Vector2 loc)
+    public void SetTarget(Vector2 loc)
     {
         _target = loc;
     }
