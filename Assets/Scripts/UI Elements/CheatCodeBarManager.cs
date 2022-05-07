@@ -61,6 +61,9 @@ public class CheatCodeBarManager : MonoBehaviour
             case "lightning":
                 cheatCodeHandler.Speed67();
                 break;
+            case "killall":
+                cheatCodeHandler.KillAll();
+                break;
             default:
                 Debug.Log("Code not valid.");
                 break;
