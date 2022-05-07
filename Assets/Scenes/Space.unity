@@ -458,6 +458,7 @@ GameObject:
   - component: {fileID: 375930919}
   - component: {fileID: 375930920}
   - component: {fileID: 375930921}
+  - component: {fileID: 375930922}
   m_Layer: 0
   m_Name: Game Manager
   m_TagString: Untagged
@@ -481,6 +482,7 @@ MonoBehaviour:
   shopBar: {fileID: 2159099622301821301}
   player: {fileID: 1193091450}
   portalManager: {fileID: 1896863594}
+  GAMESPEED: 1
 --- !u!4 &375930916
 Transform:
   m_ObjectHideFlags: 0
@@ -566,6 +568,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timeIndicator: {fileID: 1356152332}
   secondsPastIndicator: {fileID: 1427150850}
+--- !u!114 &375930922
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 375930914}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 837158e4f0cdf4749b855938a3b7ad82, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &443661619
 PrefabInstance:
   m_ObjectHideFlags: 0
