@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Networking;
 
 public class ShipSpawner : MonoBehaviour
 {
@@ -17,16 +16,13 @@ public class ShipSpawner : MonoBehaviour
 
     private float _timer;
 
-    // it receives a tick and works
+    private GameManager _gm;
 
-    void Awake()
-    {
-        // TODO: GET EVERY NPC OUT OF THE DB, ASSIGN THE VALUES
-        // StartCoroutine(Load());
-    }
+    // it receives a tick and works
 
     void Start()
     {
+        _gm = GameManager.Instance;
         _timer = 0.0f;
         if(npcPrefab.tag != "NPC")
         {
@@ -48,7 +44,7 @@ public class ShipSpawner : MonoBehaviour
         }
         if(Input.GetKeyDown(KeyCode.N))
         {
-            StartCoroutine(Load());
+            StartCoroutine(_gm.saveLoad.Load());
         }
     }
 
@@ -64,6 +60,43 @@ public class ShipSpawner : MonoBehaviour
         Transform chosenPlanet = planets.transform.GetChild(rndNum);
         Debug.Log(chosenPlanet.name + " is chosen. Will spawn in: " + chosenPlanet.position);
         return chosenPlanet.position;
+    }
+
+    public void LoadExistingNpc()
+    {
+        // POINTER ASSIGNMENT REALM
+        _npcObjectPointer = npcPrefab;
+
+        // TRANSFORM ASSIGNMENT REALM
+        Transform transformRef = _npcObjectPointer.transform; // EXPERIMENTAL
+
+        Vector3 loc = new Vector3(0,0,0); // DB OUTPUT
+        transformRef.position = loc; // temp
+        transformRef.localScale = new Vector3(0.5f, 0.5f, 1);
+
+        // NPC SCRIPT REALM
+        NPC npcRef = _npcObjectPointer.GetComponent<NPC>();
+        npcRef.objective = Objective.RandomWandering; // DB OUTPUT
+        npcRef.patrolRange = 10;
+
+        // SPACESHIP SPRITE RENDERER REALM
+        SpriteRenderer spriteRendererRef = _npcObjectPointer.GetComponentInChildren<SpriteRenderer>();
+        spriteRendererRef.sprite = Resources.Load<Sprite>("Sprites/Ships/spaceship-2");
+
+        // SPACESHIP SCRIPT REALM
+        Spaceship spaceship = _npcObjectPointer.GetComponentInChildren<Spaceship>();
+        spaceship.maxHealth = 100;
+        spaceship.currentHealth = 100;
+        spaceship.speed = 25;
+
+
+        _npcObjectPointer = Instantiate(_npcObjectPointer);
+        _npcObjectPointer.transform.SetParent(npcs.transform);
+        _NamingFreshNpc(_npcObjectPointer);
+
+        StartCoroutine(_gm.saveLoad.Register(_npcObjectPointer.GetComponent<NPC>()));
+        // npcSpawned++;
+        Debug.Log("SPAWNED SHIP: " + _npcObjectPointer.name + " @ " + _npcObjectPointer.transform.position.ToString());
     }
 
     public void DefineFreshNpc()
@@ -84,15 +117,13 @@ public class ShipSpawner : MonoBehaviour
         NPC npcRef = _npcObjectPointer.GetComponent<NPC>();
         npcRef.objective = Objective.RandomWandering;
         npcRef.patrolRange = 10;
+        Debug.Log("Set targt falan");
 
         // SPACESHIP SPRITE RENDERER REALM
         SpriteRenderer spriteRendererRef = _npcObjectPointer.GetComponentInChildren<SpriteRenderer>();
         spriteRendererRef.sprite = Resources.Load<Sprite>("Sprites/Ships/spaceship-2");
 
-        // Debug.Log(spriteRendererRef.sprite);
-        
         // SPACESHIP SCRIPT REALM
-
         Spaceship spaceship = _npcObjectPointer.GetComponentInChildren<Spaceship>();
         spaceship.maxHealth = 100;
         spaceship.currentHealth = 100;
@@ -101,14 +132,15 @@ public class ShipSpawner : MonoBehaviour
 
         _npcObjectPointer = Instantiate(_npcObjectPointer);
         _npcObjectPointer.transform.SetParent(npcs.transform);
-        _NamingNpcs(_npcObjectPointer);
+        _NamingFreshNpc(_npcObjectPointer);
+        Debug.Log("Set targt falan2");
 
-        StartCoroutine(Register(_npcObjectPointer.GetComponent<NPC>()));
+        StartCoroutine(_gm.saveLoad.Register(_npcObjectPointer.GetComponent<NPC>()));
         // npcSpawned++;
         Debug.Log("SPAWNED SHIP: " + _npcObjectPointer.name + " @ " + _npcObjectPointer.transform.position.ToString());
     }
 
-    private void _NamingNpcs(GameObject newNpc) // names are given as: "NPC_" + npcSpawned
+    private void _NamingFreshNpc(GameObject newNpc) // names are given as: "NPC_" + npcSpawned
     {
         // int npcID = npcs.transform.childCount;
         int npcSpawned = PlayerPrefs.GetInt("npcSpawned", 0);
@@ -117,48 +149,4 @@ public class ShipSpawner : MonoBehaviour
         PlayerPrefs.SetInt("npcSpawned", ++npcSpawned);
     }
 
-    IEnumerator Load()
-    {
-        UnityWebRequest www = UnityWebRequest.Get("http://localhost/sqlconnect/load.php");
-
-        yield return www.SendWebRequest();
-        
-        if( www.result == UnityWebRequest.Result.Success)
-        {
-            Debug.Log("load: success");
-            Debug.Log(www.downloadHandler.text);
-        }
-        else
-        {
-            Debug.Log("load: fail");
-            Debug.Log(www.error);
-            Debug.Log(www.result);
-
-        }
-
-    }
-
-    IEnumerator Register(NPC newNpc)
-    {
-        WWWForm form = new WWWForm();
-        form.AddField("id", newNpc.GetNPCID().ToString());
-        form.AddField("name", newNpc.gameObject.name);
-        form.AddField("credits", "1500");
-        form.AddField("race", "human");
-        form.AddField("hull_id", "1");
-        form.AddField("x_axis", newNpc.transform.position.x.ToString());
-        form.AddField("y_axis", newNpc.transform.position.y.ToString());
-        UnityWebRequest www = UnityWebRequest.Post("http://localhost/sqlconnect/register.php", form);
-        yield return www.SendWebRequest();
-        if(www.result == UnityWebRequest.Result.Success)
-        {
-            Debug.Log("register: success");
-        }
-        else
-        {
-            Debug.Log("register: fail");
-            Debug.Log(www.error);
-            Debug.Log(www.result);
-        }
-    }
 }
