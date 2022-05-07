@@ -23,7 +23,7 @@ public class ShopStock : MonoBehaviour
     public List<Item> itemStock;
     public int stockSize = 3; // TODO: RANDOMIZE THE VALUE AND MAKE THEM VISIBLE IN THE POPUP
 
-    public void Awake()
+    public void Start()
     {
         itemStock = new List<Item>();
         Item tempItem;

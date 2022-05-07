@@ -41,7 +41,7 @@ public class ShopBarManager : MonoBehaviour
         officialState = GameState.ShopState;
     }*/
 
-    void Awake()
+    void Start()
     {
         officialState = GameState.ShopState;
     }
