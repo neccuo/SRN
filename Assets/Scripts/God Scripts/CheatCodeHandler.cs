@@ -8,7 +8,12 @@ public class CheatCodeHandler : MonoBehaviour
 
     public Player player;
 
-    private GameManager _gm = GameManager.Instance;
+    private GameManager _gm;
+
+    void Start()
+    {
+        _gm = GameManager.Instance;
+    }
 
     public void AddCredit()
     {

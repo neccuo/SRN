@@ -1,5 +1,5 @@
+using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -33,16 +33,19 @@ public class GameManager : MonoBehaviour
 
     private GameState _state;
 
+    public SaveLoadSystem saveLoad;
+
     public float GAMESPEED = 1;
 
     private void Awake()
     {
+        saveLoad = GetComponent<SaveLoadSystem>();
         Instance = this;
-        ChangeGameState(GameState.PlanMovement);
     }
 
     void Start()
     {
+        ChangeGameState(GameState.PlanMovement);
         _controllerGod = Controller.ControllerGod;
     }
 
@@ -105,8 +108,8 @@ public class GameManager : MonoBehaviour
         switch (newState)
         {
             case GameState.PlanMovement:
-                TraverseNpcs();
                 Time.timeScale = 0;
+                StartCoroutine(saveLoad.SavePos());
                 break;
             case GameState.DuringMovement:
                 // YOU CAN ONLY ENTER GameState.DuringMovement from GameState.PlanMovement and vice versa.
@@ -133,49 +136,5 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    // MAYBE STORE EVERY IEnumerator FUNC TO A DEDICATED PLACE
-    IEnumerator SavePos()
-    {
-        WWWForm form = new WWWForm();
-        form.AddField("data", "asdf");
-        UnityWebRequest www = UnityWebRequest.Post("http://localhost/sqlconnect/savepos.php", form);
-        yield return www.SendWebRequest();
-        if(www.result == UnityWebRequest.Result.Success)
-        {
-            Debug.Log("register: success");
-        }
-        else
-        {
-            Debug.Log("register: fail");
-            Debug.Log(www.error);
-            Debug.Log(www.result);
-        }
-    }
-
-    private class MiniNpc
-    {
-        public int id;
-        public float x;
-        public float y;
-
-        public MiniNpc(int id, float x, float y)
-        {
-            this.id = id;
-            this.x = x;
-            this.y = y;
-        }
-    }
-
-
-    void TraverseNpcs()
-    {
-        string jsonString = "";
-        int idRegister;
-        foreach(Transform child in GameObject.Find("NPCs").transform)
-        {
-            idRegister = child.gameObject.GetComponent<NPC>().GetNPCID();
-            jsonString += JsonUtility.ToJson(new MiniNpc(idRegister, child.position.x, child.position.y));
-        }
-        Debug.Log(jsonString);
-    }
+    
 }
