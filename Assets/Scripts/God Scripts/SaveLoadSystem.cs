@@ -1,10 +1,14 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
 public class SaveLoadSystem : MonoBehaviour
 {
+    private ShipSpawner _shipSpawner;
+
+
     private class MiniNpc
     {
         public int id;
@@ -19,6 +23,103 @@ public class SaveLoadSystem : MonoBehaviour
         }
     }
 
+    public class MedNpc
+    {
+        public int id;
+        public string name;
+        public int credits;
+        public string race;
+        public int ship_id;
+        public float x_axis;
+        public float y_axis;
+
+        public void SetByIndex(int num, string val)
+        {
+            switch(num)
+            {
+                case 0:
+                    id = Int32.Parse(val);
+                    break;
+                case 1:
+                    name = val;
+                    break;
+                case 2:
+                    credits = Int32.Parse(val);
+                    break;
+                case 3:
+                    race = val;
+                    break;
+                case 4:
+                    ship_id = Int32.Parse(val);
+                    break;
+                case 5:
+                    x_axis = float.Parse(val);
+                    break;
+                case 6:
+                    y_axis = float.Parse(val);
+                    break;
+                default:
+                    throw new Exception("Invalid index value");
+            }
+        }
+
+        public override string ToString()
+        {
+            return "(" + id + ", " + name + ", " + x_axis + ", " + y_axis + ")";
+        }
+    }
+
+    // TODO: USE something like OnGameStartUp() 
+    void Start()
+    {
+        _shipSpawner = gameObject.GetComponent<ShipSpawner>();
+
+        LoadAllNpcs();
+    }
+
+    void Update()
+    {
+        // BEWARE :D
+        if(Input.GetKeyDown(KeyCode.L))
+        {
+            LoadAllNpcs();
+        }
+    }
+
+    void LoadAllNpcs()
+    {
+        StartCoroutine(LoadDB((retVal) => 
+        {
+            Debug.Log(retVal);
+            List<MedNpc> MedNpcList = ParseStrToList(retVal, 7 ); // 7 for now, maybe later something like ===>>> typeof(MedNpc).GetProperties().Length
+            foreach(MedNpc npc in MedNpcList)
+            {
+                _shipSpawner.LoadExistingNpc(npc.id, npc.name, npc.x_axis, npc.y_axis);
+            }
+        }));
+    }
+
+    List<MedNpc> ParseStrToList(string json, int elemPer) // elemPer is field size of MedNpc
+    {
+        List<string> list = new List<string>(json.Split(','));
+        for(int i = 0; i < list.Count; i++) {list[i] = list[i].Trim('[', ']', '"');}
+        if(elemPer > 0 && list.Count % elemPer != 0){throw new Exception("It is not possible to create equal elements");}
+
+        List<MedNpc> retVal = new List<MedNpc>();
+        MedNpc medNpcPointer = new MedNpc();
+        for(int i = 0; i < list.Count; i++)
+        {
+            medNpcPointer.SetByIndex(i%elemPer, list[i]);
+            if(i % elemPer == elemPer-1) // 4 % 5 == 4
+            {
+                retVal.Add(medNpcPointer);
+                medNpcPointer = new MedNpc();
+            }
+        }
+        return retVal;
+    }
+
+    // bok
     float TwoFRound(float num) // YOU LEFT HERE
     {
         return (float) Math.Round(num, 2);
@@ -59,20 +160,39 @@ public class SaveLoadSystem : MonoBehaviour
             Debug.Log("register: fail");
             Debug.Log(www.error);
             Debug.Log(www.result);
-            Debug.Log(www.downloadHandler.error);
-            Debug.Log(www.downloadHandler.text);
         }
     }
 
-
-    public IEnumerator Load()
+    public IEnumerator LoadDB(System.Action<string> callback)
     {
         UnityWebRequest www = UnityWebRequest.Get("http://localhost/sqlconnect/load.php");
         yield return www.SendWebRequest();
         if( www.result == UnityWebRequest.Result.Success)
         {
             Debug.Log("load: success");
-            Debug.Log(www.downloadHandler.text);
+            callback(www.downloadHandler.text);
+            // Debug.Log(www.downloadHandler.text);
+            // Ezan(www.downloadHandler.text);
+        }
+        else
+        {
+            Debug.Log("load: fail");
+            Debug.Log(www.error);
+            Debug.Log(www.result);
+            callback("-");
+
+        }
+    }
+
+
+    public IEnumerator Temp()
+    {
+        UnityWebRequest www = UnityWebRequest.Get("http://localhost/sqlconnect/load.php");
+        yield return www.SendWebRequest();
+        if( www.result == UnityWebRequest.Result.Success)
+        {
+            Debug.Log("load: success");
+            // Debug.Log(www.downloadHandler.text);
         }
         else
         {
@@ -83,7 +203,7 @@ public class SaveLoadSystem : MonoBehaviour
         }
     }
 
-    public IEnumerator Register(NPC newNpc)
+    public IEnumerator Register(NPC newNpc, System.Action<int> callback=null)
     {
         WWWForm form = new WWWForm();
         form.AddField("id", newNpc.GetNPCID().ToString());
@@ -98,12 +218,14 @@ public class SaveLoadSystem : MonoBehaviour
         if(www.result == UnityWebRequest.Result.Success)
         {
             Debug.Log("register: success");
+            callback(1);
         }
         else
         {
             Debug.Log("register: fail");
             Debug.Log(www.error);
             Debug.Log(www.result);
+            callback(-1);
         }
     }
 

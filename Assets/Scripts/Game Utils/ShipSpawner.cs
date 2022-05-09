@@ -44,7 +44,7 @@ public class ShipSpawner : MonoBehaviour
         }
         if(Input.GetKeyDown(KeyCode.N))
         {
-            StartCoroutine(_gm.saveLoad.Load());
+            StartCoroutine(_gm.saveLoad.Temp());
         }
     }
 
@@ -62,21 +62,24 @@ public class ShipSpawner : MonoBehaviour
         return chosenPlanet.position;
     }
 
-    public void LoadExistingNpc()
+    public void LoadExistingNpc(int id, string name, float x_axis, float y_axis)
     {
+        // let's say a tick just came and you have to set the attributes of the npc
+
         // POINTER ASSIGNMENT REALM
         _npcObjectPointer = npcPrefab;
 
         // TRANSFORM ASSIGNMENT REALM
         Transform transformRef = _npcObjectPointer.transform; // EXPERIMENTAL
 
-        Vector3 loc = new Vector3(0,0,0); // DB OUTPUT
+        Vector3 loc = new Vector3(x_axis, y_axis, 0);
         transformRef.position = loc; // temp
         transformRef.localScale = new Vector3(0.5f, 0.5f, 1);
 
         // NPC SCRIPT REALM
         NPC npcRef = _npcObjectPointer.GetComponent<NPC>();
-        npcRef.objective = Objective.RandomWandering; // DB OUTPUT
+        npcRef.SetNPCID(id);
+        npcRef.objective = Objective.RandomWandering;
         npcRef.patrolRange = 10;
 
         // SPACESHIP SPRITE RENDERER REALM
@@ -89,14 +92,12 @@ public class ShipSpawner : MonoBehaviour
         spaceship.currentHealth = 100;
         spaceship.speed = 25;
 
-
         _npcObjectPointer = Instantiate(_npcObjectPointer);
         _npcObjectPointer.transform.SetParent(npcs.transform);
-        _NamingFreshNpc(_npcObjectPointer);
+        _npcObjectPointer.name = name;
 
-        StartCoroutine(_gm.saveLoad.Register(_npcObjectPointer.GetComponent<NPC>()));
-        // npcSpawned++;
         Debug.Log("SPAWNED SHIP: " + _npcObjectPointer.name + " @ " + _npcObjectPointer.transform.position.ToString());
+
     }
 
     public void DefineFreshNpc()
@@ -133,11 +134,34 @@ public class ShipSpawner : MonoBehaviour
         _npcObjectPointer = Instantiate(_npcObjectPointer);
         _npcObjectPointer.transform.SetParent(npcs.transform);
         _NamingFreshNpc(_npcObjectPointer);
-        Debug.Log("Set targt falan2");
-
-        StartCoroutine(_gm.saveLoad.Register(_npcObjectPointer.GetComponent<NPC>()));
-        // npcSpawned++;
         Debug.Log("SPAWNED SHIP: " + _npcObjectPointer.name + " @ " + _npcObjectPointer.transform.position.ToString());
+
+        // TODO: MAYBE A KILL NPC FUNCTION THAT DOES => DESTROY(NPC) && npcSpawned--;
+        _RegisterFreshNpc(_npcObjectPointer);
+    }
+
+    // Depends on the outcome of the coroutine, npc will be registered to the db or destroyed
+    private void _RegisterFreshNpc(GameObject npc)
+    {
+        StartCoroutine(_gm.saveLoad.Register(npc.GetComponent<NPC>(), (retVal) =>
+        {
+            if(retVal == 1)
+            {
+                Debug.Log("SUCCESS: NPC REGISTERED");
+            }
+            else if(retVal == -1)
+            {
+                Debug.Log("FAIL: NPC REGISTRATION FAILED, DELETE [" + npc.name + "]");
+                Destroy(npc);
+            }
+            else
+            {
+                Debug.Log("WORST POSSIBLE OUTCOME!!!");
+                Destroy(npc);
+
+            }
+        }));
+
     }
 
     private void _NamingFreshNpc(GameObject newNpc) // names are given as: "NPC_" + npcSpawned
