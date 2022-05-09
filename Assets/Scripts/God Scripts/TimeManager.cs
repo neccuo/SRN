@@ -143,7 +143,7 @@ public class TimeManager : MonoBehaviour
             Vector2 dist = mousePos - (Vector2) _player.transform.position;
             Debug.Log("Difference is: " + dist.magnitude);
             float day = dist.magnitude/_playerSpeed;
-            Debug.LogFormat("{0} Days will pass to reach the destinations", day);
+            Debug.LogFormat("{0} Days will pass to reach the destination", day);
         }
         
     }
