@@ -482,6 +482,7 @@ MonoBehaviour:
   shopBar: {fileID: 2159099622301821301}
   player: {fileID: 1193091450}
   portalManager: {fileID: 1896863594}
+  saveLoad: {fileID: 0}
   GAMESPEED: 1
 --- !u!4 &375930916
 Transform:
