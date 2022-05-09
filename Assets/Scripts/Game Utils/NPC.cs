@@ -60,14 +60,16 @@ public class NPC : MonoBehaviour
         HandleObjective();
     }
 
+    // NOTE: Couldn't fix the problem where "npcID = 0" at the start. This method is unsafe, be careful...
     public void SetNPCID(int num) // -1 is the default value
     {
-        if(npcID == -1)
+        npcID = num;
+        /*if(npcID == -1)
         {
             npcID = num;
             return;
         }
-        Debug.LogError("Cannot assign another NPCID to an NPC");
+        Debug.LogError("Cannot assign another NPCID to an NPC");*/
     }
 
     public int GetNPCID()
