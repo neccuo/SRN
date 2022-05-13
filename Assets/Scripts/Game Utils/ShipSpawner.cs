@@ -44,7 +44,7 @@ public class ShipSpawner : MonoBehaviour
         }
         if(Input.GetKeyDown(KeyCode.N))
         {
-            StartCoroutine(_gm.saveLoad.Temp());
+            StartCoroutine(_gm.saveLoad.LoadDB());
         }
     }
 

@@ -74,7 +74,7 @@ public class SaveLoadSystem : MonoBehaviour
     {
         _shipSpawner = gameObject.GetComponent<ShipSpawner>();
 
-        LoadAllNpcs();
+        // LoadAllNpcs();
     }
 
     void Update()
@@ -152,12 +152,12 @@ public class SaveLoadSystem : MonoBehaviour
         yield return www.SendWebRequest();
         if(www.result == UnityWebRequest.Result.Success)
         {
-            Debug.Log("register: success");
-            Debug.Log(www.downloadHandler.text);
+            Debug.Log("SavePos: success");
+            // Debug.Log(www.downloadHandler.text);
         }
         else
         {
-            Debug.Log("register: fail");
+            Debug.Log("SavePos: fail");
             Debug.Log(www.error);
             Debug.Log(www.result);
         }
@@ -169,37 +169,33 @@ public class SaveLoadSystem : MonoBehaviour
         yield return www.SendWebRequest();
         if( www.result == UnityWebRequest.Result.Success)
         {
-            Debug.Log("load: success");
+            Debug.Log("LoadDB(string): success");
             callback(www.downloadHandler.text);
-            // Debug.Log(www.downloadHandler.text);
-            // Ezan(www.downloadHandler.text);
+            Debug.Log(www.downloadHandler.text);
         }
         else
         {
-            Debug.Log("load: fail");
+            Debug.Log("LoadDB(string): fail");
             Debug.Log(www.error);
             Debug.Log(www.result);
             callback("-");
-
         }
     }
 
-
-    public IEnumerator Temp()
+    public IEnumerator LoadDB()
     {
         UnityWebRequest www = UnityWebRequest.Get("http://localhost/sqlconnect/load.php");
         yield return www.SendWebRequest();
         if( www.result == UnityWebRequest.Result.Success)
         {
-            Debug.Log("load: success");
-            // Debug.Log(www.downloadHandler.text);
+            Debug.Log("LoadDB(): success");
+            Debug.Log(www.downloadHandler.text);
         }
         else
         {
-            Debug.Log("load: fail");
+            Debug.Log("LoadDB(): fail");
             Debug.Log(www.error);
             Debug.Log(www.result);
-
         }
     }
 
@@ -217,12 +213,12 @@ public class SaveLoadSystem : MonoBehaviour
         yield return www.SendWebRequest();
         if(www.result == UnityWebRequest.Result.Success)
         {
-            Debug.Log("register: success");
+            Debug.Log("Register: success");
             callback(1);
         }
         else
         {
-            Debug.Log("register: fail");
+            Debug.Log("Register: fail");
             Debug.Log(www.error);
             Debug.Log(www.result);
             callback(-1);
@@ -235,12 +231,12 @@ public class SaveLoadSystem : MonoBehaviour
         yield return www.SendWebRequest();
         if(www.result == UnityWebRequest.Result.Success)
         {
-            Debug.Log("register: success");
+            Debug.Log("EraseNPCS: success");
             Debug.Log(www.downloadHandler.text);
         }
         else
         {
-            Debug.LogError("register: fail");
+            Debug.LogError("EraseNPCS: fail");
             Debug.Log(www.error);
             Debug.Log(www.result);
         }
