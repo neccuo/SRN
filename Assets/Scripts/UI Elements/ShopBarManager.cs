@@ -1,4 +1,4 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,6 +8,8 @@ public class ShopBarManager : MonoBehaviour
     public static ShopBarManager ShopManager;
 
     List<GameObject> items = new List<GameObject>();
+    
+    [NonSerialized]
     public GameState officialState;
 
     ShopStock currentShopStockPointer;
