@@ -33,6 +33,7 @@ public class GameManager : MonoBehaviour
 
     private GameState _state;
 
+    [NonSerialized]
     public SaveLoadSystem saveLoad;
 
     public float GAMESPEED = 1;
