@@ -7,10 +7,18 @@ public class Controller : MonoBehaviour
     /// PlanMovement
     /// DuringMovement
 
+
     public static Controller ControllerGod; // GOD CLASS
 
     private GameManager gameInstance; // for storing the game state
     public Player player;
+
+    [SerializeField]
+    private GameObject _inventoryBar;
+
+    public RectTransform parent;
+    public Camera cam;
+
 
     // public Vector2 playerTargetLocation;
     // public Vector2 playerCurrentLocation;
@@ -19,6 +27,8 @@ public class Controller : MonoBehaviour
 
     float lastClickTime;
     float doubleClickRate = 0.5f; // in seconds
+
+    
 
     private void Awake()
     {
@@ -114,12 +124,33 @@ public class Controller : MonoBehaviour
     // hopefully will use algorithms at some point :P
     private bool _CheckDoubleClickWhiteList(string tag)
     {
-        if(tag == "Planet" || tag == "Portal" || tag == "NPC")
-        {
-            return true;
-        }
+        if(tag == "Planet" || tag == "Portal" || tag == "NPC"){return true;}
         return false;
     }
+    // for inventory
+    private bool _CheckRightClickWhiteList(string tag)
+    {
+        if(tag == "NPC"){return true;}
+        return false;
+    }
+
+    private GameObject _GetClickedObject()
+    {
+        Vector2 mousePos2D = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        RaycastHit2D hit = Physics2D.Raycast(mousePos2D, Vector2.zero);
+        return hit.collider?.gameObject;
+    }
+
+    private void _OpenInventory()
+    {
+        Vector2 v2;
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(parent, Input.mousePosition, cam, out v2);
+        RectTransform rectT = _inventoryBar.GetComponent<RectTransform>();
+        rectT.anchoredPosition = v2;
+        _inventoryBar.SetActive(true);
+    }
+
+    
 
     public void TakePlanMovementInput()
     {
@@ -134,12 +165,11 @@ public class Controller : MonoBehaviour
             }
             else // if double click
             {
-                Vector2 mousePos2D = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                RaycastHit2D hit = Physics2D.Raycast(mousePos2D, Vector2.zero);
-                if (hit.collider != null && _CheckDoubleClickWhiteList(hit.collider.gameObject.tag)) // NEEDS SOME DETAILS IDENTIFYING THE COLLIDER
+                GameObject colObj = _GetClickedObject();
+                if (colObj != null && _CheckDoubleClickWhiteList(colObj.tag)) // NEEDS SOME DETAILS IDENTIFYING THE COLLIDER
                 {
-                    Debug.Log(hit.collider.gameObject.name + " was double clicked");
-                    player.SetFollowedObject(hit.collider.gameObject);
+                    Debug.Log(colObj.name + " was double clicked");
+                    player.SetFollowedObject(colObj);
                     player.SetMovementFollow();
                     clickPoint.SpawnFollowArrow();
                 }
@@ -150,6 +180,21 @@ public class Controller : MonoBehaviour
                 Debug.Log("double clicked");
             }
             lastClickTime = Time.unscaledTime; // SAVE THE TIME WHEN IT IS CLICKED
+        }
+        else if(Input.GetMouseButtonDown(1))
+        {
+            GameObject colObj = _GetClickedObject();
+            if (colObj != null && _CheckRightClickWhiteList(colObj.tag))
+            {
+                Debug.Log(colObj.name + " was right clicked");
+                _OpenInventory();
+            }
+            else
+            {
+                _OpenInventory();
+            }
+
+
         }
         else if (Input.GetKey(KeyCode.C) && Input.GetKeyDown(KeyCode.H)) // HOLD C AND PRESS H TO OPEN CHEAT CODE SCREEN
         {
