@@ -74,19 +74,14 @@ public class SaveLoadSystem : MonoBehaviour
     {
         _shipSpawner = gameObject.GetComponent<ShipSpawner>();
 
-        // LoadAllNpcs();
     }
 
     void Update()
     {
         // BEWARE :D
-        if(Input.GetKeyDown(KeyCode.L))
-        {
-            LoadAllNpcs();
-        }
     }
 
-    void LoadAllNpcs()
+    public void LoadAllNpcs()
     {
         StartCoroutine(LoadDB((retVal) => 
         {
@@ -94,7 +89,7 @@ public class SaveLoadSystem : MonoBehaviour
             List<MedNpc> MedNpcList = ParseStrToList(retVal, 7 ); // 7 for now, maybe later something like ===>>> typeof(MedNpc).GetProperties().Length
             foreach(MedNpc npc in MedNpcList)
             {
-                _shipSpawner.LoadExistingNpc(npc.id, npc.name, npc.x_axis, npc.y_axis);
+                _shipSpawner.LoadExistingNpc(npc.id, npc.name, npc.ship_id ,npc.x_axis, npc.y_axis);
             }
         }));
     }
@@ -206,7 +201,7 @@ public class SaveLoadSystem : MonoBehaviour
         form.AddField("name", newNpc.gameObject.name);
         form.AddField("credits", "1500");
         form.AddField("race", "human");
-        form.AddField("hull_id", "1");
+        form.AddField("hull_id", newNpc.ship.GetHullID().ToString());
         form.AddField("x_axis", newNpc.transform.position.x.ToString());
         form.AddField("y_axis", newNpc.transform.position.y.ToString());
         UnityWebRequest www = UnityWebRequest.Post("http://localhost/sqlconnect/register.php", form);

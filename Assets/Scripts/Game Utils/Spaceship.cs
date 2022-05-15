@@ -1,4 +1,4 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,6 +8,9 @@ public class Spaceship : MonoBehaviour
     public float maxHealth = 100;
     public float currentHealth;
     public float speed = 10f;
+
+    [SerializeField]
+    private int _hullID = -1;
 
     // Rotation realm (work in progress)
     public float rotationBounds = 30; // 150 - 180 - 210
@@ -49,6 +52,16 @@ public class Spaceship : MonoBehaviour
         {
             TakeDamage(20);
         }*/
+    }
+
+    public void SetHullID(int id)
+    {
+        _hullID = id;
+    }
+
+    public int GetHullID()
+    {
+        return _hullID;
     }
 
     public void ChangeHull(Sprite newSprite)

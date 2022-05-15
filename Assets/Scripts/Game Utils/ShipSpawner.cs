@@ -38,13 +38,11 @@ public class ShipSpawner : MonoBehaviour
             // DefineFreshNpc();
             _timer = 0.0f;
         }
-        if(Input.GetKeyDown(KeyCode.M))
+        if(GameManager.Instance.GetCurrentState() == GameState.PlanMovement)
         {
-            DefineFreshNpc();
-        }
-        if(Input.GetKeyDown(KeyCode.N))
-        {
-            StartCoroutine(_gm.saveLoad.LoadDB());
+            if(Input.GetKeyDown(KeyCode.M)){DefineFreshNpc();}
+            else if(Input.GetKeyDown(KeyCode.N)){StartCoroutine(_gm.saveLoad.LoadDB());}
+            else if(Input.GetKeyDown(KeyCode.L)){_gm.saveLoad.LoadAllNpcs();}
         }
     }
 
@@ -62,7 +60,18 @@ public class ShipSpawner : MonoBehaviour
         return chosenPlanet.position;
     }
 
-    public void LoadExistingNpc(int id, string name, float x_axis, float y_axis)
+    private int _PickRandomShipID()
+    {
+        return Random.Range(1, 8);
+    }
+
+    private void _RegisterHull(SpriteRenderer sr, Spaceship ship, int id)
+    {
+        sr.sprite = Resources.Load<Sprite>("Sprites/Ships/spaceship-" + id.ToString());
+        ship.SetHullID(id);
+    }
+
+    public void LoadExistingNpc(int id, string name, int ship_id, float x_axis, float y_axis)
     {
         // let's say a tick just came and you have to set the attributes of the npc
 
@@ -82,12 +91,11 @@ public class ShipSpawner : MonoBehaviour
         npcRef.objective = Objective.RandomWandering;
         npcRef.patrolRange = 10;
 
-        // SPACESHIP SPRITE RENDERER REALM
+        // SPACESHIP REALM
         SpriteRenderer spriteRendererRef = _npcObjectPointer.GetComponentInChildren<SpriteRenderer>();
-        spriteRendererRef.sprite = Resources.Load<Sprite>("Sprites/Ships/spaceship-2");
-
-        // SPACESHIP SCRIPT REALM
         Spaceship spaceship = _npcObjectPointer.GetComponentInChildren<Spaceship>();
+        _RegisterHull(spriteRendererRef, spaceship, ship_id);
+
         spaceship.maxHealth = 100;
         spaceship.currentHealth = 100;
         spaceship.speed = 25;
@@ -120,12 +128,11 @@ public class ShipSpawner : MonoBehaviour
         npcRef.patrolRange = 10;
         Debug.Log("Set targt falan");
 
-        // SPACESHIP SPRITE RENDERER REALM
+        // SPACESHIP REALM
         SpriteRenderer spriteRendererRef = _npcObjectPointer.GetComponentInChildren<SpriteRenderer>();
-        spriteRendererRef.sprite = Resources.Load<Sprite>("Sprites/Ships/spaceship-2");
-
-        // SPACESHIP SCRIPT REALM
         Spaceship spaceship = _npcObjectPointer.GetComponentInChildren<Spaceship>();
+        _RegisterHull(spriteRendererRef, spaceship, _PickRandomShipID());
+
         spaceship.maxHealth = 100;
         spaceship.currentHealth = 100;
         spaceship.speed = 25;
