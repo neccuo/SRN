@@ -133,7 +133,7 @@ public class TimeManager : MonoBehaviour
             Date.PassDay();
         }
         secondsPast += Time.deltaTime;
-        secondsPastIndicator.text = "SECONDS PAST " + secondsPast;
+        secondsPastIndicator.text = "Day: " + (secondsPast)*100 + "%";
         timeIndicator.text = DisplayDate();
 
 

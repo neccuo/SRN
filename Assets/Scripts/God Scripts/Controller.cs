@@ -17,7 +17,6 @@ public class Controller : MonoBehaviour
     private GameObject _inventoryBar;
 
     public RectTransform parent;
-    public Camera cam;
 
 
     // public Vector2 playerTargetLocation;
@@ -144,13 +143,17 @@ public class Controller : MonoBehaviour
     private void _OpenInventory()
     {
         Vector2 v2;
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(parent, Input.mousePosition, cam, out v2);
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(parent, Input.mousePosition, null, out v2);
         RectTransform rectT = _inventoryBar.GetComponent<RectTransform>();
         rectT.anchoredPosition = v2;
         _inventoryBar.SetActive(true);
     }
 
-    
+    // TODO: CLOSE EVERYTHING METHOD
+    private void _CloseInventory()
+    {
+        _inventoryBar.SetActive(false);
+    }
 
     public void TakePlanMovementInput()
     {
@@ -187,12 +190,8 @@ public class Controller : MonoBehaviour
             if (colObj != null && _CheckRightClickWhiteList(colObj.tag))
             {
                 Debug.Log(colObj.name + " was right clicked");
-                _OpenInventory();
             }
-            else
-            {
-                _OpenInventory();
-            }
+            _OpenInventory();
 
 
         }
