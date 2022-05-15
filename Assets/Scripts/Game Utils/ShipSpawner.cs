@@ -43,6 +43,8 @@ public class ShipSpawner : MonoBehaviour
             if(Input.GetKeyDown(KeyCode.M)){DefineFreshNpc();}
             else if(Input.GetKeyDown(KeyCode.N)){StartCoroutine(_gm.saveLoad.LoadDB());}
             else if(Input.GetKeyDown(KeyCode.L)){_gm.saveLoad.LoadAllNpcs();}
+            else if(Input.GetKeyDown(KeyCode.B)){StartCoroutine(_gm.saveLoad.NpcItemBuy(2, 2, 3));}
+
         }
     }
 

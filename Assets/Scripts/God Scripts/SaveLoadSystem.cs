@@ -138,6 +138,28 @@ public class SaveLoadSystem : MonoBehaviour
         return jsonString;
     }
 
+    public IEnumerator NpcItemBuy(int npcID, int itemID, int quantity)
+    {
+        WWWForm form = new WWWForm();
+        form.AddField("pilot_id", npcID.ToString());
+        form.AddField("item_id", itemID.ToString());
+        form.AddField("quantity", quantity.ToString());
+        UnityWebRequest www = UnityWebRequest.Post("http://localhost/sqlconnect/npc_item_buy.php", form);
+        yield return www.SendWebRequest();
+        if(www.result == UnityWebRequest.Result.Success)
+        {
+            Debug.Log("BUY: success");
+            Debug.Log(www.downloadHandler.text);
+        }
+        else
+        {
+            Debug.Log("BUY: fail");
+            Debug.Log(www.error);
+            Debug.Log(www.result);
+        }
+
+    }
+
     public IEnumerator SavePos()
     {
         WWWForm form = new WWWForm();
