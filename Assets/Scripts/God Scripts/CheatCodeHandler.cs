@@ -36,4 +36,14 @@ public class CheatCodeHandler : MonoBehaviour
         PlayerPrefs.SetInt("npcSpawned", 0);
         StartCoroutine(_gm.saveLoad.EraseNPCS());
     }
+
+    public void BuyItemNpc(string npcId, string itemId, string quantity)
+    {
+        int nId, iId, qu;
+        if(int.TryParse(npcId, out nId) && int.TryParse(itemId, out iId) && int.TryParse(quantity, out qu))
+            StartCoroutine(_gm.saveLoad.NpcItemBuy(nId, iId, qu));
+        else
+            Debug.LogWarning("Cheat code poorly formatted");
+
+    }
 }

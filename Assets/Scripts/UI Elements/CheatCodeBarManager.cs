@@ -1,5 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections.Generic;
+using System.Linq;
 
 
 public class CheatCodeBarManager : MonoBehaviour
@@ -48,12 +50,39 @@ public class CheatCodeBarManager : MonoBehaviour
         //Controller.ControllerGod.ChangeState();
     }
 
+    private string _IsPrefixValid(string str)
+    {
+        // "BUY: "
+        string prefix = str.Substring(0, 2);
+        if(prefix == "BUY")
+        {
+            return prefix;
+        }
+        // else
+        return "";
+    }
+
+    private List<string> _ParseCommand(string str)
+    {
+        List<string> strList = str.Split().ToList();
+
+        return strList;
+    }
+
+    private bool _CheckListLength(List<string> strLi, int num)
+    {
+        if(strLi.Count == num)
+            return true;
+        return false;
+    }
+
     public void ConfirmPopup()
     {
         ClosePopup();
         
         cheatCode = inputField.GetComponent<InputField>().text;
-        switch(cheatCode)
+        List<string> strList = _ParseCommand(cheatCode);
+        switch(strList[0])
         {
             case "monet":
                 cheatCodeHandler.AddCredit();
@@ -63,6 +92,12 @@ public class CheatCodeBarManager : MonoBehaviour
                 break;
             case "killall":
                 cheatCodeHandler.KillAll();
+                break;
+            case "BUY":
+                if(_CheckListLength(strList, 4))
+                    cheatCodeHandler.BuyItemNpc(strList[1], strList[2], strList[3]);
+                else
+                    Debug.LogWarning("Poorly formatted [" + strList[0] + "] code");
                 break;
             default:
                 Debug.Log("Code not valid.");
