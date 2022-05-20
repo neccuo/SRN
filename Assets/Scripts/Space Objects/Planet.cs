@@ -30,7 +30,7 @@ public class Planet : MonoBehaviour
         //scaleBase = 1f;
         scaleRange = 0.6f;
         speedBase = 5f;
-        speedRange = 20f;
+        speedRange = 5f;
         angularSpeed = 0f;
 
         if(sunLocation == null)
