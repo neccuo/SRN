@@ -7,7 +7,8 @@ public enum Objective
     Follow,
     Patrol,
     SeekPortal,
-    RandomWandering
+    RandomWandering,
+    SeekPlanet
 }
 
 public class NPC : MonoBehaviour
@@ -28,17 +29,25 @@ public class NPC : MonoBehaviour
 
     private Vector2[] directions;
     private int index;
-    private GameManager currentGameInstance;
+    private GameManager _gm;
+
+    private Vector3 _nullVector = new Vector3(0, 0, -1);
 
 
     // PORTAL SEEK REALM
     public bool teleportReady = false;
-    private GameObject _chosenPortal;
+    private GameObject _chosenObject;
+
+    private readonly int _wanderingLimit = 2;
+    [SerializeField] private int remainingWandering;
 
     void Start()
     {
         // objective = Objective.Patrol; // starts with patrolling for testing
 
+        _gm = GameManager.Instance;
+
+        FillRemainingWandering();
         _currentLoc = (Vector2) transform.position;
         // DEFINITELY CHANGE IT
         _target = _currentLoc; // exceptional situation, just for initialization
@@ -96,38 +105,101 @@ public class NPC : MonoBehaviour
             case Objective.RandomWandering:
                 HandleRandomWandering();
                 break;
+            
+            case Objective.SeekPlanet:
+                HandleSeekPlanet();
+                break;
 
             default:
                 throw new MissingComponentException("Shit sn");
         }
+        HandleMovement();
+    }
+
+    bool CheckSwitchFromRandomWandering(Objective newObjective)
+    {
+        if(--remainingWandering < 0)
+        {
+            SetObjective(newObjective);
+            return true;
+        }
+        return false;
     }
 
     void HandleRandomWandering()
     {
         // TODO: DEAL WITH HARD CODED ELEMENTS SUCH AS WANDERING RANGE
         int lim = 100;
-        if(_target == _currentLoc)
+        if(IsTargetReached())
         {
+            if(CheckSwitchFromRandomWandering(Objective.SeekPlanet)){return;}
             Vector2 vec = new Vector2(Random.Range(-lim, lim), Random.Range(-lim, lim));
             SetTarget(vec);
         }
-        HandleMovement();
+    }
+
+    void SetObjective(Objective newObjective)
+    {
+        objective = newObjective;
     }
 
     void HandleFollow()
     {
         _target = (Vector2) player.transform.position;
-        HandleMovement();
+    }
+
+    void FillRemainingWandering()
+    {
+        remainingWandering = _wanderingLimit;
+    }
+
+    bool IsTargetReached()
+    {
+        return (_currentLoc == _target) ? true : false;
+    }
+
+    bool IsTargetReached(int permittedDistance)
+    {
+        return (Vector2.Distance(_currentLoc, _target) <= permittedDistance) ? true : false;
     }
 
     void HandlePatrol()
     {
-        if(_currentLoc == _target)
+        if(IsTargetReached())
         {
             SetPatrolTarget(directions[index%(directions.Length)]);
             index++;
         }
-        HandleMovement();
+    }
+
+    Vector3 ClosestObjectLocationByTag(string tag)
+    {
+        GameObject[] objects;
+        objects = GameObject.FindGameObjectsWithTag(tag);
+        if(objects.Length == 0)
+        {
+            Debug.LogWarning("NO " + tag + " AVAILABLE, BEWARE");
+            return _nullVector;
+        }
+        float closestPos = -1f;
+        float temp;
+        foreach (GameObject obj in objects)
+        {
+            temp = _GetDistanceToPos((Vector2)obj.transform.position);
+            if(temp < closestPos || closestPos == -1f)
+            {
+                closestPos = temp;
+                _chosenObject = obj;
+            }
+        }
+        return _chosenObject.transform.position;
+    }
+
+    void TargetClosestObjectByTag(string tag)
+    {
+        Vector3 closestObject = ClosestObjectLocationByTag(tag);
+        if(closestObject == _nullVector){return;}
+        SetTarget((Vector2)closestObject);
     }
 
     void HandleSeekPortal()
@@ -135,29 +207,27 @@ public class NPC : MonoBehaviour
         // BURADA HİÇ PORTAL YOKSA OLACAKLARI DÜŞÜN
         if(!teleportReady)
         {
-            GameObject[] portals;
-            portals = GameObject.FindGameObjectsWithTag("Portal");
-            if(portals.Length == 0)
-            {
-                Debug.LogWarning("NO PORTAL AVAILABLE, BEWARE");
-                return;
-            }
-            float closestPos = -1f;
-            float temp;
-            foreach (GameObject portal in portals)
-            {
-                temp = _GetDistanceToPos((Vector2)portal.transform.position);
-                if(temp < closestPos || closestPos == -1f)
-                {
-                    closestPos = temp;
-                    _chosenPortal = portal;
-                }
-            }
-            SetTarget((Vector2)_chosenPortal.transform.position);
+            TargetClosestObjectByTag("Portal");
             teleportReady = true;
         }
-        HandleMovement();
+    }
 
+    void BuyItem()
+    {
+        int randInt = Random.Range(0, 3);
+        StartCoroutine(_gm.saveLoad.NpcItemBuy(npcID, randInt, 1));
+    }
+
+    void HandleSeekPlanet() // CHANGES ITS FOCUS WHENEVER A PLANET IS CLOSER TO IT (ADHD)
+    {
+        TargetClosestObjectByTag("Planet");
+        if(IsTargetReached(5))
+        {
+            // BUYING TIME!!!!
+            BuyItem();
+            FillRemainingWandering();
+            SetObjective(Objective.RandomWandering);
+        }
     }
 
     private float _GetDistanceToPos(Vector2 loc)
