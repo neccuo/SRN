@@ -18,11 +18,11 @@ public class CheatCodeBarManager : MonoBehaviour
 
     // private GameState _ourState = GameState.CheatBarState;
 
-    public void SetPreviousState(GameState state)
+    public void CheckPreviousState(GameState state)
     {
-        if(state == GameState.CheatBarState)
+        if(state != GameState.PlanMovement)
         {
-            throw new UnityException("HOW DID YOU CAME FROM CHEATBAR TO CHEATBAR");
+            throw new UnityException("YOU SHOULDN'T BE OPENING CHEAT BAR NOW!");
         }
         _previousState = state;
     }

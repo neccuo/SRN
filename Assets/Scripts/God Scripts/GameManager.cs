@@ -46,6 +46,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        saveLoad.LoadAllNpcs();
         ChangeGameState(GameState.PlanMovement);
         _controllerGod = Controller.ControllerGod;
     }
@@ -121,8 +122,15 @@ public class GameManager : MonoBehaviour
             case GameState.TurnEvaluation:
                 break;
             case GameState.CheatBarState: // first, tell the cheat code the previous state. so, at the time of termination, return the state to it.
-                cheatCodeBar.GetComponent<CheatCodeBarManager>().SetPreviousState(oldState); // reached its script
-                cheatCodeBar.SetActive(true);
+                try
+                {
+                    cheatCodeBar.GetComponent<CheatCodeBarManager>().CheckPreviousState(oldState); // reached its script
+                    cheatCodeBar.SetActive(true);
+                }
+                catch(UnityException e)
+                {
+                    Debug.LogError("lan");
+                }
                 break;
             case GameState.ShopState:
                 Time.timeScale = 0; // BE CAREFUL ABOUT IT...!!!!
