@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Spaceship : MonoBehaviour
 {
+    private Dictionary<int, (float, float)> engineLocationsByHullId;
+    [SerializeField] private GameObject engineBeam;
+
     // stats realm
     public float maxHealth = 100;
     public float currentHealth;
@@ -22,6 +25,19 @@ public class Spaceship : MonoBehaviour
     // public Sprite sprite;
     private SpriteRenderer _spriteRenderer;
 
+    // place it to somewhere more appropriate
+    void InitEngineLocationHash()
+    {
+        engineLocationsByHullId = new Dictionary<int, (float, float)>();
+        engineLocationsByHullId.Add(1, (0.5f, 0.305f));
+        engineLocationsByHullId.Add(2, (0.5f, 0.19f));
+        engineLocationsByHullId.Add(3, (0.5f, 0.3f));
+        engineLocationsByHullId.Add(4, (0.5f, 0.32f));
+        engineLocationsByHullId.Add(5, (0.5f, 0.137f));
+        engineLocationsByHullId.Add(6, (0.5f, 0.205f));
+        engineLocationsByHullId.Add(7, (0.5f, 0.125f));
+    }
+
     float GetScaleFromMaxHealth()
     {
         if(maxHealth <= 100) { return 0.5f; }
@@ -33,6 +49,7 @@ public class Spaceship : MonoBehaviour
     void Start()
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
+        InitEngineLocationHash();
         //float shipScale = GetScaleFromMaxHealth();
         //transform.localScale = new Vector3(shipScale, shipScale, 1);
 
@@ -57,6 +74,7 @@ public class Spaceship : MonoBehaviour
     public void SetHullID(int id)
     {
         _hullID = id;
+        // hull id ile bir şeyler yapacaksın, engine location vsvs
     }
 
     public int GetHullID()
