@@ -85,7 +85,7 @@ public class SaveLoadSystem : MonoBehaviour
     {
         StartCoroutine(LoadDB((retVal) => 
         {
-            Debug.Log(retVal);
+            // Debug.Log(retVal);
             List<MedNpc> MedNpcList = ParseStrToList(retVal, 7 ); // 7 for now, maybe later something like ===>>> typeof(MedNpc).GetProperties().Length
             foreach(MedNpc npc in MedNpcList)
             {
@@ -179,6 +179,26 @@ public class SaveLoadSystem : MonoBehaviour
         }
     }
 
+    public IEnumerator NpcItemSell(int npcID, int itemID, int quantity)
+    {
+        WWWForm form = new WWWForm();
+        form.AddField("pilot_id", npcID.ToString());
+        form.AddField("item_id", itemID.ToString());
+        form.AddField("quantity", quantity.ToString());
+        UnityWebRequest www = UnityWebRequest.Post("http://localhost/sqlconnect/npc_item_sell.php", form);
+        yield return www.SendWebRequest();
+        if(www.result == UnityWebRequest.Result.Success)
+        {
+            Debug.Log(www.downloadHandler.text);
+        }
+        else
+        {
+            Debug.Log("SELL: fail");
+            Debug.Log(www.error);
+            Debug.Log(www.result);
+        }
+    }
+
     public IEnumerator NpcItemSell(int npcID, int itemID, int quantity, System.Action<string> callback)
     {
         WWWForm form = new WWWForm();
@@ -199,7 +219,7 @@ public class SaveLoadSystem : MonoBehaviour
             Debug.Log(www.result);
         }
     }
-    
+
     public IEnumerator SavePos()
     {
         WWWForm form = new WWWForm();
@@ -228,7 +248,7 @@ public class SaveLoadSystem : MonoBehaviour
         {
             Debug.Log("LoadDB(string): success");
             callback(www.downloadHandler.text);
-            Debug.Log(www.downloadHandler.text);
+            // Debug.Log(www.downloadHandler.text);
         }
         else
         {

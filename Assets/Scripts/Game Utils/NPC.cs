@@ -218,13 +218,19 @@ public class NPC : MonoBehaviour
         StartCoroutine(_gm.saveLoad.NpcItemBuy(npcID, randInt, 1));
     }
 
+    void SellItem()
+    {
+        int randInt = Random.Range(0, 3);
+        StartCoroutine(_gm.saveLoad.NpcItemSell(npcID, randInt, 1));
+    }
+
     void HandleSeekPlanet() // CHANGES ITS FOCUS WHENEVER A PLANET IS CLOSER TO IT (ADHD)
     {
         TargetClosestObjectByTag("Planet");
         if(IsTargetReached(5))
         {
-            // BUYING TIME!!!!
-            BuyItem();
+            int randInt = Random.Range(0, 2);
+            if(randInt == 0) BuyItem(); else SellItem();
             FillRemainingWandering();
             SetObjective(Objective.RandomWandering);
         }
