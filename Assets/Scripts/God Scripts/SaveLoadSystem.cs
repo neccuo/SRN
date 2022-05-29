@@ -148,7 +148,7 @@ public class SaveLoadSystem : MonoBehaviour
         yield return www.SendWebRequest();
         if(www.result == UnityWebRequest.Result.Success)
         {
-            Debug.Log("BUY: success");
+            // Debug.Log("BUY: success");
             Debug.Log(www.downloadHandler.text);
         }
         else
@@ -157,14 +157,54 @@ public class SaveLoadSystem : MonoBehaviour
             Debug.Log(www.error);
             Debug.Log(www.result);
         }
-
+    }
+    public IEnumerator NpcItemBuy(int npcID, int itemID, int quantity, System.Action<string> callback)
+    {
+        WWWForm form = new WWWForm();
+        form.AddField("pilot_id", npcID.ToString());
+        form.AddField("item_id", itemID.ToString());
+        form.AddField("quantity", quantity.ToString());
+        UnityWebRequest www = UnityWebRequest.Post("http://localhost/sqlconnect/npc_item_buy.php", form);
+        yield return www.SendWebRequest();
+        if(www.result == UnityWebRequest.Result.Success)
+        {
+            callback(www.downloadHandler.text);
+            Debug.Log(www.downloadHandler.text);
+        }
+        else
+        {
+            callback("-");
+            Debug.Log(www.error);
+            Debug.Log(www.result);
+        }
     }
 
+    public IEnumerator NpcItemSell(int npcID, int itemID, int quantity, System.Action<string> callback)
+    {
+        WWWForm form = new WWWForm();
+        form.AddField("pilot_id", npcID.ToString());
+        form.AddField("item_id", itemID.ToString());
+        form.AddField("quantity", quantity.ToString());
+        UnityWebRequest www = UnityWebRequest.Post("http://localhost/sqlconnect/npc_item_sell.php", form);
+        yield return www.SendWebRequest();
+        if(www.result == UnityWebRequest.Result.Success)
+        {
+            callback(www.downloadHandler.text);
+            Debug.Log(www.downloadHandler.text);
+        }
+        else
+        {
+            callback("-");
+            Debug.Log(www.error);
+            Debug.Log(www.result);
+        }
+    }
+    
     public IEnumerator SavePos()
     {
         WWWForm form = new WWWForm();
         form.AddField("npcpos_json", TraverseNpcs());
-        Debug.Log(TraverseNpcs());
+        // Debug.Log(TraverseNpcs());
         UnityWebRequest www = UnityWebRequest.Post("http://localhost/sqlconnect/savepos.php", form);
         yield return www.SendWebRequest();
         if(www.result == UnityWebRequest.Result.Success)
@@ -221,7 +261,7 @@ public class SaveLoadSystem : MonoBehaviour
         WWWForm form = new WWWForm();
         form.AddField("id", newNpc.GetNPCID().ToString());
         form.AddField("name", newNpc.gameObject.name);
-        form.AddField("credits", "1500");
+        form.AddField("credits", "5000");
         form.AddField("race", "human");
         form.AddField("hull_id", newNpc.ship.GetHullID().ToString());
         form.AddField("x_axis", newNpc.transform.position.x.ToString());
