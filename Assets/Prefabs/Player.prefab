@@ -26,7 +26,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4663110006814661181}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -98,25 +98,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerShip
       objectReference: {fileID: 0}
-    - target: {fileID: 153713890, guid: c45e4796aed4a484085a33fa4b597189, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 153713891, guid: c45e4796aed4a484085a33fa4b597189, type: 3}
-      propertyPath: m_SortingOrder
-      value: 15
-      objectReference: {fileID: 0}
     - target: {fileID: 153713892, guid: c45e4796aed4a484085a33fa4b597189, type: 3}
       propertyPath: m_RootOrder
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 153713892, guid: c45e4796aed4a484085a33fa4b597189, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 153713892, guid: c45e4796aed4a484085a33fa4b597189, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 153713892, guid: c45e4796aed4a484085a33fa4b597189, type: 3}
       propertyPath: m_LocalPosition.x
@@ -157,11 +141,6 @@ PrefabInstance:
     - target: {fileID: 153713892, guid: c45e4796aed4a484085a33fa4b597189, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8994337464357882659, guid: c45e4796aed4a484085a33fa4b597189,
-        type: 3}
-      propertyPath: sprite
-      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c45e4796aed4a484085a33fa4b597189, type: 3}

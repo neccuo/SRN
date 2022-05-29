@@ -58,7 +58,8 @@ public class Planet : MonoBehaviour
         // Debug.Log("" + collidedObject.name + " collided with " + this.name);
         if(collidedObject.tag == "Player")
         {
-            shopStock.PrintStock();
+            Debug.Log("Player collided with planet: " + gameObject.name);
+            // shopStock.PrintStock();
         }
     }
 

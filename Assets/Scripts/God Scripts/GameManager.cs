@@ -127,7 +127,7 @@ public class GameManager : MonoBehaviour
                     cheatCodeBar.GetComponent<CheatCodeBarManager>().CheckPreviousState(oldState); // reached its script
                     cheatCodeBar.SetActive(true);
                 }
-                catch(UnityException e)
+                catch/*(UnityException e)*/
                 {
                     Debug.LogError("lan");
                 }

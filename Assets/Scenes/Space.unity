@@ -1265,12 +1265,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1405150124}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &933962303 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3846092036821736247, guid: 12cded581d2207f40bc18f46fb0bdc81,
-    type: 3}
-  m_PrefabInstance: {fileID: 4663110005860137796}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1152568141
 GameObject:
   m_ObjectHideFlags: 0
@@ -2457,21 +2451,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 4351884191414890525, guid: 12cded581d2207f40bc18f46fb0bdc81,
-        type: 3}
-      propertyPath: speed
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 4351884191414890525, guid: 12cded581d2207f40bc18f46fb0bdc81,
-        type: 3}
-      propertyPath: engineBeam
-      value: 
-      objectReference: {fileID: 933962303}
-    - target: {fileID: 4663110006814661177, guid: 12cded581d2207f40bc18f46fb0bdc81,
-        type: 3}
-      propertyPath: m_BodyType
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4663110006814661181, guid: 12cded581d2207f40bc18f46fb0bdc81,
         type: 3}
       propertyPath: m_Name
