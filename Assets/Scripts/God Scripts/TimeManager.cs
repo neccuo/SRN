@@ -131,6 +131,8 @@ public class TimeManager : MonoBehaviour
         {
             secondsPast = 0;
             Date.PassDay();
+            StartCoroutine(GameManager.Instance.saveLoad.UpdatePrices());
+            // ^DEFINITELY USE UNITY EVENTS AT SOME POINT FOR THIS
         }
         secondsPast += Time.deltaTime;
         secondsPastIndicator.text = "Day: " + (secondsPast)*100 + "%";

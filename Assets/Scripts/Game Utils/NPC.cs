@@ -215,13 +215,15 @@ public class NPC : MonoBehaviour
     void BuyItem()
     {
         int randInt = Random.Range(0, 3);
-        StartCoroutine(_gm.saveLoad.NpcItemBuy(npcID, randInt, 1));
+        int randInt2 = Random.Range(1, 4);
+        StartCoroutine(_gm.saveLoad.NpcItemBuy(npcID, randInt, randInt2));
     }
 
     void SellItem()
     {
         int randInt = Random.Range(0, 3);
-        StartCoroutine(_gm.saveLoad.NpcItemSell(npcID, randInt, 1));
+        int randInt2 = Random.Range(1, 2); // returns 1
+        StartCoroutine(_gm.saveLoad.NpcItemSell(npcID, randInt, randInt2));
     }
 
     void HandleSeekPlanet() // CHANGES ITS FOCUS WHENEVER A PLANET IS CLOSER TO IT (ADHD)

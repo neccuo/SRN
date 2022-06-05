@@ -281,7 +281,7 @@ public class SaveLoadSystem : MonoBehaviour
         WWWForm form = new WWWForm();
         form.AddField("id", newNpc.GetNPCID().ToString());
         form.AddField("name", newNpc.gameObject.name);
-        form.AddField("credits", "5000");
+        form.AddField("credits", "15000");
         form.AddField("race", "human");
         form.AddField("hull_id", newNpc.ship.GetHullID().ToString());
         form.AddField("x_axis", newNpc.transform.position.x.ToString());
@@ -299,6 +299,24 @@ public class SaveLoadSystem : MonoBehaviour
             Debug.Log(www.error);
             Debug.Log(www.result);
             callback(-1);
+        }
+    }
+
+    /* TODO: REMEMBER UNITY EVENTS FOR THIS */
+    public IEnumerator UpdatePrices()
+    {
+        UnityWebRequest www = UnityWebRequest.Get("http://localhost/sqlconnect/item_price_update.php");
+        yield return www.SendWebRequest();
+        if(www.result == UnityWebRequest.Result.Success)
+        {
+            Debug.Log("UpdatePrices: success");
+            // Debug.Log(www.downloadHandler.text);
+        }
+        else
+        {
+            Debug.LogError("UpdatePrices: fail");
+            Debug.Log(www.error);
+            Debug.Log(www.result);
         }
     }
 
