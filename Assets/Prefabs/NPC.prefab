@@ -27,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2409782443382836827}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.43622175, y: -24.996115, z: 0}
+  m_LocalPosition: {x: 30.6448, y: 7.53657, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_Children:
   - {fileID: 2553247402552559786}
@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc42632275c1e944abf9af03ddf3f7ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  npcID: 16
+  npcID: 20
   objective: 3
   ship: {fileID: 2553247402552559788}
   player: {fileID: 0}
@@ -106,12 +106,12 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 3482c7e64a6a2064aa55dff099f5593a,
+      objectReference: {fileID: 21300000, guid: c058dd42e13033b4486a596dcbbcf73c,
         type: 3}
     - target: {fileID: 8994337465208505314, guid: f8f67eeb31d53534897658337c27c48c,
         type: 3}
       propertyPath: _hullID
-      value: 3
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 8994337465208505316, guid: f8f67eeb31d53534897658337c27c48c,
         type: 3}

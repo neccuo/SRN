@@ -594,6 +594,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Planet_0
       objectReference: {fileID: 0}
+    - target: {fileID: 8833258815693163110, guid: 7866c22ea3eee074b98e744cc4416bff,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8833258815693163160, guid: 7866c22ea3eee074b98e744cc4416bff,
         type: 3}
       propertyPath: m_RootOrder
@@ -786,6 +791,51 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!1 &519956822
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 519956824}
+  - component: {fileID: 519956823}
+  m_Layer: 0
+  m_Name: TEST OBJECT
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &519956823
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519956822}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d324d1962ccd4643828338d98738498, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _dbName: URI=file:System.db
+  _planetManager: {fileID: 1318918574}
+--- !u!4 &519956824
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519956822}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 50, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 12
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &701337322
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1501,6 +1551,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Planet_2
       objectReference: {fileID: 0}
+    - target: {fileID: 8833258815693163110, guid: 7866c22ea3eee074b98e744cc4416bff,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8833258815693163160, guid: 7866c22ea3eee074b98e744cc4416bff,
         type: 3}
       propertyPath: m_RootOrder
@@ -1594,6 +1649,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1318918573}
+  - component: {fileID: 1318918574}
   m_Layer: 0
   m_Name: Planets
   m_TagString: Untagged
@@ -1618,6 +1674,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1318918574
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1318918572}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3707c79eeb219604ba6a007a18ca27ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _planetPrefab: {fileID: 8833258815693163110, guid: 7866c22ea3eee074b98e744cc4416bff,
+    type: 3}
 --- !u!1 &1356152329
 GameObject:
   m_ObjectHideFlags: 0
@@ -1724,6 +1794,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Planet_1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8833258815693163110, guid: 7866c22ea3eee074b98e744cc4416bff,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8833258815693163160, guid: 7866c22ea3eee074b98e744cc4416bff,
         type: 3}

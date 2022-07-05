@@ -13,8 +13,7 @@ public class Controller : MonoBehaviour
     private GameManager gameInstance; // for storing the game state
     public Player player;
 
-    [SerializeField]
-    private GameObject _inventoryBar;
+    [SerializeField] private GameObject _inventoryBar;
 
     public RectTransform parent;
 

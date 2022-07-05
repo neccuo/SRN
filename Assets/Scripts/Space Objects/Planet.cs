@@ -15,7 +15,8 @@ public class Planet : MonoBehaviour
     #region movement realm
     float speedBase;
     float speedRange;
-    public float angularSpeed;
+    [SerializeField] private float planetID;
+    [SerializeField] private float angularSpeed;
 
     #endregion
 
@@ -28,23 +29,32 @@ public class Planet : MonoBehaviour
         shopStock = GetComponent<ShopStock>();
         
         //scaleBase = 1f;
-        scaleRange = 0.6f;
-        speedBase = 5f;
-        speedRange = 5f;
-        angularSpeed = 0f;
+        // scaleRange = 0.6f;
+        //speedBase = 5f;
+        // speedRange = 5f;
+        // angularSpeed = 0f;
 
         if(sunLocation == null)
         {
             sunLocation = GameObject.Find("Sun").transform;
         }
 
-        InitScale();
-        InitAngularSpeed();
+        // InitScale();
+        // InitAngularSpeed();
     }
 
     void Update()
     {
         OrbitSun(sunLocation.position, angularSpeed * Time.deltaTime);
+    }
+
+    public void SetPlanet(int id, string name, float x, float y, float scale, float angularSpeed)
+    {
+        this.planetID = id;
+        this.gameObject.name = name;
+        this.transform.position = new Vector3(x, y, 0);
+        this.transform.localScale = new Vector3(scale, scale, 1);
+        this.angularSpeed = angularSpeed;
     }
 
     /*void OnMouseDown() // TO BE CONTINUED
