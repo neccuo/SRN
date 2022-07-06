@@ -124,19 +124,29 @@ public class TimeManager : MonoBehaviour
     {
         _player = Controller.ControllerGod.player;
         _playerSpeed = _player.transform.GetChild(0).GetComponent<Spaceship>().speed;
+        timeIndicator.text = DisplayDate();
+
     }
+
+    private void OnPassDay()
+    {
+        StartCoroutine(GameManager.Instance.saveLoad.UpdatePrices());
+        timeIndicator.text = DisplayDate();
+        // If you happen to add a functionality that updates planet locations per day, put it under here
+
+    }
+
     void Update()
     {
         if(secondsPast >= 1.0f)
         {
             secondsPast = 0;
             Date.PassDay();
-            StartCoroutine(GameManager.Instance.saveLoad.UpdatePrices());
             // ^DEFINITELY USE UNITY EVENTS AT SOME POINT FOR THIS
+            OnPassDay();
         }
         secondsPast += Time.deltaTime;
         secondsPastIndicator.text = "Day: " + (secondsPast)*100 + "%";
-        timeIndicator.text = DisplayDate();
 
 
         if(Input.GetMouseButtonDown(0) && GameManager.Instance.GetCurrentState() == GameState.PlanMovement)

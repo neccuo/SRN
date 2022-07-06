@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Data;
 using Mono.Data.Sqlite;
+using System.Collections.Generic;
 
 public class SimpleDB : MonoBehaviour
 {
@@ -29,6 +30,18 @@ public class SimpleDB : MonoBehaviour
             LoadPlanets();
             // load planets from DB
         }
+        if(Input.GetKeyDown(KeyCode.S))
+        {
+            SavePlanets();
+            // load planets from DB
+        }
+        if(Input.GetKeyDown(KeyCode.A))
+        {
+            for(int i = 0; i < 10; i++)
+            {
+                AddRandomPlanet();
+            }
+        }
     }
 
     public void LoadPlanets()
@@ -48,6 +61,30 @@ public class SimpleDB : MonoBehaviour
                         _planetManager.SpawnPlanet(reader);
                     }
                     reader.Close();
+                }
+            }
+            connection.Close();
+        }
+    }
+
+    public void SavePlanets()
+    {
+        using (var connection = new SqliteConnection(_dbName))
+        {
+            connection.Open();
+
+            Dictionary<int, Vector2> planetDic = _planetManager.GetPlanetPoss();
+
+            foreach(KeyValuePair<int, Vector2> entry in planetDic)
+            {
+                using (var command = connection.CreateCommand())
+                {
+                    command.CommandText = "UPDATE planets SET " +
+                        "x_axis = '" + entry.Value.x + "', " +
+                        "y_axis = '" + entry.Value.y + "' " +
+                        "WHERE id = '" + entry.Key + "'" +
+                        ";";
+                    command.ExecuteNonQuery();
                 }
             }
             connection.Close();
@@ -91,18 +128,28 @@ public class SimpleDB : MonoBehaviour
         }
     }
 
-    public void AddPlanet(string name, float x_axis, float y_axis)
+    // USE "LOAD" AFTER IT
+    // GOOD FOR BENCHMARK
+    public void AddRandomPlanet()
     {
+        string name = "Planet " + Random.Range(0, 10000).ToString();
+        float x = Random.Range(-80.0f, 80.0f);
+        float y = Random.Range(-80.0f, 80.0f);
+        float scale = Random.Range(0.22f, 4.0f);
+        float speed = Random.Range(-15.0f, 15.0f);
+
         using (var connection = new SqliteConnection(_dbName))
         {
             connection.Open();
 
             using (var command = connection.CreateCommand())
             {
-                command.CommandText = "INSERT INTO planets (name, x_axis, y_axis) VALUES (" +
+                command.CommandText = "INSERT INTO planets (name, x_axis, y_axis, scale, angular_speed) VALUES (" +
                     "'" + name + "', " +
-                    "'" + x_axis + "', " +
-                    "'" + y_axis + "'" +
+                    "'" + x + "', " +
+                    "'" + y + "', " +
+                    "'" + scale + "', " +
+                    "'" + speed + "'" +
                     ");";
                 command.ExecuteNonQuery();
             }

@@ -8,12 +8,18 @@ using System.Data;
 public class PlanetManager : MonoBehaviour
 {
     [SerializeField] private GameObject _planetPrefab;
+    [SerializeField] private Dictionary<int, Vector2> planetPoss = new Dictionary<int, Vector2>();
+
+    void Update()
+    {
+        UpdatePlanetPoss();
+
+    }
 
     public void SpawnPlanet(IDataReader data)
     {
         GameObject newPlanet = Instantiate(_planetPrefab);
         newPlanet.transform.parent = this.transform;
-        // Int32.Parse("1234"); öffffffffffffffffffffffffffffffffffffffffff
         newPlanet.GetComponent<Planet>().SetPlanet(
             ObjectToInt(data["id"]), 
             data["name"].ToString(),
@@ -22,6 +28,27 @@ public class PlanetManager : MonoBehaviour
             ObjectToFloat(data["scale"]), 
             ObjectToFloat(data["angular_speed"])
         );
+    }
+
+    private void UpdatePlanetPoss()
+    {
+        int id;
+        GameObject gObject;
+        Planet planet;
+        foreach(Transform child in transform)
+        {
+            gObject = child.gameObject;
+            planet = gObject.GetComponent<Planet>();
+            planet.OrbitSun();
+            id = gObject.GetComponent<Planet>().GetPlanetID();
+            planetPoss[id] = (Vector2) child.position;
+        }
+    }
+
+    // TODO: OPTIMIZATION
+    public Dictionary<int, Vector2> GetPlanetPoss()
+    {
+        return planetPoss;
     }
 
     private int ObjectToInt(object obj)

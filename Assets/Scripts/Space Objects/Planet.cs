@@ -15,12 +15,12 @@ public class Planet : MonoBehaviour
     #region movement realm
     float speedBase;
     float speedRange;
-    [SerializeField] private float planetID;
+    [SerializeField] private int planetID;
     [SerializeField] private float angularSpeed;
 
     #endregion
 
-    public Transform sunLocation;
+    public Vector2 sunLocation;
 
     ShopStock shopStock;
 
@@ -28,24 +28,16 @@ public class Planet : MonoBehaviour
     {
         shopStock = GetComponent<ShopStock>();
         
-        //scaleBase = 1f;
-        // scaleRange = 0.6f;
-        //speedBase = 5f;
-        // speedRange = 5f;
-        // angularSpeed = 0f;
-
         if(sunLocation == null)
         {
-            sunLocation = GameObject.Find("Sun").transform;
+            sunLocation = new Vector2(0, 0);
         }
-
-        // InitScale();
-        // InitAngularSpeed();
     }
 
-    void Update()
+
+    public int GetPlanetID()
     {
-        OrbitSun(sunLocation.position, angularSpeed * Time.deltaTime);
+        return planetID;
     }
 
     public void SetPlanet(int id, string name, float x, float y, float scale, float angularSpeed)
@@ -56,11 +48,6 @@ public class Planet : MonoBehaviour
         this.transform.localScale = new Vector3(scale, scale, 1);
         this.angularSpeed = angularSpeed;
     }
-
-    /*void OnMouseDown() // TO BE CONTINUED
-    {
-        Debug.Log("You just clicked " + this.name);
-    }*/
 
     private void OnTriggerEnter2D(Collider2D col)
     {
@@ -94,15 +81,34 @@ public class Planet : MonoBehaviour
             angularSpeed = randNum - speedBase;
         else
             angularSpeed = randNum + speedBase;
+    }
 
-        // Debug.LogFormat("angular speed: {0}", angularSpeed);
-
+    // COME AGAIN
+    void OneDayOfOrbit()
+    {
+        Vector2 center = new Vector2(0, 0);
+        Vector2 pos = transform.position;
+        Quaternion rot = Quaternion.AngleAxis(angularSpeed, new Vector3(0, 0, 1));
+        Vector2 dir = pos - center;
+        dir = rot * dir;
+        transform.position = center + dir;
     }
 
 
     // taken from transform.RotateAround()
-    void OrbitSun(Vector2 center, float angle)
+    public void OrbitSun(Vector2 center, float angle)
     {
+        Vector2 pos = transform.position;
+        Quaternion rot = Quaternion.AngleAxis(angle, new Vector3(0, 0, 1));
+        Vector2 dir = pos - center;
+        dir = rot * dir;
+        transform.position = center + dir;
+    }
+
+    public void OrbitSun()
+    {
+        Vector2 center = new Vector2(0, 0);
+        float angle = angularSpeed * Time.deltaTime;
         Vector2 pos = transform.position;
         Quaternion rot = Quaternion.AngleAxis(angle, new Vector3(0, 0, 1));
         Vector2 dir = pos - center;
