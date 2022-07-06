@@ -20,7 +20,7 @@ public class Planet : MonoBehaviour
 
     #endregion
 
-    public Vector2 sunLocation;
+    private Vector2 _sunLocation;
 
     ShopStock shopStock;
 
@@ -28,9 +28,9 @@ public class Planet : MonoBehaviour
     {
         shopStock = GetComponent<ShopStock>();
         
-        if(sunLocation == null)
+        if(_sunLocation == null)
         {
-            sunLocation = new Vector2(0, 0);
+            _sunLocation = new Vector2(0, 0);
         }
     }
 
@@ -40,13 +40,15 @@ public class Planet : MonoBehaviour
         return planetID;
     }
 
-    public void SetPlanet(int id, string name, float x, float y, float scale, float angularSpeed)
+    public Planet SetPlanet(int id, string name, float x, float y, float scale, float angularSpeed)
     {
         this.planetID = id;
         this.gameObject.name = name;
         this.transform.position = new Vector3(x, y, 0);
         this.transform.localScale = new Vector3(scale, scale, 1);
         this.angularSpeed = angularSpeed;
+
+        return this;
     }
 
     private void OnTriggerEnter2D(Collider2D col)

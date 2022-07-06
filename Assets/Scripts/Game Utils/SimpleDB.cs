@@ -1,5 +1,7 @@
 using UnityEngine;
 using System.Data;
+using System;
+
 using Mono.Data.Sqlite;
 using System.Collections.Generic;
 
@@ -8,6 +10,9 @@ public class SimpleDB : MonoBehaviour
     [SerializeField] private string _dbName = "URI=file:System.db";
 
     [SerializeField] private PlanetManager _planetManager;
+
+    [SerializeField] private SystemManager _systemManager;
+
 
 
     void Start()
@@ -25,15 +30,9 @@ public class SimpleDB : MonoBehaviour
         {
             CreateDB();
         }
-        if(Input.GetKeyDown(KeyCode.L))
-        {
-            LoadPlanets();
-            // load planets from DB
-        }
         if(Input.GetKeyDown(KeyCode.S))
         {
             SavePlanets();
-            // load planets from DB
         }
         if(Input.GetKeyDown(KeyCode.A))
         {
@@ -42,8 +41,13 @@ public class SimpleDB : MonoBehaviour
                 AddRandomPlanet();
             }
         }
+        if(Input.GetKeyDown(KeyCode.G))
+        {
+            GetPlanetsFromSystemID(_systemManager.currentSystemID);
+        }
     }
 
+    // ONLY USE IT AT THE START
     public void LoadPlanets()
     {
         using (var connection = new SqliteConnection(_dbName))
@@ -67,21 +71,49 @@ public class SimpleDB : MonoBehaviour
         }
     }
 
+    // USE IT WHEN CHANGING SYSTEMS
+    public List<int> GetPlanetsFromSystemID(int systemID)
+    {
+        List<int> idList = new List<int>();
+        using (var connection = new SqliteConnection(_dbName))
+        {
+            connection.Open();
+
+            using (var command = connection.CreateCommand())
+            {
+                command.CommandText = "SELECT planet_id FROM system_planets WHERE system_id = '" + systemID + "';";
+
+                using (IDataReader reader = command.ExecuteReader())
+                {
+                    int num;
+                    while (reader.Read())
+                    {
+                        num = Int32.Parse(reader["planet_id"].ToString());
+                        idList.Add(num);
+                        Debug.Log(num.ToString());
+                    }
+                    reader.Close();
+                }
+            }
+            connection.Close();
+        }
+        return idList;
+    }
+
     public void SavePlanets()
     {
         using (var connection = new SqliteConnection(_dbName))
         {
             connection.Open();
+            Dictionary<int, Planet> planetDic = _planetManager.GetPlanetDic();
 
-            Dictionary<int, Vector2> planetDic = _planetManager.GetPlanetPoss();
-
-            foreach(KeyValuePair<int, Vector2> entry in planetDic)
+            foreach(KeyValuePair<int, Planet> entry in planetDic)
             {
                 using (var command = connection.CreateCommand())
                 {
                     command.CommandText = "UPDATE planets SET " +
-                        "x_axis = '" + entry.Value.x + "', " +
-                        "y_axis = '" + entry.Value.y + "' " +
+                        "x_axis = '" + entry.Value.transform.position.x + "', " +
+                        "y_axis = '" + entry.Value.transform.position.y + "' " +
                         "WHERE id = '" + entry.Key + "'" +
                         ";";
                     command.ExecuteNonQuery();
@@ -132,11 +164,11 @@ public class SimpleDB : MonoBehaviour
     // GOOD FOR BENCHMARK
     public void AddRandomPlanet()
     {
-        string name = "Planet " + Random.Range(0, 10000).ToString();
-        float x = Random.Range(-80.0f, 80.0f);
-        float y = Random.Range(-80.0f, 80.0f);
-        float scale = Random.Range(0.22f, 4.0f);
-        float speed = Random.Range(-15.0f, 15.0f);
+        string name = "Planet " + UnityEngine.Random.Range(0, 10000).ToString();
+        float x = UnityEngine.Random.Range(-80.0f, 80.0f);
+        float y = UnityEngine.Random.Range(-80.0f, 80.0f);
+        float scale = UnityEngine.Random.Range(0.22f, 4.0f);
+        float speed = UnityEngine.Random.Range(-15.0f, 15.0f);
 
         using (var connection = new SqliteConnection(_dbName))
         {
