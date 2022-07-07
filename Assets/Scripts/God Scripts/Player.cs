@@ -61,9 +61,11 @@ public class Player : MonoBehaviour
         _followedObject = obj;
     }
 
-    public GameObject GetFollowedObject()
+    public GameObject GetFollowedObject() // Works fine now. Not decided on whether adding the logic here or outside of this method
     {
-        return _followedObject;
+        if(_followedObject != null && _followedObject.activeSelf)
+            return _followedObject;
+        return null;
     }
 
     public Vector2 SetMovementBasic()

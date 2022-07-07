@@ -8,16 +8,38 @@ using System.Data;
 public class PlanetManager : MonoBehaviour
 {
     [SerializeField] private GameObject _planetPrefab;
+    [SerializeField] private SystemManager _systemManager;
+
     [SerializeField] private SimpleDB _simpleDB;
 
     // [SerializeField] private Dictionary<int, Vector2> planetPoss = new Dictionary<int, Vector2>();
 
     [SerializeField] private Dictionary<int, Planet> _planetDic = new Dictionary<int, Planet>();
 
-    void Start()
+    void Awake()
     {
         _simpleDB.LoadPlanets();
-        // fill planet dic
+    }
+
+    void Start()
+    {
+    }
+
+    public void PrepareSystemPlanets(int oldSysID, int newSysID)
+    {
+        List<int> deactivateIdList = _simpleDB.GetPlanetsBySystemID(oldSysID);
+        List<int> activateIdList = _simpleDB.GetPlanetsBySystemID(newSysID);
+
+        foreach(int i in deactivateIdList)
+        {
+            _planetDic[i].gameObject.SetActive(false);
+        }
+        foreach(int i in activateIdList)
+        {
+            _planetDic[i].gameObject.SetActive(true);
+        }
+
+
     }
 
     private void FillPlanetDic(int id, Planet planet)
@@ -29,9 +51,16 @@ public class PlanetManager : MonoBehaviour
     void Update()
     {
         UpdatePlanetPoss();
+        if(Input.GetKeyDown(KeyCode.D))
+        {
+            foreach(KeyValuePair<int, Planet> row in _planetDic)
+            {
+                Debug.Log(row.Key);
+            }
+        }
     }
 
-    public void SpawnPlanet(IDataReader data)
+    public void SpawnPlanet(IDataReader data) // ONLY USED ON INITIALIZATION
     {
         GameObject newPlanet = Instantiate(_planetPrefab);
         int id = ObjectToInt(data["id"]);
@@ -85,9 +114,9 @@ public class PlanetManager : MonoBehaviour
         return float.Parse(obj.ToString());
     }
 
-    public Planet GetPlanetByID(int id)
+    /*public Planet GetPlanetByID(int id)
     {
         return null;
-    }
+    }*/
 
 }

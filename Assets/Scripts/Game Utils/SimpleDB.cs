@@ -43,7 +43,7 @@ public class SimpleDB : MonoBehaviour
         }
         if(Input.GetKeyDown(KeyCode.G))
         {
-            GetPlanetsFromSystemID(_systemManager.currentSystemID);
+            GetPlanetsBySystemID(_systemManager.currentSystemID);
         }
     }
 
@@ -72,9 +72,13 @@ public class SimpleDB : MonoBehaviour
     }
 
     // USE IT WHEN CHANGING SYSTEMS
-    public List<int> GetPlanetsFromSystemID(int systemID)
+    public List<int> GetPlanetsBySystemID(int systemID)
     {
         List<int> idList = new List<int>();
+        if(systemID == 0) // FOR TEST OR INIT
+        {
+            return idList;
+        }
         using (var connection = new SqliteConnection(_dbName))
         {
             connection.Open();
@@ -90,7 +94,6 @@ public class SimpleDB : MonoBehaviour
                     {
                         num = Int32.Parse(reader["planet_id"].ToString());
                         idList.Add(num);
-                        Debug.Log(num.ToString());
                     }
                     reader.Close();
                 }

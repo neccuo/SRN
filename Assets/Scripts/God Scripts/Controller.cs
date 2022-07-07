@@ -206,11 +206,12 @@ public class Controller : MonoBehaviour
             ChangeState(GameState.PlanMovement); // stop game
         else if(player.GetTarget() == (Vector2) player.transform.position) // REACHED TO THE DESTINATION
         {
-            if(player.GetFollowedObject() == null)
+            GameObject followedObject = player.GetFollowedObject();
+            if(followedObject == null)
             {
                 ChangeState(GameState.PlanMovement);
             }
-            else if(player.GetFollowedObject().tag == "Planet") // REACHED A PLANET (FOLLOW CLICKPOINT): change to ShopState
+            else if(followedObject.tag == "Planet") // REACHED A PLANET (FOLLOW CLICKPOINT): change to ShopState
             {
                 GameObject planet = player.GetFollowedObject();
                 ShopStock currentStock = planet.GetComponent<ShopStock>();
@@ -218,10 +219,11 @@ public class Controller : MonoBehaviour
 
                 ChangeState(GameState.ShopState);
             }
-            else if(player.GetFollowedObject().tag == "Portal")
+            else if(followedObject.tag == "Portal")
             {
                 Debug.Log("portal");
-                ChangeState(GameState.SpaceSystemLoad);
+                followedObject.GetComponent<PortalLogic>().PortalTravelInit();
+                // ChangeState(GameState.SpaceSystemLoad);
             }
             else // REACHED NON-OBJECT DESTINATION (DEFAULT CLICKPOINT) OR NON-PLANET OBJECT (FOLLOW CLICKPOINT): return to PlanMovement state
             {

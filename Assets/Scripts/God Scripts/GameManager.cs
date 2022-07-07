@@ -11,8 +11,7 @@ public enum GameState
     Combat,
     TurnEvaluation,
     CheatBarState,
-    ShopState,
-    SpaceSystemLoad
+    ShopState // , SpaceSystemLoad
 }
 
 public class GameManager : MonoBehaviour
@@ -85,8 +84,8 @@ public class GameManager : MonoBehaviour
             case GameState.ShopState:
                 break;
 
-            case GameState.SpaceSystemLoad:
-                break;
+            //case GameState.SpaceSystemLoad:
+            //    break;
 
             default:
                 throw new MissingComponentException("" + GetCurrentState().ToString() + "is not an available state.");
@@ -137,9 +136,9 @@ public class GameManager : MonoBehaviour
                 shopBar.SetActive(true);
                 // OpenShopMenu(Planet planet)
                 break;
-            case GameState.SpaceSystemLoad:
-                portalManager.CreateSystemToTravel();
-                break;
+            //case GameState.SpaceSystemLoad:
+                // portalManager.CreateSystemToTravel();
+            //    break;
             default:
                 throw new MissingComponentException("" + newState.ToString() + "is not an available state.");
         }
