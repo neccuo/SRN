@@ -1253,6 +1253,7 @@ MonoBehaviour:
   currentSystemID: 0
   _planets: {fileID: 1318918572}
   _systemNameDisplay: {fileID: 2058863372}
+  _spaceBG: {fileID: 373136420}
 --- !u!4 &978083696
 Transform:
   m_ObjectHideFlags: 0

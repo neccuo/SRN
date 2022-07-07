@@ -8,6 +8,8 @@ public class SystemManager : MonoBehaviour
     [SerializeField] public int currentSystemID = 0;
     [SerializeField] private GameObject _planets;
     [SerializeField] private Text _systemNameDisplay;
+    [SerializeField] private GameObject _spaceBG;
+
 
     private PlanetManager _planetManager;
 
@@ -30,7 +32,7 @@ public class SystemManager : MonoBehaviour
     {
         // check for validity maybe??
 
-        // SetBackground
+        SetBackground(newSystemID);
         // SetSun
         _planetManager.PrepareSystemPlanets(currentSystemID, newSystemID);
         // SetNPCs
@@ -41,6 +43,25 @@ public class SystemManager : MonoBehaviour
     private string GetSystemNameByID()
     {
         return "";
+    }
+
+    private void SetBackground(int newSystemID)
+    {
+        SpriteRenderer sr = _spaceBG.GetComponent<SpriteRenderer>();
+        string directory = "Sprites/Environment/SpaceBG/Space_Background_"; /*insert number*/
+        sr.sprite = Resources.Load<Sprite>("" + directory + newSystemID.ToString());
+        switch(newSystemID)
+        {
+            case 2:
+                sr.sprite = Resources.Load<Sprite>(directory + 2.ToString());
+                sr.color = new Color32(231, 231, 231, 255);
+                break;
+            default:
+                sr.sprite = Resources.Load<Sprite>(directory + 1.ToString());
+                sr.color = new Color32(103, 103, 103, 255);
+                break;
+
+        }
     }
 
     /*private void SetPlanets()
