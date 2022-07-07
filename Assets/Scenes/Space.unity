@@ -717,7 +717,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 519956822}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2d324d1962ccd4643828338d98738498, type: 3}
+  m_Script: {fileID: 11500000, guid: 5b0bc26c42c0f00478c382cd7643e6a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _dbName: URI=file:System.db
@@ -1525,7 +1525,7 @@ MonoBehaviour:
   _planetPrefab: {fileID: 8833258815693163110, guid: 7866c22ea3eee074b98e744cc4416bff,
     type: 3}
   _systemManager: {fileID: 978083695}
-  _simpleDB: {fileID: 519956823}
+  _systemDB: {fileID: 519956823}
 --- !u!1 &1356152329
 GameObject:
   m_ObjectHideFlags: 0

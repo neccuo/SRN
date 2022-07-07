@@ -10,7 +10,7 @@ public class PlanetManager : MonoBehaviour
     [SerializeField] private GameObject _planetPrefab;
     [SerializeField] private SystemManager _systemManager;
 
-    [SerializeField] private SimpleDB _simpleDB;
+    [SerializeField] private SystemDB _systemDB;
 
     // [SerializeField] private Dictionary<int, Vector2> planetPoss = new Dictionary<int, Vector2>();
 
@@ -18,7 +18,7 @@ public class PlanetManager : MonoBehaviour
 
     void Awake()
     {
-        _simpleDB.LoadPlanets();
+        _systemDB.LoadPlanets();
     }
 
     void Start()
@@ -27,8 +27,8 @@ public class PlanetManager : MonoBehaviour
 
     public void PrepareSystemPlanets(int oldSysID, int newSysID)
     {
-        List<int> deactivateIdList = _simpleDB.GetPlanetsBySystemID(oldSysID);
-        List<int> activateIdList = _simpleDB.GetPlanetsBySystemID(newSysID);
+        List<int> deactivateIdList = _systemDB.GetPlanetsBySystemID(oldSysID);
+        List<int> activateIdList = _systemDB.GetPlanetsBySystemID(newSysID);
 
         foreach(int i in deactivateIdList)
         {

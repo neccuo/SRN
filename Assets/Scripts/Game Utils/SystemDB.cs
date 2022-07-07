@@ -5,7 +5,7 @@ using System;
 using Mono.Data.Sqlite;
 using System.Collections.Generic;
 
-public class SimpleDB : MonoBehaviour
+public class SystemDB : MonoBehaviour
 {
     [SerializeField] private string _dbName = "URI=file:System.db";
 
