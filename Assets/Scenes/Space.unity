@@ -562,6 +562,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed31353fbdae4ad4a8b2b7456e91843b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _systemDB: {fileID: 519956823}
   timeIndicator: {fileID: 1356152332}
   secondsPastIndicator: {fileID: 1427150850}
 --- !u!114 &375930922
@@ -576,6 +577,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 837158e4f0cdf4749b855938a3b7ad82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _npcManager: {fileID: 789564860}
 --- !u!1 &467269414
 GameObject:
   m_ObjectHideFlags: 0
@@ -964,7 +966,7 @@ GameObject:
   m_Component:
   - component: {fileID: 789564861}
   m_Layer: 0
-  m_Name: NPCs
+  m_Name: NPC Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1251,9 +1253,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentSystemID: 0
-  _planets: {fileID: 1318918572}
   _systemNameDisplay: {fileID: 2058863372}
   _spaceBG: {fileID: 373136420}
+  _systemDB: {fileID: 519956823}
+  _planetManager: {fileID: 1318918574}
 --- !u!4 &978083696
 Transform:
   m_ObjectHideFlags: 0
@@ -1491,7 +1494,7 @@ GameObject:
   - component: {fileID: 1318918573}
   - component: {fileID: 1318918574}
   m_Layer: 0
-  m_Name: Planets
+  m_Name: Planet Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

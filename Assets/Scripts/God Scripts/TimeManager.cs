@@ -17,9 +17,7 @@ public class Date
 
     static Date()
     {
-        dayOfMonth = 28;
-        month = Month.February;
-        year = 3000;
+        LoadDate();
     }
     
     public static void PassDay()
@@ -104,11 +102,28 @@ public class Date
         else
             return true;
     }
+
+    public static void LoadDate()
+    {
+        dayOfMonth = PlayerPrefs.GetInt("day", 1);
+        month = (Month) PlayerPrefs.GetInt("month", 0);
+        year = PlayerPrefs.GetInt("year", 3000);;
+    }
+
+    public static void SaveDate()
+    {
+        PlayerPrefs.SetInt("day", dayOfMonth);
+        PlayerPrefs.SetInt("month", (int) month);
+        PlayerPrefs.SetInt("year", year);
+    }
 }
 
 public class TimeManager : MonoBehaviour
 {
     // day = nco/spd
+
+    [SerializeField] private SystemDB _systemDB;
+
     private Player _player;
 
     private float _playerSpeed;
@@ -133,6 +148,10 @@ public class TimeManager : MonoBehaviour
         StartCoroutine(GameManager.Instance.saveLoad.UpdatePrices());
         timeIndicator.text = DisplayDate();
         // If you happen to add a functionality that updates planet locations per day, put it under here
+        _systemDB.SavePlanets();
+        // save it to playerprefs
+        Date.SaveDate();
+
 
     }
 

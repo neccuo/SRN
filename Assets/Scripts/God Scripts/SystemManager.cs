@@ -2,25 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
+
 
 public class SystemManager : MonoBehaviour
 {
     [SerializeField] public int currentSystemID = 0;
-    [SerializeField] private GameObject _planets;
     [SerializeField] private Text _systemNameDisplay;
     [SerializeField] private GameObject _spaceBG;
-
-
-    private PlanetManager _planetManager;
+    [SerializeField] private SystemDB _systemDB;
+    [SerializeField] private PlanetManager _planetManager;
 
     void Awake()
     {
-        _planetManager = _planets.GetComponent<PlanetManager>();
+        // _planetManager = _planets.GetComponent<PlanetManager>();
     }
 
     void Start()
     {
-        ChangeSystem(0); // START WHERE YOU LEFT OFF?
+        ChangeSystem(1); // START WHERE YOU LEFT OFF?
     }
 
     void Update()
@@ -31,26 +31,27 @@ public class SystemManager : MonoBehaviour
     public void ChangeSystem(int newSystemID)
     {
         // check for validity maybe??
+        SystemTEMP sysTemp = _systemDB.GetSystemData(newSystemID);
 
-        SetBackground(newSystemID);
-        // SetSun
         _planetManager.PrepareSystemPlanets(currentSystemID, newSystemID);
+        SetBackground(sysTemp.background_id);
+        SetSun(sysTemp.sun_id);
         // SetNPCs
-        currentSystemID = newSystemID;
-        _systemNameDisplay.text = "!System!: " + newSystemID;
+        currentSystemID = sysTemp.id;
+        _systemNameDisplay.text = "!System!: " + sysTemp.name;
     }
 
-    private string GetSystemNameByID()
+    private void SetSun(int id)
     {
-        return "";
+
     }
 
-    private void SetBackground(int newSystemID)
+    private void SetBackground(int id)
     {
         SpriteRenderer sr = _spaceBG.GetComponent<SpriteRenderer>();
         string directory = "Sprites/Environment/SpaceBG/Space_Background_"; /*insert number*/
-        sr.sprite = Resources.Load<Sprite>("" + directory + newSystemID.ToString());
-        switch(newSystemID)
+        sr.sprite = Resources.Load<Sprite>("" + directory + id.ToString());
+        switch(id)
         {
             case 2:
                 sr.sprite = Resources.Load<Sprite>(directory + 2.ToString());
@@ -64,9 +65,10 @@ public class SystemManager : MonoBehaviour
         }
     }
 
-    /*private void SetPlanets()
+    private int StrToInt(string str)
     {
-        _planetManager.PrepareSystemPlanets();
-    }*/
+        return Int32.Parse(str);
+    }
+
 
 }

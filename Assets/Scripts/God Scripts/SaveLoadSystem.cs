@@ -8,6 +8,9 @@ public class SaveLoadSystem : MonoBehaviour
 {
     private ShipSpawner _shipSpawner;
 
+    [SerializeField] private GameObject _npcManager; // Needs update, check here
+
+
 
     private class MiniNpc
     {
@@ -126,7 +129,7 @@ public class SaveLoadSystem : MonoBehaviour
         string jsonString = "[";
         int idRegister;
         int i = 0;
-        foreach(Transform child in GameObject.Find("NPCs").transform)
+        foreach(Transform child in _npcManager.transform)
         {
             if(i != 0)
                 jsonString += ",";

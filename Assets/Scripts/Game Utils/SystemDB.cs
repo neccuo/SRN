@@ -5,8 +5,18 @@ using System;
 using Mono.Data.Sqlite;
 using System.Collections.Generic;
 
+public class SystemTEMP
+{
+    public int id { get; set; }
+    public string name { get; set; }
+    public int sun_id { get; set; }
+    public int background_id { get; set; }
+}
+
 public class SystemDB : MonoBehaviour
 {
+    
+
     [SerializeField] private string _dbName = "URI=file:System.db";
 
     [SerializeField] private PlanetManager _planetManager;
@@ -26,10 +36,6 @@ public class SystemDB : MonoBehaviour
 
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.C))
-        {
-            CreateDB();
-        }
         if(Input.GetKeyDown(KeyCode.S))
         {
             SavePlanets();
@@ -41,15 +47,12 @@ public class SystemDB : MonoBehaviour
                 AddRandomPlanet();
             }
         }
-        if(Input.GetKeyDown(KeyCode.G))
-        {
-            GetPlanetsBySystemID(_systemManager.currentSystemID);
-        }
     }
 
     // ONLY USE IT AT THE START
     public void LoadPlanets()
     {
+        // looks shit, change it later
         using (var connection = new SqliteConnection(_dbName))
         {
             connection.Open();
@@ -103,6 +106,38 @@ public class SystemDB : MonoBehaviour
         return idList;
     }
 
+    public SystemTEMP GetSystemData(int systemID)
+    {
+        SystemTEMP system = new SystemTEMP();
+        if(systemID == 0) // FOR TEST OR INIT
+        {
+            return null;
+        }
+        using (var connection = new SqliteConnection(_dbName))
+        {
+            connection.Open();
+
+            using (var command = connection.CreateCommand())
+            {
+                // EXPECTING 1 ROW
+                command.CommandText = "SELECT * FROM systems WHERE id = '" + systemID + "';";
+                using (IDataReader reader = command.ExecuteReader())
+                {
+                    reader.Read();
+
+                    system.id = StrToInt(reader["id"].ToString());
+                    system.name = reader["name"].ToString();
+                    system.sun_id = StrToInt(reader["sun_id"].ToString());
+                    system.background_id = StrToInt(reader["background_id"].ToString());
+
+                    reader.Close();
+                }
+            }
+            connection.Close();
+        }
+        return system;
+    }
+
     public void SavePlanets()
     {
         using (var connection = new SqliteConnection(_dbName))
@@ -122,43 +157,6 @@ public class SystemDB : MonoBehaviour
                     command.ExecuteNonQuery();
                 }
             }
-            connection.Close();
-        }
-    }
-
-
-    public void KillDB()
-    {
-        using (var connection = new SqliteConnection(_dbName))
-        {
-            connection.Open();
-
-            using (var command = connection.CreateCommand())
-            {
-                command.CommandText = "DROP TABLE planets";
-                command.ExecuteNonQuery();
-            }
-
-            connection.Close();
-        }
-    }
-
-    public void CreateDB()
-    {
-        using (var connection = new SqliteConnection(_dbName))
-        {
-            connection.Open();
-
-            using (var command = connection.CreateCommand())
-            {
-                command.CommandText = "CREATE TABLE IF NOT EXISTS planets (" +
-                    "name VARCHAR(20)," +
-                    "x_axis FLOAT," +
-                    "y_axis FLOAT" +
-                    ");";
-                command.ExecuteNonQuery();
-            }
-
             connection.Close();
         }
     }
@@ -193,26 +191,8 @@ public class SystemDB : MonoBehaviour
         }
     }
 
-    public void DisplayPlanet()
+    private int StrToInt(string str)
     {
-        using (var connection = new SqliteConnection(_dbName))
-        {
-            connection.Open();
-
-            using (var command = connection.CreateCommand())
-            {
-                command.CommandText = "SELECT * FROM planets;";
-
-                using (IDataReader reader = command.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        Debug.Log("Name: " + reader["name"]);
-                    }
-                    reader.Close();
-                }
-            }
-            connection.Close();
-        }
+        return Int32.Parse(str);
     }
 }
