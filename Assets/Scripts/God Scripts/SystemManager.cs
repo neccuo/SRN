@@ -20,7 +20,7 @@ public class SystemManager : MonoBehaviour
 
     void Start()
     {
-        ChangeSystem(1); // START WHERE YOU LEFT OFF?
+        // ChangeSystem(1); // START WHERE YOU LEFT OFF?
     }
 
     void Update()

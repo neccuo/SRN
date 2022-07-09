@@ -45,7 +45,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        saveLoad.LoadAllNpcs();
+        // saveLoad.LoadAllNpcs();
         ChangeGameState(GameState.PlanMovement);
         _controllerGod = Controller.ControllerGod;
     }
@@ -110,7 +110,7 @@ public class GameManager : MonoBehaviour
         {
             case GameState.PlanMovement:
                 Time.timeScale = 0;
-                StartCoroutine(saveLoad.SavePos());
+                // StartCoroutine(saveLoad.SavePos());
                 break;
             case GameState.DuringMovement:
                 // YOU CAN ONLY ENTER GameState.DuringMovement from GameState.PlanMovement and vice versa.

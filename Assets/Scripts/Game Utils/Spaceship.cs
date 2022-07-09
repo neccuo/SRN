@@ -57,7 +57,6 @@ public class Spaceship : MonoBehaviour
         //spriteRenderer.sprite = sprite;
 
         //transform.rotation.Set(transform.rotation.x, initialRotationY, transform.rotation.z, 0);
-        transform.rotation = new Quaternion(0, initialRotationY, transform.rotation.z, 0);
         currentHealth = maxHealth;
 
     }

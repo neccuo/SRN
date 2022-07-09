@@ -145,10 +145,19 @@ public class TimeManager : MonoBehaviour
 
     private void OnPassDay()
     {
+        Date.PassDay();
         timeIndicator.text = DisplayDate();
         // If you happen to add a functionality that updates planet locations per day, put it under here
+
+
+        // UNCOMMENT THEM AT SOME POINT
+        //_systemDB.UpdatePrices();
+
+        /* AUTOSAVE SHIZZ
         _systemDB.SavePlanets();
-        _systemDB.UpdatePrices();
+        _systemDB.SavePlayer();
+        */
+
         // save it to playerprefs
         Date.SaveDate();
 
@@ -160,7 +169,6 @@ public class TimeManager : MonoBehaviour
         if(secondsPast >= 1.0f)
         {
             secondsPast = 0;
-            Date.PassDay();
             // ^DEFINITELY USE UNITY EVENTS AT SOME POINT FOR THIS
             OnPassDay();
         }
@@ -172,9 +180,9 @@ public class TimeManager : MonoBehaviour
         {
             Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Vector2 dist = mousePos - (Vector2) _player.transform.position;
-            Debug.Log("Difference is: " + dist.magnitude);
+            //Debug.Log("Difference is: " + dist.magnitude);
             float day = dist.magnitude/_playerSpeed;
-            Debug.LogFormat("{0} Days will pass to reach the destination", day);
+            //Debug.LogFormat("{0} Days will pass to reach the destination", day);
         }
         
     }
