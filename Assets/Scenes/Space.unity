@@ -708,6 +708,7 @@ MonoBehaviour:
   _dbName: URI=file:System.db
   _planetManager: {fileID: 1318918574}
   _systemManager: {fileID: 978083695}
+  _npcManager: {fileID: 789564862}
 --- !u!4 &519956824
 Transform:
   m_ObjectHideFlags: 0
