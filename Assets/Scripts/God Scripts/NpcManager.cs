@@ -2,11 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShipSpawner : MonoBehaviour
+public class NpcManager : MonoBehaviour
 {
     public GameObject npcPrefab;
     public GameObject planets;
-    public GameObject npcs;
 
     public static int npcSpawned = 0;
 
@@ -100,7 +99,7 @@ public class ShipSpawner : MonoBehaviour
         spaceship.speed = 25;
 
         _npcObjectPointer = Instantiate(_npcObjectPointer);
-        _npcObjectPointer.transform.SetParent(npcs.transform);
+        _npcObjectPointer.transform.SetParent(this.transform);
         _npcObjectPointer.name = name;
 
         Debug.Log("SPAWNED SHIP: " + _npcObjectPointer.name + " @ " + _npcObjectPointer.transform.position.ToString());
@@ -138,7 +137,7 @@ public class ShipSpawner : MonoBehaviour
 
 
         _npcObjectPointer = Instantiate(_npcObjectPointer);
-        _npcObjectPointer.transform.SetParent(npcs.transform);
+        _npcObjectPointer.transform.SetParent(this.transform);
         _NamingFreshNpc(_npcObjectPointer);
         Debug.Log("SPAWNED SHIP: " + _npcObjectPointer.name + " @ " + _npcObjectPointer.transform.position.ToString());
 

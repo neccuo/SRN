@@ -6,10 +6,7 @@ using UnityEngine.Networking;
 
 public class SaveLoadSystem : MonoBehaviour
 {
-    private ShipSpawner _shipSpawner;
-
-    [SerializeField] private GameObject _npcManager; // Needs update, check here
-
+    [SerializeField] private NpcManager _npcManager; // Needs update, check here
 
 
     private class MiniNpc
@@ -75,7 +72,6 @@ public class SaveLoadSystem : MonoBehaviour
     // TODO: USE something like OnGameStartUp() 
     void Start()
     {
-        _shipSpawner = gameObject.GetComponent<ShipSpawner>();
 
     }
 
@@ -92,7 +88,7 @@ public class SaveLoadSystem : MonoBehaviour
             List<MedNpc> MedNpcList = ParseStrToList(retVal, 7 ); // 7 for now, maybe later something like ===>>> typeof(MedNpc).GetProperties().Length
             foreach(MedNpc npc in MedNpcList)
             {
-                _shipSpawner.LoadExistingNpc(npc.id, npc.name, npc.ship_id ,npc.x_axis, npc.y_axis);
+                _npcManager.LoadExistingNpc(npc.id, npc.name, npc.ship_id ,npc.x_axis, npc.y_axis);
             }
         }));
     }

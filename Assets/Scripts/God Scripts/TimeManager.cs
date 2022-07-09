@@ -145,10 +145,10 @@ public class TimeManager : MonoBehaviour
 
     private void OnPassDay()
     {
-        StartCoroutine(GameManager.Instance.saveLoad.UpdatePrices());
         timeIndicator.text = DisplayDate();
         // If you happen to add a functionality that updates planet locations per day, put it under here
         _systemDB.SavePlanets();
+        _systemDB.UpdatePrices();
         // save it to playerprefs
         Date.SaveDate();
 
@@ -165,7 +165,7 @@ public class TimeManager : MonoBehaviour
             OnPassDay();
         }
         secondsPast += Time.deltaTime;
-        secondsPastIndicator.text = "Day: " + (secondsPast)*100 + "%";
+        secondsPastIndicator.text = $"FPS: {(int)(1f / Time.unscaledDeltaTime)}\nDay: {(secondsPast)*100}%";
 
 
         if(Input.GetMouseButtonDown(0) && GameManager.Instance.GetCurrentState() == GameState.PlanMovement)

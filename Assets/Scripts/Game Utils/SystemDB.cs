@@ -1,9 +1,9 @@
 using UnityEngine;
 using System.Data;
 using System;
-
 using Mono.Data.Sqlite;
 using System.Collections.Generic;
+
 
 public class SystemTEMP
 {
@@ -13,15 +13,26 @@ public class SystemTEMP
     public int background_id { get; set; }
 }
 
+public class PilotTEMP
+{
+    public int id { get; set; }
+    public string name { get; set; }
+    public int credits { get; set; }
+    public string race { get; set; }
+    public int hull_id { get; set; }
+    public float x_axis { get; set; }
+    public float y_axis { get; set; }
+    
+}
+
+
 public class SystemDB : MonoBehaviour
 {
-    
-
     [SerializeField] private string _dbName = "URI=file:System.db";
-
     [SerializeField] private PlanetManager _planetManager;
-
     [SerializeField] private SystemManager _systemManager;
+    [SerializeField] private NpcManager _npcManager;
+
 
 
 
@@ -125,10 +136,10 @@ public class SystemDB : MonoBehaviour
                 {
                     reader.Read();
 
-                    system.id = StrToInt(reader["id"].ToString());
+                    system.id = STI(reader["id"]);
                     system.name = reader["name"].ToString();
-                    system.sun_id = StrToInt(reader["sun_id"].ToString());
-                    system.background_id = StrToInt(reader["background_id"].ToString());
+                    system.sun_id = STI(reader["sun_id"]);
+                    system.background_id = STI(reader["background_id"]);
 
                     reader.Close();
                 }
@@ -191,8 +202,73 @@ public class SystemDB : MonoBehaviour
         }
     }
 
-    private int StrToInt(string str)
+    public void UpdatePrices()
     {
-        return Int32.Parse(str);
+        SqliteConnection connection = new SqliteConnection(_dbName);
+        connection.Open();
+        SqliteCommand sqCommand = connection.CreateCommand();
+        SqliteTransaction trans = connection.BeginTransaction();
+
+        Dictionary<int, int> idDic = new Dictionary<int, int>();
+        try
+        {
+            sqCommand.CommandText = "SELECT id, price FROM items;";
+            using(IDataReader reader = sqCommand.ExecuteReader())
+            {
+                while(reader.Read())
+                {
+                    idDic[STI(reader["id"])] = STI(reader["price"]);
+                }
+            }
+            int tempID = 0;
+            int tempPrice = 0;
+            string priceLog = "Dic:\n";
+            foreach(KeyValuePair<int, int> pair in idDic)
+            {
+                tempID = pair.Key;
+                tempPrice = NewPrice(pair.Value);
+                sqCommand.CommandText = $"UPDATE items SET price = {tempPrice} WHERE id = {tempID};";
+                sqCommand.ExecuteNonQuery();
+
+                priceLog += $"key: {pair.Key}   value: {pair.Value}\n";
+            }
+            trans.Commit();
+            Debug.Log(priceLog);
+        }
+        catch(Exception e)
+        {
+            trans.Rollback();
+            Debug.LogError(e.ToString());
+            Debug.LogWarning("Price update failed, rollback");
+        }
+        finally
+        {
+            trans.Dispose();
+            sqCommand.Dispose();
+            connection.Close();
+        }
     }
+
+    private void PrintDic<TKey, TValue>(Dictionary<TKey, TValue> dic)
+    {
+        string str = "Dic:\n";
+        foreach(KeyValuePair<TKey, TValue> pair in dic)
+        {
+            str += $"key: {pair.Key}   value: {pair.Value}\n";
+        }
+        Debug.Log(str);
+    }
+
+    private int NewPrice(int currentPrice)
+    {
+        int retVal = currentPrice + UnityEngine.Random.Range(-99, 100);
+        retVal = (retVal > 3000 || retVal < 50) ? currentPrice : retVal;
+        return retVal;
+    }
+
+    private int STI(object obj)
+    {
+        return Int32.Parse(obj.ToString());
+    }
+
 }
