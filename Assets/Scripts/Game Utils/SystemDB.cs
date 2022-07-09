@@ -4,6 +4,12 @@ using System;
 using Mono.Data.Sqlite;
 using System.Collections.Generic;
 
+// ---> NOTES TO SELF <---
+// At some point, you will have to implement a proper save/load system where
+// every single aspect of the game has to be saved synchronously. Which means
+// you have to revert every change if something goes wrong (including outside commands).
+// Also, decide when to save. End of the day or when the game stops.
+
 
 public class SystemTEMP
 {
@@ -22,6 +28,10 @@ public class PilotTEMP
     public int hull_id { get; set; }
     public float x_axis { get; set; }
     public float y_axis { get; set; }
+    public float angle { get; set; }
+
+
+    public int system_id { get; set; }
     
 }
 
@@ -32,17 +42,15 @@ public class SystemDB : MonoBehaviour
     [SerializeField] private PlanetManager _planetManager;
     [SerializeField] private SystemManager _systemManager;
     [SerializeField] private NpcManager _npcManager;
+    [SerializeField] private Player _player;
+
 
 
 
 
     void Start()
     {
-        // CreateDB();
-
-        // AddPlanet("Planet_0", 50.0f, 90.0f);
-
-        // DisplayPlanet();
+        LoadPlayer();
     }
 
     void Update()
@@ -50,17 +58,17 @@ public class SystemDB : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.S))
         {
             SavePlanets();
+            SavePlayer();
+            UpdatePrices();
         }
-        if(Input.GetKeyDown(KeyCode.A))
+        if(Input.GetKeyDown(KeyCode.L))
         {
-            for(int i = 0; i < 10; i++)
-            {
-                AddRandomPlanet();
-            }
+            // LoadPlayer();
         }
     }
 
     // ONLY USE IT AT THE START
+    // ***planets***
     public void LoadPlanets()
     {
         // looks shit, change it later
@@ -86,6 +94,7 @@ public class SystemDB : MonoBehaviour
     }
 
     // USE IT WHEN CHANGING SYSTEMS
+    // ***system_planets***
     public List<int> GetPlanetsBySystemID(int systemID)
     {
         List<int> idList = new List<int>();
@@ -117,6 +126,7 @@ public class SystemDB : MonoBehaviour
         return idList;
     }
 
+    // ***systems***
     public SystemTEMP GetSystemData(int systemID)
     {
         SystemTEMP system = new SystemTEMP();
@@ -136,10 +146,10 @@ public class SystemDB : MonoBehaviour
                 {
                     reader.Read();
 
-                    system.id = STI(reader["id"]);
+                    system.id = OTI(reader["id"]);
                     system.name = reader["name"].ToString();
-                    system.sun_id = STI(reader["sun_id"]);
-                    system.background_id = STI(reader["background_id"]);
+                    system.sun_id = OTI(reader["sun_id"]);
+                    system.background_id = OTI(reader["background_id"]);
 
                     reader.Close();
                 }
@@ -149,6 +159,7 @@ public class SystemDB : MonoBehaviour
         return system;
     }
 
+    // ***planets***
     public void SavePlanets()
     {
         using (var connection = new SqliteConnection(_dbName))
@@ -174,6 +185,7 @@ public class SystemDB : MonoBehaviour
 
     // USE "LOAD" AFTER IT
     // GOOD FOR BENCHMARK
+    // ***planets***
     public void AddRandomPlanet()
     {
         string name = "Planet " + UnityEngine.Random.Range(0, 10000).ToString();
@@ -202,22 +214,23 @@ public class SystemDB : MonoBehaviour
         }
     }
 
+    // ***items***
     public void UpdatePrices()
     {
         SqliteConnection connection = new SqliteConnection(_dbName);
         connection.Open();
-        SqliteCommand sqCommand = connection.CreateCommand();
+        SqliteCommand command = connection.CreateCommand();
         SqliteTransaction trans = connection.BeginTransaction();
 
         Dictionary<int, int> idDic = new Dictionary<int, int>();
         try
         {
-            sqCommand.CommandText = "SELECT id, price FROM items;";
-            using(IDataReader reader = sqCommand.ExecuteReader())
+            command.CommandText = "SELECT id, price FROM items;";
+            using(IDataReader reader = command.ExecuteReader())
             {
                 while(reader.Read())
                 {
-                    idDic[STI(reader["id"])] = STI(reader["price"]);
+                    idDic[OTI(reader["id"])] = OTI(reader["price"]);
                 }
             }
             int tempID = 0;
@@ -227,13 +240,13 @@ public class SystemDB : MonoBehaviour
             {
                 tempID = pair.Key;
                 tempPrice = NewPrice(pair.Value);
-                sqCommand.CommandText = $"UPDATE items SET price = {tempPrice} WHERE id = {tempID};";
-                sqCommand.ExecuteNonQuery();
+                command.CommandText = $"UPDATE items SET price = {tempPrice} WHERE id = {tempID};";
+                command.ExecuteNonQuery();
 
                 priceLog += $"key: {pair.Key}   value: {pair.Value}\n";
             }
             trans.Commit();
-            Debug.Log(priceLog);
+            // Debug.Log(priceLog);
         }
         catch(Exception e)
         {
@@ -244,9 +257,68 @@ public class SystemDB : MonoBehaviour
         finally
         {
             trans.Dispose();
-            sqCommand.Dispose();
+            command.Dispose();
             connection.Close();
         }
+    }
+
+    // ***pilots
+    public void LoadPilots()
+    {
+        SqliteConnection connection = new SqliteConnection(_dbName);
+        connection.Open();
+        SqliteCommand command = connection.CreateCommand();
+        SqliteTransaction trans = connection.BeginTransaction();
+        // not including 0
+
+    }
+
+    public void SavePlayer()
+    {
+        SqliteConnection connection = new SqliteConnection(_dbName);
+        SqliteCommand command = connection.CreateCommand();
+        connection.Open();
+
+        PilotTEMP pilot = new PilotTEMP();
+        pilot.credits = _player.GetPlayerCredits();
+        pilot.x_axis = _player.transform.position.x;
+        pilot.y_axis = _player.transform.position.y;
+        pilot.angle = (_player.transform.rotation.eulerAngles.z);
+        pilot.system_id = _systemManager.currentSystemID;
+
+        command.CommandText = $"UPDATE pilots SET credits = {pilot.credits}, x_axis = {pilot.x_axis}, y_axis = {pilot.y_axis}, " +
+        $"angle = {pilot.angle}, system_id = {pilot.system_id} WHERE id = 0";
+        command.ExecuteNonQuery();
+
+        command.Dispose();
+        connection.Close();
+    }
+
+    public void LoadPlayer()
+    {
+        SqliteConnection connection = new SqliteConnection(_dbName);
+        SqliteCommand command = connection.CreateCommand();
+        connection.Open();
+
+        command.CommandText = $"SELECT * FROM pilots WHERE id = 0";
+        command.ExecuteNonQuery();
+
+        using(IDataReader reader = command.ExecuteReader())
+        {
+            // expecting only one iteration
+            while(reader.Read())
+            {
+                Transform tr = _player.transform;
+                _player.SetPlayerCredits(OTI(reader["credits"]));
+                tr.position = new Vector3(OTF(reader["x_axis"]), OTF(reader["y_axis"]), tr.position.z);
+                tr.Rotate(tr.rotation.x, tr.rotation.y, OTF(reader["angle"]));
+                // tr.rotation = new Quaternion(tr.rotation.x, tr.rotation.y, OTF(reader["angle"]), tr.rotation.w);
+                _systemManager.ChangeSystem(OTI(reader["system_id"]));
+            }
+        }
+        
+        command.Dispose();
+        connection.Close();
     }
 
     private void PrintDic<TKey, TValue>(Dictionary<TKey, TValue> dic)
@@ -266,9 +338,14 @@ public class SystemDB : MonoBehaviour
         return retVal;
     }
 
-    private int STI(object obj)
+    private int OTI(object obj)
     {
         return Int32.Parse(obj.ToString());
+    }
+
+    private float OTF(object obj)
+    {
+        return float.Parse(obj.ToString());
     }
 
 }

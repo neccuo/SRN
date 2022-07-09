@@ -21,11 +21,11 @@ public class CreditManager : MonoBehaviour
         SetCredits(_credit + amount);
     }
 
-    void SetCredits(int amount)
+    public void SetCredits(int amount)
     {
         _credit = amount;
         PlayerPrefs.SetInt("playerMoney", _credit);
-        Debug.Log("Money is changed to " + _credit);
+        // Debug.Log("Money is changed to " + _credit);
         UpdateText();
 
     }

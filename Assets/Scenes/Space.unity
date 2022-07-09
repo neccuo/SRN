@@ -268,6 +268,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: ClickPoint
       objectReference: {fileID: 0}
+    - target: {fileID: 640430864312092281, guid: a33e7b16cdc4d6247ac954c3bb692bc8,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 640430864312092283, guid: a33e7b16cdc4d6247ac954c3bb692bc8,
         type: 3}
       propertyPath: m_RootOrder
@@ -709,6 +714,7 @@ MonoBehaviour:
   _planetManager: {fileID: 1318918574}
   _systemManager: {fileID: 978083695}
   _npcManager: {fileID: 789564862}
+  _player: {fileID: 1193091450}
 --- !u!4 &519956824
 Transform:
   m_ObjectHideFlags: 0
@@ -983,9 +989,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bef0c54d59b536c49971adc06c27ad11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _systemDB: {fileID: 519956823}
+  _planetManager: {fileID: 1318918574}
   npcPrefab: {fileID: 2409782443382836827, guid: 6964bad8c2a9c85408025d71a9be641a,
     type: 3}
-  planets: {fileID: 1318918572}
 --- !u!1001 &830888655
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2453,6 +2460,31 @@ PrefabInstance:
     - target: {fileID: 4663110006814661183, guid: 12cded581d2207f40bc18f46fb0bdc81,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4663110007553738714, guid: 12cded581d2207f40bc18f46fb0bdc81,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4663110007553738714, guid: 12cded581d2207f40bc18f46fb0bdc81,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4663110007553738714, guid: 12cded581d2207f40bc18f46fb0bdc81,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4663110007553738714, guid: 12cded581d2207f40bc18f46fb0bdc81,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4663110007553738714, guid: 12cded581d2207f40bc18f46fb0bdc81,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

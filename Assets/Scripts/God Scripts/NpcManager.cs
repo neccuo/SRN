@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class NpcManager : MonoBehaviour
 {
-    public GameObject npcPrefab;
-    public GameObject planets;
+    [SerializeField] private SystemDB _systemDB;
+    [SerializeField] private PlanetManager _planetManager;
+    [SerializeField] private GameObject npcPrefab;
 
     public static int npcSpawned = 0;
 
@@ -32,28 +33,35 @@ public class NpcManager : MonoBehaviour
     void Update()
     {
         _timer += Time.deltaTime;
-        if(_timer > 1.5f && planets.transform.childCount > 0)
+        if(_timer > 1.5f && _planetManager.transform.childCount > 0)
         {
             // DefineFreshNpc();
             _timer = 0.0f;
         }
         if(GameManager.Instance.GetCurrentState() == GameState.PlanMovement)
         {
-            if(Input.GetKeyDown(KeyCode.M)){DefineFreshNpc();}
-            else if(Input.GetKeyDown(KeyCode.N)){StartCoroutine(_gm.saveLoad.LoadDB());}
+            //if(Input.GetKeyDown(KeyCode.M)){DefineFreshNpc();}
+            //else if(Input.GetKeyDown(KeyCode.N)){StartCoroutine(_gm.saveLoad.LoadDB());}
         }
+    }
+
+    // use it at the start
+    public void InitializeAllPilots()
+    {
+        
+
     }
 
     public Vector3 PickRandomPlanetPos()
     {
-        int childCount = planets.transform.childCount;
+        int childCount = _planetManager.transform.childCount;
         if(childCount == 0)
         {
             Debug.LogError("Planet count is 0, can't pick a planet");
             return new Vector3(0,0,-100);
         }
         int rndNum = Random.Range(0, childCount);
-        Transform chosenPlanet = planets.transform.GetChild(rndNum);
+        Transform chosenPlanet = _planetManager.transform.GetChild(rndNum);
         Debug.Log(chosenPlanet.name + " is chosen. Will spawn in: " + chosenPlanet.position);
         return chosenPlanet.position;
     }
@@ -142,7 +150,7 @@ public class NpcManager : MonoBehaviour
         Debug.Log("SPAWNED SHIP: " + _npcObjectPointer.name + " @ " + _npcObjectPointer.transform.position.ToString());
 
         // TODO: MAYBE A KILL NPC FUNCTION THAT DOES => DESTROY(NPC) && npcSpawned--;
-        _RegisterFreshNpc(_npcObjectPointer);
+        // _RegisterFreshNpc(_npcObjectPointer);
     }
 
     // Depends on the outcome of the coroutine, npc will be registered to the db or destroyed
