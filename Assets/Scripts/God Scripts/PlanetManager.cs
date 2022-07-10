@@ -18,7 +18,7 @@ public class PlanetManager : MonoBehaviour
 
     void Awake()
     {
-        _systemDB.LoadPlanets();
+        // _systemDB.LoadPlanets();
     }
 
     void Start()

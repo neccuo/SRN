@@ -13,8 +13,16 @@ public enum Objective
 
 public class NPC : MonoBehaviour
 {
-    [SerializeField]
-    private int npcID = -1; // Unique identifier for NPCs. Default value is -1, means empty
+
+
+    [SerializeField] private int _systemID;
+    [SerializeField] private int _npcID = -1; // Unique identifier for NPCs. Default value is -1, means empty
+    [SerializeField] private int _credits;
+
+    public string race;
+
+    // bottom of them will be cleaned
+    
     public Objective objective;
     public Spaceship ship;
 
@@ -32,6 +40,8 @@ public class NPC : MonoBehaviour
     private GameManager _gm;
 
     private Vector3 _nullVector = new Vector3(0, 0, -1);
+    [SerializeField] private int remainingWandering;
+
 
 
     // PORTAL SEEK REALM
@@ -39,7 +49,6 @@ public class NPC : MonoBehaviour
     private GameObject _chosenObject;
 
     private readonly int _wanderingLimit = 2;
-    [SerializeField] private int remainingWandering;
 
     void Start()
     {
@@ -63,27 +72,48 @@ public class NPC : MonoBehaviour
         
     }
 
-    void Update()
+    public void NpcFakeUpdate() // for making the npcs move when disabled
     {
         _currentLoc = (Vector2) transform.position;
         HandleObjective();
+
     }
+
+    /*void Update() // update will not work when disabled, change it at some point
+    {
+        _currentLoc = (Vector2) transform.position;
+        HandleObjective();
+    }*/
 
     // NOTE: Couldn't fix the problem where "npcID = 0" at the start. This method is unsafe, be careful...
     public void SetNPCID(int num) // -1 is the default value
     {
-        npcID = num;
-        /*if(npcID == -1)
-        {
-            npcID = num;
-            return;
-        }
-        Debug.LogError("Cannot assign another NPCID to an NPC");*/
+        _npcID = num;
     }
 
     public int GetNPCID()
     {
-        return npcID;
+        return _npcID;
+    }
+
+    public void SetSystemID(int num)
+    {
+        _systemID = num;
+    }
+
+    public int GetSystemID()
+    {
+        return _systemID;
+    }
+
+    public void SetNpcCredits(int num)
+    {
+        _credits = num;
+    }
+
+    public int GetNpcCredits()
+    {
+        return _credits;
     }
 
     void HandleObjective()

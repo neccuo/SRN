@@ -991,7 +991,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _systemDB: {fileID: 519956823}
   _planetManager: {fileID: 1318918574}
-  npcPrefab: {fileID: 2409782443382836827, guid: 6964bad8c2a9c85408025d71a9be641a,
+  _npcPrefab: {fileID: 2409782443382836827, guid: 6964bad8c2a9c85408025d71a9be641a,
     type: 3}
 --- !u!1001 &830888655
 PrefabInstance:
@@ -1264,6 +1264,7 @@ MonoBehaviour:
   _spaceBG: {fileID: 373136420}
   _systemDB: {fileID: 519956823}
   _planetManager: {fileID: 1318918574}
+  _npcManager: {fileID: 789564862}
 --- !u!4 &978083696
 Transform:
   m_ObjectHideFlags: 0

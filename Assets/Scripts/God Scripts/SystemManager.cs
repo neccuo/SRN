@@ -12,6 +12,8 @@ public class SystemManager : MonoBehaviour
     [SerializeField] private GameObject _spaceBG;
     [SerializeField] private SystemDB _systemDB;
     [SerializeField] private PlanetManager _planetManager;
+    [SerializeField] private NpcManager _npcManager;
+
 
     void Awake()
     {
@@ -33,6 +35,7 @@ public class SystemManager : MonoBehaviour
         // check for validity maybe??
         SystemTEMP sysTemp = _systemDB.GetSystemData(newSystemID);
 
+        _npcManager.PrepareSystemNPCs(currentSystemID, newSystemID);
         _planetManager.PrepareSystemPlanets(currentSystemID, newSystemID);
         SetBackground(sysTemp.background_id);
         SetSun(sysTemp.sun_id);

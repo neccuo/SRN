@@ -50,7 +50,10 @@ public class SystemDB : MonoBehaviour
 
     void Start()
     {
-        LoadPlayer();
+        LoadPlanets();
+        LoadPilots();
+
+        LoadPlayer(); // THIS ONE ALSO SETS THE SYSTEM
     }
 
     void Update()
@@ -58,6 +61,7 @@ public class SystemDB : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.S))
         {
             SavePlanets();
+            SavePilots();
             SavePlayer();
             UpdatePrices();
         }
@@ -123,6 +127,35 @@ public class SystemDB : MonoBehaviour
             }
             connection.Close();
         }
+        return idList;
+    }
+    // ***pilots***
+    public List<int> GetPilotsBySystemID(int systemID)
+    {
+        List<int> idList = new List<int>();
+        if(systemID == 0) // FOR TEST OR INIT
+        {
+            return idList;
+        }
+        SqliteConnection connection = new SqliteConnection(_dbName);
+        connection.Open();
+        SqliteCommand command = connection.CreateCommand();
+
+        command.CommandText = $"SELECT id FROM pilots WHERE system_id = {systemID} AND id != 0;";
+
+        using (IDataReader reader = command.ExecuteReader())
+        {
+            int num;
+            while (reader.Read())
+            {
+                num = OTI(reader["id"]);
+                idList.Add(num);
+            }
+            reader.Close();
+        }
+
+        command.Dispose();
+        connection.Close();
         return idList;
     }
 
@@ -269,8 +302,60 @@ public class SystemDB : MonoBehaviour
         connection.Open();
         SqliteCommand command = connection.CreateCommand();
         SqliteTransaction trans = connection.BeginTransaction();
-        // not including 0
 
+        // not including 0
+        command.CommandText = "SELECT * FROM pilots WHERE id != 0;";
+
+        using(IDataReader reader = command.ExecuteReader())
+        {
+            // expecting only one iteration
+            while(reader.Read())
+            {
+                PilotTEMP temp = new PilotTEMP();
+                temp.id = OTI(reader["id"]);
+                temp.name = reader["name"].ToString();
+                temp.credits = OTI(reader["credits"]);
+                temp.race = reader["race"].ToString();
+                temp.hull_id = OTI(reader["hull_id"]);
+                temp.x_axis = OTF(reader["x_axis"]);
+                temp.y_axis = OTF(reader["y_axis"]);
+                temp.angle = OTF(reader["angle"]);
+                temp.system_id = OTI(reader["system_id"]);
+
+                _npcManager.SpawnNPC(temp);
+            }
+        }
+        trans.Dispose();
+        command.Dispose();
+        connection.Close();
+    }
+
+    public void SavePilots()
+    {
+        SqliteConnection connection = new SqliteConnection(_dbName);
+        SqliteCommand command = connection.CreateCommand();
+        connection.Open();
+
+        Dictionary<int, NPC> dic = _npcManager.GetNpcDic();
+        foreach(KeyValuePair<int, NPC> pair in dic)
+        {
+            NPC npc = pair.Value;
+            PilotTEMP p = new PilotTEMP();
+            p.id = npc.GetNPCID();
+            p.credits = npc.GetNpcCredits();
+            p.x_axis = npc.transform.position.x;
+            p.y_axis = npc.transform.position.y;
+            p.angle = npc.transform.rotation.eulerAngles.z;
+            p.system_id = npc.GetSystemID();
+
+            command.CommandText = $"UPDATE pilots SET credits = {p.credits}, x_axis = {p.x_axis}, y_axis = {p.y_axis}, " +
+            $"angle = {p.angle}, system_id = {p.system_id} WHERE id = {p.id};";
+            command.ExecuteNonQuery();
+
+        }
+
+        command.Dispose();
+        connection.Close();
     }
 
     public void SavePlayer()
@@ -287,7 +372,7 @@ public class SystemDB : MonoBehaviour
         pilot.system_id = _systemManager.currentSystemID;
 
         command.CommandText = $"UPDATE pilots SET credits = {pilot.credits}, x_axis = {pilot.x_axis}, y_axis = {pilot.y_axis}, " +
-        $"angle = {pilot.angle}, system_id = {pilot.system_id} WHERE id = 0";
+        $"angle = {pilot.angle}, system_id = {pilot.system_id} WHERE id = 0;";
         command.ExecuteNonQuery();
 
         command.Dispose();
@@ -301,7 +386,7 @@ public class SystemDB : MonoBehaviour
         connection.Open();
 
         command.CommandText = $"SELECT * FROM pilots WHERE id = 0";
-        command.ExecuteNonQuery();
+        // command.ExecuteNonQuery();
 
         using(IDataReader reader = command.ExecuteReader())
         {

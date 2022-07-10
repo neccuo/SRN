@@ -6,7 +6,7 @@ public class NpcManager : MonoBehaviour
 {
     [SerializeField] private SystemDB _systemDB;
     [SerializeField] private PlanetManager _planetManager;
-    [SerializeField] private GameObject npcPrefab;
+    [SerializeField] private GameObject _npcPrefab;
 
     public static int npcSpawned = 0;
 
@@ -18,13 +18,15 @@ public class NpcManager : MonoBehaviour
 
     private GameManager _gm;
 
+    [SerializeField] private Dictionary<int, NPC> _npcDic = new Dictionary<int, NPC>();
+
     // it receives a tick and works
 
     void Start()
     {
         _gm = GameManager.Instance;
         _timer = 0.0f;
-        if(npcPrefab.tag != "NPC")
+        if(_npcPrefab.tag != "NPC")
         {
             Debug.LogError("NPC tag is not NPC, blueprint is flawed.");
         }
@@ -32,6 +34,11 @@ public class NpcManager : MonoBehaviour
 
     void Update()
     {
+        foreach(KeyValuePair<int, NPC> pair in _npcDic)
+        {
+            pair.Value.NpcFakeUpdate();
+        }
+
         _timer += Time.deltaTime;
         if(_timer > 1.5f && _planetManager.transform.childCount > 0)
         {
@@ -45,11 +52,73 @@ public class NpcManager : MonoBehaviour
         }
     }
 
+    void MoveNpcs()
+    {
+
+    }
+
     // use it at the start
     public void InitializeAllPilots()
     {
         
 
+    }
+
+    public void PrepareSystemNPCs(int oldSysID, int newSysID)
+    {
+        List<int> deactivateIdList = _systemDB.GetPilotsBySystemID(oldSysID);
+        List<int> activateIdList = _systemDB.GetPilotsBySystemID(newSysID);
+
+        foreach(int i in deactivateIdList)
+        {
+            _npcDic[i].gameObject.SetActive(false);
+        }
+        foreach(int i in activateIdList)
+        {
+            _npcDic[i].gameObject.SetActive(true);
+        }
+
+    }
+
+    public Dictionary<int, NPC> GetNpcDic()
+    {
+        return _npcDic;
+    }
+
+    private void FillNpcDic(int id, NPC npcObj)
+    {
+        _npcDic[id] = npcObj;
+    }
+
+    public void SpawnNPC(PilotTEMP inp)
+    {
+        GameObject obj = Instantiate(_npcPrefab);
+        NPC npcLogic = obj.GetComponent<NPC>();
+        Transform tr = obj.transform;
+        Spaceship ship = obj.GetComponentInChildren<Spaceship>();
+
+        obj.SetActive(false);
+        obj.name = inp.name;
+        _RegisterHull(obj, inp.hull_id);
+
+        tr.parent = this.transform;
+        tr.position = new Vector3(inp.x_axis, inp.y_axis, 0);
+        tr.Rotate(tr.rotation.x, tr.rotation.y, inp.angle); // 0s might be problematic, but anyway.
+
+        tr.localScale = new Vector3(0.5f, 0.5f, 1); // change
+
+        npcLogic.SetNPCID(inp.id);
+        npcLogic.SetSystemID(inp.system_id);
+        npcLogic.SetNpcCredits(inp.credits);
+        npcLogic.race = inp.race;
+        npcLogic.objective = Objective.RandomWandering; // change
+        npcLogic.patrolRange = 10; //  change
+
+        ship.maxHealth = 100; // change
+        ship.maxHealth = 100; // change
+        ship.speed = 25; // change
+
+        FillNpcDic(inp.id, npcLogic);
     }
 
     public Vector3 PickRandomPlanetPos()
@@ -77,12 +146,20 @@ public class NpcManager : MonoBehaviour
         ship.SetHullID(id);
     }
 
+    private void _RegisterHull(GameObject obj, int id)
+    {
+        SpriteRenderer sr = obj.GetComponentInChildren<SpriteRenderer>();
+        Spaceship ship = obj.GetComponentInChildren<Spaceship>();
+        sr.sprite = Resources.Load<Sprite>("Sprites/Ships/spaceship-" + id.ToString());
+        ship.SetHullID(id);
+    }
+
     public void LoadExistingNpc(int id, string name, int ship_id, float x_axis, float y_axis)
     {
         // let's say a tick just came and you have to set the attributes of the npc
 
         // POINTER ASSIGNMENT REALM
-        _npcObjectPointer = npcPrefab;
+        _npcObjectPointer = _npcPrefab;
 
         // TRANSFORM ASSIGNMENT REALM
         Transform transformRef = _npcObjectPointer.transform; // EXPERIMENTAL
@@ -119,7 +196,7 @@ public class NpcManager : MonoBehaviour
         // let's say a tick just came and you have to set the attributes of the npc
 
         // POINTER ASSIGNMENT REALM
-        _npcObjectPointer = npcPrefab;
+        _npcObjectPointer = _npcPrefab;
 
         // TRANSFORM ASSIGNMENT REALM
         Transform transformRef = _npcObjectPointer.transform; // EXPERIMENTAL
