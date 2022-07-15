@@ -17,6 +17,10 @@ public class Planet : MonoBehaviour
     float speedRange;
     [SerializeField] private int planetID;
     [SerializeField] private float angularSpeed;
+    [SerializeField] private int systemID;
+    [SerializeField] private int spriteID;
+
+
 
     #endregion
 
@@ -40,13 +44,15 @@ public class Planet : MonoBehaviour
         return planetID;
     }
 
-    public Planet SetPlanet(int id, string name, float x, float y, float scale, float angularSpeed)
+    public Planet SetPlanet(int id, string name, float x, float y, float scale, float angularSpeed, int system_id, int sprite_id)
     {
         this.planetID = id;
         this.gameObject.name = name;
         this.transform.position = new Vector3(x, y, 0);
         this.transform.localScale = new Vector3(scale, scale, 1);
         this.angularSpeed = angularSpeed;
+        this.systemID = system_id;
+        this.spriteID = sprite_id;
 
         return this;
     }

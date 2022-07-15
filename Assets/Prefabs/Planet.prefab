@@ -100,6 +100,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   planetID: 0
   angularSpeed: 0
+  systemID: 0
+  spriteID: 0
 --- !u!114 &8889549745094350969
 MonoBehaviour:
   m_ObjectHideFlags: 0

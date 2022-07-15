@@ -56,13 +56,17 @@ public class SystemManager : MonoBehaviour
         sr.sprite = Resources.Load<Sprite>("" + directory + id.ToString());
         switch(id)
         {
+            case 1:
+                sr.color = new Color32(183, 183, 183, 255);
+                break;
             case 2:
-                sr.sprite = Resources.Load<Sprite>(directory + 2.ToString());
-                sr.color = new Color32(231, 231, 231, 255);
+                sr.color = new Color32(118, 118, 118, 255);
+                break;
+            case 3:
+                sr.color = new Color32(255, 255, 255, 255);
                 break;
             default:
-                sr.sprite = Resources.Load<Sprite>(directory + 1.ToString());
-                sr.color = new Color32(103, 103, 103, 255);
+                sr.color = new Color32(183, 183, 183, 255);
                 break;
 
         }

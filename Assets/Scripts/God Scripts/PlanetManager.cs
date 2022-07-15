@@ -60,21 +60,30 @@ public class PlanetManager : MonoBehaviour
         }
     }
 
-    public void SpawnPlanet(IDataReader data) // ONLY USED ON INITIALIZATION
+    public void SpawnPlanet(PlanetTEMP temp)
     {
         GameObject newPlanet = Instantiate(_planetPrefab);
-        int id = ObjectToInt(data["id"]);
+        int id = temp.id;
         newPlanet.transform.parent = this.transform;
 
-        Planet planetObj = newPlanet.GetComponent<Planet>().SetPlanet(
+        Planet planetLogic = newPlanet.GetComponent<Planet>().SetPlanet(
             id, 
-            data["name"].ToString(),
-            ObjectToFloat(data["x_axis"]), 
-            ObjectToFloat(data["y_axis"]), 
-            ObjectToFloat(data["scale"]), 
-            ObjectToFloat(data["angular_speed"])
+            temp.name,
+            temp.x_axis,
+            temp.y_axis,
+            temp.scale,
+            temp.angular_speed,
+            temp.system_id,
+            temp.sprite_id
         );
-        FillPlanetDic(id, planetObj);
+        FillPlanetDic(id, planetLogic);
+    }
+
+    public void SetPlanetTexture(int id)
+    {
+        GameObject planetObject = _planetDic[id].gameObject;
+        // SpriteRenderer
+
     }
 
     private void UpdatePlanetPoss()

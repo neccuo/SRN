@@ -19,6 +19,20 @@ public class SystemTEMP
     public int background_id { get; set; }
 }
 
+public class PlanetTEMP
+{
+    public int id { get; set; }
+    public string name { get; set; }
+    public float x_axis { get; set; }
+    public float y_axis { get; set; }
+    public float scale { get; set; }
+    public float angular_speed { get; set; }
+    public int system_id { get; set; }
+    public int sprite_id { get; set; }
+
+
+}
+
 public class PilotTEMP
 {
     public int id { get; set; }
@@ -75,30 +89,37 @@ public class SystemDB : MonoBehaviour
     // ***planets***
     public void LoadPlanets()
     {
-        // looks shit, change it later
-        using (var connection = new SqliteConnection(_dbName))
+        SqliteConnection connection = new SqliteConnection(_dbName);
+        connection.Open();
+        using (var command = connection.CreateCommand())
         {
-            connection.Open();
+            command.CommandText = "SELECT * FROM planets;";
 
-            using (var command = connection.CreateCommand())
+            using (IDataReader reader = command.ExecuteReader())
             {
-                command.CommandText = "SELECT * FROM planets;";
-
-                using (IDataReader reader = command.ExecuteReader())
+                while (reader.Read())
                 {
-                    while (reader.Read())
-                    {
-                        _planetManager.SpawnPlanet(reader);
-                    }
-                    reader.Close();
+                    PlanetTEMP temp = new PlanetTEMP();
+                    temp.id = OTI(reader["id"]);
+                    temp.name = reader["name"].ToString();
+                    temp.x_axis = OTF(reader["x_axis"]);
+                    temp.y_axis = OTF(reader["y_axis"]);
+                    temp.scale = OTF(reader["scale"]);
+                    temp.angular_speed = OTF(reader["angular_speed"]);
+                    temp.system_id = OTI(reader["system_id"]);
+                    temp.sprite_id = OTI(reader["sprite_id"]);
+
+
+                    _planetManager.SpawnPlanet(temp);
                 }
+                reader.Close();
             }
-            connection.Close();
         }
+        connection.Close();
     }
 
     // USE IT WHEN CHANGING SYSTEMS
-    // ***system_planets***
+    // ***planets***
     public List<int> GetPlanetsBySystemID(int systemID)
     {
         List<int> idList = new List<int>();
@@ -112,14 +133,14 @@ public class SystemDB : MonoBehaviour
 
             using (var command = connection.CreateCommand())
             {
-                command.CommandText = "SELECT planet_id FROM system_planets WHERE system_id = '" + systemID + "';";
+                command.CommandText = "SELECT id FROM planets WHERE system_id = '" + systemID + "';";
 
                 using (IDataReader reader = command.ExecuteReader())
                 {
                     int num;
                     while (reader.Read())
                     {
-                        num = Int32.Parse(reader["planet_id"].ToString());
+                        num = Int32.Parse(reader["id"].ToString());
                         idList.Add(num);
                     }
                     reader.Close();
