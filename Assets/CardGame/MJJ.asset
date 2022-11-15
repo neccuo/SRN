@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0834f8494497cd5458f9105c014794c6, type: 3}
+  m_Name: MJJ
+  m_EditorClassIdentifier: 
+  cardName: Blue Sun
+  description: Cools the environment. Disables overheat and fire effects on everyone.
+  artwork: {fileID: -119213928601622100, guid: 1cceecb33c1c23040bb8c6aea8056f93, type: 3}
+  manaCost: 2
+  attack: 3
+  health: 3
