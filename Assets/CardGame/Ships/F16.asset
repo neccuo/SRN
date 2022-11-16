@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hullName: F-16
   hullSprite: {fileID: 21300000, guid: 791e940a07039ef4a93171fa2874e952, type: 3}
+  shipSr: {fileID: 0}
   attack: 5
-  health: 25
-  shield: 10
+  health: 23
+  shield: 12

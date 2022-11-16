@@ -14,13 +14,19 @@ public class CombatManager : MonoBehaviour
     public static CombatManager Instance;
     private CombatState _state;
 
-    [SerializeField] private Ship playerShip;
-    [SerializeField] private Ship enemyShip;
+    [SerializeField] private Pilot player;
+    [SerializeField] private Pilot enemy;
+
+    private Ship playerShip;
+    private Ship enemyShip;
 
     void Awake()
     {
         Instance = this;
         _state = CombatState.TurnPrep;
+
+        playerShip = player.ship;
+        enemyShip = enemy.ship;
     }
     void Start()
     {
