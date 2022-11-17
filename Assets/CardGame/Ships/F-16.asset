@@ -9,12 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cd438f384710b864b9225fe9e1e9ef4d, type: 3}
-  m_Name: F16
+  m_Script: {fileID: 11500000, guid: fb7d456d9392fdd47b81c245bdc7c972, type: 3}
+  m_Name: F-16
   m_EditorClassIdentifier: 
   hullName: F-16
   hullSprite: {fileID: 21300000, guid: 791e940a07039ef4a93171fa2874e952, type: 3}
-  shipSr: {fileID: 0}
-  attack: 5
-  health: 23
-  shield: 12
+  baseAttack: 5
+  baseHealth: 25
+  baseShield: 10
+  baseRecovery: 1

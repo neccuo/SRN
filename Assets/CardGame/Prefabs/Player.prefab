@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4293233279432296982}
   - component: {fileID: 4293233279432296981}
-  - component: {fileID: 4293233279432296983}
+  - component: {fileID: 1787503818}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -25,7 +25,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4293233279432296980}
-  m_LocalRotation: {x: -0, y: -0, z: -0.622422, w: 0.7826818}
+  m_LocalRotation: {x: 0, y: 0, z: -0.62241906, w: 0.7826842}
   m_LocalPosition: {x: -6.1, y: 1.41, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_Children: []
@@ -83,7 +83,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &4293233279432296983
+--- !u!114 &1787503818
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -92,7 +92,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 4293233279432296980}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: db18544098d4b9c44b2681495fc70795, type: 3}
+  m_Script: {fileID: 11500000, guid: cd438f384710b864b9225fe9e1e9ef4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ship: {fileID: 11400000, guid: 40da113a7a7f68c46acbac2a0bac63e9, type: 2}
+  ss: {fileID: 11400000, guid: 98a26195b5f47964984372b668a02dab, type: 2}
+  hullName: 
+  attack: 0
+  health: 0
+  shield: 0

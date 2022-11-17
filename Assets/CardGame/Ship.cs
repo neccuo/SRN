@@ -1,45 +1,91 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.Rendering.DebugUI;
+using UnityEngine.UIElements;
 
-[CreateAssetMenu(fileName = "New Ship", menuName = "Ship")]
-public class Ship : ScriptableObject
+public class Ship : MonoBehaviour
 {
-    
-    public string hullName;
+    public ShipSchema ss;
+    private SpriteRenderer sRenderer;
 
-    public Sprite hullSprite;
-    public SpriteRenderer shipSr;
+    private string _hullName;
 
-    public float attack;
-    public float health;
-    public float shield;
+    private float _attack;
+    private float _health;
+    private float _shield;
+    private float _recovery;
+
+    private float _maxHealth;
+
+
+
+    public void Awake()
+    {
+        _hullName = ss.hullName;
+
+        _attack = ss.baseAttack;
+        _health = ss.baseHealth;
+        _maxHealth = ss.baseAttack;
+        _shield = ss.baseShield;
+        _recovery = ss.baseRecovery;
+    }
+
+    void Start()
+    {
+        sRenderer = GetComponent<SpriteRenderer>();
+        sRenderer.sprite = ss.hullSprite;
+    }
+
+    public float GetDamage()
+    {
+        return _attack;
+    }
+
+    public string GetHullName()
+    {
+        return _hullName;
+    }
 
     public void ReceiveDamage(float damageAmount)
     {
-        shipSr.color = Color.red;
-        float takenDamage = damageAmount - shield;
-        if(0 < takenDamage)
+        // sRenderer.color = Color.red;
+        float takenDamage = damageAmount - _shield;
+        if (0 < takenDamage)
         {
-            shield = 0;
-            Debug.Log($"{hullName} absorbed {shield} damage");
-
+            _shield = 0;
+            _health -= takenDamage;
+            Debug.Log($"{_hullName} took {takenDamage} (absorbed {_shield} damage)");
         }
         else
         {
-            shield -= damageAmount;
-            Debug.Log($"{hullName} absorbed {damageAmount} damage");
+            _shield -= damageAmount;
+            Debug.Log($"{_hullName} absorbed {damageAmount} damage");
         }
-        health -= takenDamage;
         CheckDeath();
+    }
+
+    public void RecoverHealth()
+    {
+        float finalHealth = _recovery + _health;
+        if(finalHealth > _maxHealth)
+        {
+            finalHealth = _maxHealth;
+        }
+        _health = finalHealth;
+    }
+
+    public void ShieldUp(float addShield)
+    {
+        _shield = addShield;
     }
 
     public void CheckDeath()
     {
-        if(health <= 0)
+        if (_health <= 0)
         {
-            health = 0;
-            Debug.Log($"{hullName}: Öldün, çýk");
+            _health = 0;
+            Debug.Log($"{_hullName}: ï¿½ldï¿½n, ï¿½ï¿½k");
         }
     }
 }

@@ -2,9 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum CombatPhase
+{
+    NullPhase,
+    Preparation,
+    Action,
+    After
+}
+
 public enum CombatState
 {
-    TurnPrep,
+    Intermission,
     PlayerTurn,
     EnemyTurn
 }
@@ -12,29 +20,51 @@ public enum CombatState
 public class CombatManager : MonoBehaviour
 {
     public static CombatManager Instance;
+
+    private CombatPhase _phase;
     private CombatState _state;
 
-    [SerializeField] private Pilot player;
-    [SerializeField] private Pilot enemy;
+    [SerializeField] private Ship player;
+    [SerializeField] private Ship enemy;
 
-    private Ship playerShip;
-    private Ship enemyShip;
+    private ShipSchema playerShip;
+    private ShipSchema enemyShip;
+
+    private List<CombatState> stateList;
+    int temp;
 
     void Awake()
     {
         Instance = this;
-        _state = CombatState.TurnPrep;
+        _phase = CombatPhase.NullPhase;
+        _state = CombatState.Intermission;
 
-        playerShip = player.ship;
-        enemyShip = enemy.ship;
+        temp = 0;
+        stateList = new List<CombatState>
+        {
+            CombatState.Intermission,
+            CombatState.PlayerTurn,
+            CombatState.EnemyTurn,
+            CombatState.Intermission,
+            CombatState.PlayerTurn,
+            CombatState.EnemyTurn,
+            CombatState.Intermission,
+            CombatState.PlayerTurn,
+            CombatState.EnemyTurn,
+            CombatState.Intermission
+        };
+
+        // playerShip = player.ship;
+        // enemyShip = enemy.ship;
     }
     void Start()
     {
-        ChangeState(CombatState.PlayerTurn);
+        // ChangeState(CombatState.PlayerTurn);
     }
 
     void Update()
     {
+        // HandlePhase();
         HandleState();
     }
 
@@ -45,44 +75,81 @@ public class CombatManager : MonoBehaviour
             return;
         }
         CombatState oldState = _state;
-        // Debug.Log($"From [{oldState}] to [{newState}]");
+        Debug.Log($"From [{oldState}] to [{newState}]");
         _state = newState;
 
     }
+
+    // TODO
+    //public void ChangePhase(CombatPhase newPhase)
 
     public CombatState GetState()
     {
         return _state;
     }
 
+    public CombatPhase GetPhase()
+    {
+        return _phase;
+    }
+
+    private void HandleTurn(string turn)
+    {
+        switch(_phase)
+        {
+            case CombatPhase.Preparation:
+                break;
+            case CombatPhase.Action:
+                break;
+            case CombatPhase.After:
+                break;
+
+        }
+    }
+
     private void HandlePlayerTurn()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.A))
         {
-            float dmg = playerShip.attack;
+            float dmg = player.GetDamage();
             Debug.Log("5 vurdun he");
-            enemyShip.ReceiveDamage(dmg);
-            ChangeState(CombatState.EnemyTurn);
+            enemy.ReceiveDamage(dmg);
+            // ChangeState(CombatState.EnemyTurn);
+            // NextState();
         }
 
     }
     private void HandleEnemyTurn()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.A))
         {
-            float dmg = enemyShip.attack;
+            float dmg = enemy.GetDamage();
             Debug.Log("5 vurdular sana he");
-            playerShip.ReceiveDamage(dmg);
-            ChangeState(CombatState.PlayerTurn);
+            player.ReceiveDamage(dmg);
+            // ChangeState(CombatState.PlayerTurn);
+            // NextState();
         }
+    }
 
+    private void HandleIntermission()
+    {
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            // NextState();
+        }
+    }
+
+    public void EndTurn()
+    {
+        NextState();
     }
 
     private void HandleState()
     {
         switch(_state)
         {
-            case CombatState.TurnPrep:
+            case CombatState.Intermission:
+                HandleIntermission();
                 break;
             case CombatState.PlayerTurn:
                 HandlePlayerTurn();
@@ -93,5 +160,49 @@ public class CombatManager : MonoBehaviour
             default:
                 throw new System.Exception($"State [{_state}] is not an available state to handle.");
         }
+    }
+
+    // TODO
+    // private void HandlePhase()
+
+    // TEMPORARY ENDEAVOUR
+    private void NextState()
+    {
+        if(temp >= stateList.Count)
+        {
+            ChangeState(CombatState.Intermission);
+            return;
+        }
+        CombatState cs = stateList[temp];
+        temp++;
+        ChangeState(cs);
+        if(cs == CombatState.Intermission)
+        {
+            NextPhase();
+        }
+    }
+
+    private void NextPhase()
+    {
+        Debug.Log("NextPhase");
+        CombatPhase oldPhase = _phase;
+        switch(_phase)
+        {
+            case CombatPhase.NullPhase:
+                _phase = CombatPhase.Preparation;
+                break;
+            case CombatPhase.Preparation:
+                _phase = CombatPhase.Action;
+                break;
+            case CombatPhase.Action:
+                _phase = CombatPhase.After;
+                break;
+            case CombatPhase.After:
+                _phase = CombatPhase.Preparation;
+                break;
+            default:
+                throw new System.Exception($"Phase [{_phase}] is not an available phase to handle.");
+        }
+        Debug.Log($"From [{oldPhase}] to [{_phase}]");
     }
 }

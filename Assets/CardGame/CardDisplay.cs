@@ -22,7 +22,7 @@ public class CardDisplay : MonoBehaviour
 
     private void Start()
     {
-        Debug.Log(card.name);
+        // Debug.Log(card.name);
         SetAttributes();
     }
 
