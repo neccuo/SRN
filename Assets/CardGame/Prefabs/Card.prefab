@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 68465683314194546}
   - component: {fileID: 68465683314194547}
   - component: {fileID: 1076473524}
+  - component: {fileID: 3377357357361920468}
   m_Layer: 5
   m_Name: Card
   m_TagString: Untagged
@@ -36,7 +37,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.000015259, y: 0}
+  m_AnchoredPosition: {x: -600, y: -500}
   m_SizeDelta: {x: 522.707, y: 757.6174}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &68465683314194546
@@ -59,7 +60,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f631cdf34e94eff4b8c1d628c11eec11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  card: {fileID: 11400000, guid: 9b0423e95f49369458be18d223d515ed, type: 2}
+  cardBG: {fileID: 68465684670826839}
   cardNameText: {fileID: 68465684724746661}
   descriptionText: {fileID: 68465683767859629}
   artworkImage: {fileID: 68465684299187940}
@@ -79,6 +80,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dragSpeed: 4000
+--- !u!114 &3377357357361920468
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 68465683314194545}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72f6131fbbfbb0942a5179a5f44118c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  card: {fileID: 11400000, guid: 9b0423e95f49369458be18d223d515ed, type: 2}
 --- !u!1 &68465683465804634
 GameObject:
   m_ObjectHideFlags: 0
@@ -158,7 +172,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 1
+  m_Text: 0
 --- !u!114 &848143897
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -253,7 +267,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 1
+  m_Text: 0
 --- !u!114 &409089662
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -348,7 +362,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 'Lorem Ipsum dolor sit amet... '
+  m_Text: Lorem ipsum dolor sit amet...
 --- !u!114 &1304030152
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -579,8 +593,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.5660378, g: 0.5660378, b: 0.5660378, a: 1}
-  m_RaycastTarget: 1
+  m_Color: {r: 0.5647059, g: 0.5647059, b: 0.5647059, a: 1}
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -656,7 +670,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -675,7 +689,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: CARD NAME
+  m_Text: Card Name
 --- !u!114 &75976314
 MonoBehaviour:
   m_ObjectHideFlags: 0

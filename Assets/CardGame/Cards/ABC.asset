@@ -16,6 +16,7 @@ MonoBehaviour:
   description: It's getting hot.
   artwork: {fileID: -5176030191639227831, guid: 95eeab1bb7cf61040bf044e70d5414d4,
     type: 3}
+  cardType: 2
   manaCost: 3
   attack: 4
   health: 4

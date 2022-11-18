@@ -62,6 +62,12 @@ public class CombatManager : MonoBehaviour
         // ChangeState(CombatState.PlayerTurn);
     }
 
+    void InitGame()
+    {
+        _phase = CombatPhase.NullPhase;
+        _state = CombatState.Intermission;
+    }
+
     void Update()
     {
         // HandlePhase();
@@ -82,6 +88,31 @@ public class CombatManager : MonoBehaviour
 
     // TODO
     //public void ChangePhase(CombatPhase newPhase)
+
+    public void CardPlayed(GameObject gObject)
+    {
+        Card playedCard = gObject.GetComponent<CardData>().card;
+        CardType cardType = playedCard.cardType;
+
+        switch(cardType)
+        {
+            case CardType.Standard:
+                Debug.Log($"Dealt {playedCard.attack} damage");
+                break;
+            case CardType.Shield:
+                Debug.Log($"Charged {playedCard.attack} shield");
+                break;
+            case CardType.Attack:
+                Debug.Log($"Dealt {playedCard.attack} damage");
+                break;
+            case CardType.Recovery:
+                Debug.Log($"Recovered {playedCard.attack}");
+                break;
+            default:
+                Debug.LogError("Something went wrong");
+                break;
+        }
+    }
 
     public CombatState GetState()
     {
@@ -170,8 +201,9 @@ public class CombatManager : MonoBehaviour
     {
         if(temp >= stateList.Count)
         {
-            ChangeState(CombatState.Intermission);
-            return;
+            temp = 0;
+            // InitGame();
+            // ChangeState(CombatState.Intermission);
         }
         CombatState cs = stateList[temp];
         temp++;

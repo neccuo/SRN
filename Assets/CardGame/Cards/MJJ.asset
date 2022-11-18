@@ -15,6 +15,7 @@ MonoBehaviour:
   cardName: Blue Sun
   description: Cools the environment. Disables overheat and fire effects on everyone.
   artwork: {fileID: -119213928601622100, guid: 1cceecb33c1c23040bb8c6aea8056f93, type: 3}
+  cardType: 1
   manaCost: 2
   attack: 3
   health: 3

@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using static UnityEngine.GraphicsBuffer;
 
-public class CardMovementHandler : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerEnterHandler, IPointerExitHandler
+public class CardMovementHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerEnterHandler ,IPointerExitHandler
 {
     private Vector3 originalPos;
     private Vector3 originalScale;
@@ -14,6 +14,11 @@ public class CardMovementHandler : MonoBehaviour, IDragHandler, IEndDragHandler,
     private bool _isHover = false;
 
     // RectTransform rectTransform = GetComponent<RectTransform>();
+
+    public void OnBeginDrag(PointerEventData eventData)
+    {
+        
+    }
 
     public void OnDrag(PointerEventData eventData)
     {
@@ -25,18 +30,40 @@ public class CardMovementHandler : MonoBehaviour, IDragHandler, IEndDragHandler,
     public void OnEndDrag(PointerEventData eventData)
     {
         _isDragged= false;
+        // if on PlayArea, do something else
+
+        List<RaycastResult> raycastResults = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(eventData, raycastResults);
+        foreach(var raycastResult in raycastResults)
+        {
+            GameObject resObj = raycastResult.gameObject;
+            // SHITTY HACK, PLEASE CHANGE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            if(resObj.name == "PlayArea")
+            {
+                CombatManager.Instance.CardPlayed(gameObject);
+                Destroy(gameObject);
+                return;
+            }
+        }
+
+        transform.position = originalPos;
+
+
+        // TODO: ADD ANIMATIONS LATER, NOT NOW...
+        // transform.position = Vector3.MoveTowards(transform.position, originalPos, dragSpeed * Time.deltaTime);
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        _isHover = true;
-        transform.localScale = Vector3.one;
+        //Debug.Log("Icerdeyim");
+        //_isHover = true;
+        //transform.localScale = Vector3.one;
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        _isHover = false;
-        transform.position = originalPos;
+        //_isHover = false;
+        //transform.position = originalPos;
     }
 
     void Start()
@@ -47,7 +74,7 @@ public class CardMovementHandler : MonoBehaviour, IDragHandler, IEndDragHandler,
 
     void Update()
     {
-        if(!_isDragged)
+        /*if(!_isDragged)
         {
             transform.position = Vector3.MoveTowards(transform.position, originalPos, dragSpeed * Time.deltaTime);
         }
@@ -58,7 +85,7 @@ public class CardMovementHandler : MonoBehaviour, IDragHandler, IEndDragHandler,
         else
         {
             transform.localScale = originalScale;
-        }
+        }*/
 
     }
 
