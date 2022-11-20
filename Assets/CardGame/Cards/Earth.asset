@@ -10,13 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0834f8494497cd5458f9105c014794c6, type: 3}
-  m_Name: ABC
+  m_Name: Earth
   m_EditorClassIdentifier: 
-  cardName: Red Sun
-  description: It's getting hot.
-  artwork: {fileID: -5176030191639227831, guid: 95eeab1bb7cf61040bf044e70d5414d4,
-    type: 3}
-  cardType: 2
+  cardName: Earth
+  description: Just earth
+  artwork: {fileID: 21300000, guid: a8f90d173cafacc43b4457b65eef06d4, type: 3}
+  cardType: 3
   manaCost: 3
-  attack: 4
+  attack: 3
   health: 4

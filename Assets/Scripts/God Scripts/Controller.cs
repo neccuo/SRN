@@ -15,6 +15,9 @@ public class Controller : MonoBehaviour
 
     [SerializeField] private GameObject _inventoryBar;
 
+    [SerializeField] private GameObject _privateComm;
+
+
     public RectTransform parent;
 
 
@@ -154,6 +157,16 @@ public class Controller : MonoBehaviour
         _inventoryBar.SetActive(false);
     }
 
+    private void _OpenSkype()
+    {
+        _privateComm.SetActive(true);
+    }
+
+    public void CloseSkype()
+    {
+        _privateComm.SetActive(false);
+    }
+
     public void TakePlanMovementInput()
     {
         if (Input.GetKeyDown(KeyCode.Space))
@@ -189,8 +202,9 @@ public class Controller : MonoBehaviour
             if (colObj != null && _CheckRightClickWhiteList(colObj.tag))
             {
                 Debug.Log(colObj.name + " was right clicked");
+                _OpenSkype();
             }
-            _OpenInventory();
+            // _OpenInventory();
 
 
         }
