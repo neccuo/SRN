@@ -89,9 +89,9 @@ public class CombatManager : MonoBehaviour
     // TODO
     //public void ChangePhase(CombatPhase newPhase)
 
-    public void CardPlayed(GameObject gObject)
+    public void CardPlayed(GameObject cardObject)
     {
-        Card playedCard = gObject.GetComponent<CardData>().card;
+        Card playedCard = cardObject.GetComponent<CardData>().card;
         CardType cardType = playedCard.cardType;
 
         switch(cardType)
@@ -103,6 +103,7 @@ public class CombatManager : MonoBehaviour
                 Debug.Log($"Charged {playedCard.attack} shield");
                 break;
             case CardType.Attack:
+                enemy.ReceiveDamage(playedCard.attack);
                 Debug.Log($"Dealt {playedCard.attack} damage");
                 break;
             case CardType.Recovery:

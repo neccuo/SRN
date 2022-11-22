@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4293233279432296982}
   - component: {fileID: 4293233279432296981}
   - component: {fileID: 1787503818}
+  - component: {fileID: 4001381126861486225}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -96,7 +97,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ss: {fileID: 11400000, guid: 98a26195b5f47964984372b668a02dab, type: 2}
-  hullName: 
-  attack: 0
-  health: 0
-  shield: 0
+--- !u!114 &4001381126861486225
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4293233279432296980}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bddd0159a0c51c340b6315beff3105f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cardList: []
+  hand: []

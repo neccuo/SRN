@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Events;
 using static UnityEngine.GraphicsBuffer;
 
 public class CardMovementHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerEnterHandler ,IPointerExitHandler
@@ -55,14 +56,15 @@ public class CardMovementHandler : MonoBehaviour, IBeginDragHandler, IDragHandle
 
     public void OnPointerEnter(PointerEventData eventData)
     {
+
         //Debug.Log("Icerdeyim");
-        //_isHover = true;
+        _isHover = true;
         //transform.localScale = Vector3.one;
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        //_isHover = false;
+        _isHover = false;
         //transform.position = originalPos;
     }
 
@@ -74,6 +76,10 @@ public class CardMovementHandler : MonoBehaviour, IBeginDragHandler, IDragHandle
 
     void Update()
     {
+        if(_isHover)
+        {
+            
+        }
         /*if(!_isDragged)
         {
             transform.position = Vector3.MoveTowards(transform.position, originalPos, dragSpeed * Time.deltaTime);

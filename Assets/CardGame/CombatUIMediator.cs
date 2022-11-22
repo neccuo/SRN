@@ -2,15 +2,35 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
 
 public class CombatUIMediator : MonoBehaviour
 {
     [SerializeField] private Text stateText;
     [SerializeField] private Text phaseText;
 
+    public GameObject cardInfoHolder;
+
+
+    // public static delegate;
+
     void Update()
     {
         SetTexts();
+    }
+
+    public void SetCardInfo(GameObject card)
+    {
+        GameObject c = Instantiate(card);
+        card.transform.parent = cardInfoHolder.transform;
+    }
+
+    public void EmptyCardInfo()
+    {
+        foreach(Transform child in cardInfoHolder.transform)
+        {
+            Destroy(child.gameObject);
+        }
     }
 
     // TODO: USE EVENTS FOR OPTIMIZATION
