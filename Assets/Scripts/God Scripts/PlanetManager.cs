@@ -25,6 +25,11 @@ public class PlanetManager : MonoBehaviour
     {
     }
 
+    public void PrintPlanetStockById(int id)
+    {
+        _systemDB.GetShopStockById(id);
+    }
+
     public void PrepareSystemPlanets(int oldSysID, int newSysID)
     {
         List<int> deactivateIdList = _systemDB.GetPlanetsBySystemID(oldSysID);
@@ -74,7 +79,8 @@ public class PlanetManager : MonoBehaviour
             temp.scale,
             temp.angular_speed,
             temp.system_id,
-            temp.sprite_id
+            temp.sprite_id,
+            temp.shop_id
         );
         FillPlanetDic(id, planetLogic);
     }

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Planet : MonoBehaviour
 {
+
     #region size realm
     // float scaleBase;
     float scaleRange;
@@ -15,12 +16,13 @@ public class Planet : MonoBehaviour
     #region movement realm
     float speedBase;
     float speedRange;
+
+    [SerializeField] private PlanetManager planetManager;
     [SerializeField] private int planetID;
     [SerializeField] private float angularSpeed;
     [SerializeField] private int systemID;
     [SerializeField] private int spriteID;
-
-
+    [SerializeField] private int shopID;
 
     #endregion
 
@@ -31,6 +33,7 @@ public class Planet : MonoBehaviour
     void Start()
     {
         shopStock = GetComponent<ShopStock>();
+        planetManager = transform.GetComponentInParent<PlanetManager>();
         
         if(_sunLocation == null)
         {
@@ -44,7 +47,7 @@ public class Planet : MonoBehaviour
         return planetID;
     }
 
-    public Planet SetPlanet(int id, string name, float x, float y, float scale, float angularSpeed, int system_id, int sprite_id)
+    public Planet SetPlanet(int id, string name, float x, float y, float scale, float angularSpeed, int system_id, int sprite_id, int shop_id)
     {
         this.planetID = id;
         this.gameObject.name = name;
@@ -53,6 +56,7 @@ public class Planet : MonoBehaviour
         this.angularSpeed = angularSpeed;
         this.systemID = system_id;
         this.spriteID = sprite_id;
+        this.shopID = shop_id;
 
         return this;
     }
@@ -65,6 +69,7 @@ public class Planet : MonoBehaviour
         {
             Debug.Log("Player collided with planet: " + gameObject.name);
             // shopStock.PrintStock();
+            planetManager.PrintPlanetStockById(this.shopID);
         }
     }
 

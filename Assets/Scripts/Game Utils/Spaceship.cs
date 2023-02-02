@@ -50,6 +50,10 @@ public class Spaceship : MonoBehaviour
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
         InitEngineLocationHash();
+
+        // ************* DON'T FORGET ***********
+        engineBeam.SetActive(false); 
+        
         //float shipScale = GetScaleFromMaxHealth();
         //transform.localScale = new Vector3(shipScale, shipScale, 1);
 

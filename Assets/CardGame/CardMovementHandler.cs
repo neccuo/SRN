@@ -11,8 +11,13 @@ public class CardMovementHandler : MonoBehaviour, IBeginDragHandler, IDragHandle
     private Vector3 originalScale;
 
     public float dragSpeed = 4000.0f;
+
+    #pragma warning disable CS0414
+
     private bool _isDragged = false;
     private bool _isHover = false;
+
+    #pragma warning restore CS0414
 
     // RectTransform rectTransform = GetComponent<RectTransform>();
 

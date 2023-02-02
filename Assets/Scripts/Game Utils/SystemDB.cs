@@ -29,7 +29,7 @@ public class PlanetTEMP
     public float angular_speed { get; set; }
     public int system_id { get; set; }
     public int sprite_id { get; set; }
-
+    public int shop_id { get; set; }
 
 }
 
@@ -74,6 +74,7 @@ public class SystemDB : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.S))
         {
+            // Save time/date
             SavePlanets();
             SavePilots();
             SavePlayer();
@@ -85,6 +86,44 @@ public class SystemDB : MonoBehaviour
         }
     }
 
+
+    // IT ONLY PRINTS!!!!!!!!
+    public void GetShopStockById(int id)
+    {
+        SqliteConnection connection = new SqliteConnection(_dbName);
+        connection.Open();
+
+        string shopInventoryTableName = "shop_inventories";
+
+        string ans = "";
+
+        using (var command = connection.CreateCommand())
+        {
+            command.CommandText = 
+            $"SELECT items.name, ROUND(items.price * {shopInventoryTableName}.price_coefficient), {shopInventoryTableName}.quantity " + 
+            $"FROM items " +
+            $"JOIN {shopInventoryTableName} ON {shopInventoryTableName}.item_id = items.id " +
+            $"WHERE {shopInventoryTableName}.shop_id = {id};";
+
+            using (IDataReader reader = command.ExecuteReader())
+            {
+                string str = "";
+                while (reader.Read()) 
+                {
+                    for (int i = 0; i < reader.FieldCount; i++) 
+                    {
+                        str += reader[i].ToString();
+                        str += ", ";
+                    }
+                    str += "\n";
+                }
+                ans = str;
+            }
+        }
+
+        Debug.Log(ans);
+    }
+
     // ONLY USE IT AT THE START
     // ***planets***
     public void LoadPlanets()
@@ -93,7 +132,7 @@ public class SystemDB : MonoBehaviour
         connection.Open();
         using (var command = connection.CreateCommand())
         {
-            command.CommandText = "SELECT * FROM planets;";
+            command.CommandText = "SELECT * FROM planets ORDER BY system_id;";
 
             using (IDataReader reader = command.ExecuteReader())
             {
@@ -108,7 +147,7 @@ public class SystemDB : MonoBehaviour
                     temp.angular_speed = OTF(reader["angular_speed"]);
                     temp.system_id = OTI(reader["system_id"]);
                     temp.sprite_id = OTI(reader["sprite_id"]);
-
+                    temp.shop_id = reader["shop_id"] != DBNull.Value ? OTI(reader["shop_id"]) : -1;
 
                     _planetManager.SpawnPlanet(temp);
                 }
