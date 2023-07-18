@@ -227,10 +227,15 @@ public class Controller : MonoBehaviour
             }
             else if(followedObject.tag == "Planet") // REACHED A PLANET (FOLLOW CLICKPOINT): change to ShopState
             {
-                GameObject planet = player.GetFollowedObject();
-                ShopStock currentStock = planet.GetComponent<ShopStock>();
-                ShopBarManager.ShopManager.SetCurrentShopStockPointer(currentStock);
 
+                // USE DB CONNECTION 
+                Planet planet = player.GetFollowedObject().GetComponent<Planet>();
+
+                // SET SHOP BY ID
+                ShopManager.shopManager.OpenByShopID(planet.GetShopID());
+
+
+                // Changing the state later saved me from a Null Reference bug, keep it.
                 ChangeState(GameState.ShopState);
             }
             else if(followedObject.tag == "Portal")

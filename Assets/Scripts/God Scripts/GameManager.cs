@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
 
     public GameObject cheatCodeBar;
-    public GameObject shopBar;
+    // public GameObject shopBar;
 
     public Player player;
 
@@ -133,7 +133,7 @@ public class GameManager : MonoBehaviour
                 break;
             case GameState.ShopState:
                 Time.timeScale = 0; // BE CAREFUL ABOUT IT...!!!!
-                shopBar.SetActive(true);
+                // shopBar.SetActive(true);
                 // OpenShopMenu(Planet planet)
                 break;
             //case GameState.SpaceSystemLoad:

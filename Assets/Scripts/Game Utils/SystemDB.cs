@@ -49,17 +49,15 @@ public class PilotTEMP
     
 }
 
-
+// ONLY MANAGERS CAN ACCESS IT
 public class SystemDB : MonoBehaviour
 {
     [SerializeField] private string _dbName = "URI=file:System.db";
-    [SerializeField] private PlanetManager _planetManager;
     [SerializeField] private SystemManager _systemManager;
     [SerializeField] private NpcManager _npcManager;
+    [SerializeField] private PlanetManager _planetManager;
+    // [SerializeField] private ShopManager _shopManager;
     [SerializeField] private Player _player;
-
-
-
 
 
     void Start()
@@ -86,43 +84,41 @@ public class SystemDB : MonoBehaviour
         }
     }
 
-
-    // IT ONLY PRINTS!!!!!!!!
-    public void GetShopStockById(int id)
+    public List<ShopItem> GetShopItemsById(int id)
     {
         SqliteConnection connection = new SqliteConnection(_dbName);
         connection.Open();
 
         string shopInventoryTableName = "shop_inventories";
 
-        string ans = "";
+        List<ShopItem> shopItemList = new List<ShopItem>();
 
         using (var command = connection.CreateCommand())
         {
-            command.CommandText = 
-            $"SELECT items.name, ROUND(items.price * {shopInventoryTableName}.price_coefficient), {shopInventoryTableName}.quantity " + 
-            $"FROM items " +
-            $"JOIN {shopInventoryTableName} ON {shopInventoryTableName}.item_id = items.id " +
-            $"WHERE {shopInventoryTableName}.shop_id = {id};";
+            command.CommandText =
+                $"SELECT items.id, items.name, ROUND(items.price * {shopInventoryTableName}.price_coefficient), {shopInventoryTableName}.quantity " +
+                $"FROM items " +
+                $"JOIN {shopInventoryTableName} ON {shopInventoryTableName}.item_id = items.id " +
+                $"WHERE {shopInventoryTableName}.shop_id = {id};" + 
+                $"ORDER BY items.id ASC;";
 
             using (IDataReader reader = command.ExecuteReader())
             {
-                string str = "";
-                while (reader.Read()) 
+                while (reader.Read())
                 {
-                    for (int i = 0; i < reader.FieldCount; i++) 
-                    {
-                        str += reader[i].ToString();
-                        str += ", ";
-                    }
-                    str += "\n";
+                    ShopItem item = new ShopItem();
+                    item.id = reader.GetInt32(0);
+                    item.name = reader.GetString(1);
+                    item.price = reader.GetDecimal(2);
+                    item.quantity = reader.GetInt32(3);
+                    shopItemList.Add(item);
                 }
-                ans = str;
             }
         }
 
-        Debug.Log(ans);
+        return shopItemList;
     }
+
 
     // ONLY USE IT AT THE START
     // ***planets***
@@ -307,55 +303,114 @@ public class SystemDB : MonoBehaviour
         }
     }
 
-    // ***items***
+    // organized by chatgpt. 7/18/2023, 6:49 EST
     public void UpdatePrices()
     {
-        SqliteConnection connection = new SqliteConnection(_dbName);
-        connection.Open();
-        SqliteCommand command = connection.CreateCommand();
-        SqliteTransaction trans = connection.BeginTransaction();
-
         Dictionary<int, int> idDic = new Dictionary<int, int>();
-        try
+
+        using (SqliteConnection connection = new SqliteConnection(_dbName))
         {
-            command.CommandText = "SELECT id, price FROM items;";
-            using(IDataReader reader = command.ExecuteReader())
+            connection.Open();
+            using (SqliteTransaction trans = connection.BeginTransaction())
             {
-                while(reader.Read())
+                try
                 {
-                    idDic[OTI(reader["id"])] = OTI(reader["price"]);
+                    using (SqliteCommand command = connection.CreateCommand())
+                    {
+                        command.CommandText = "SELECT id, price FROM items;";
+
+                        using (IDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                int id = Convert.ToInt32(reader["id"]);
+                                int price = Convert.ToInt32(reader["price"]);
+                                idDic[id] = price;
+                            }
+                        }
+                    }
+
+                    string priceLog = "Dic:\n";
+                    foreach (KeyValuePair<int, int> pair in idDic)
+                    {
+                        int itemId = pair.Key;
+                        int currentPrice = pair.Value;
+                        int newPrice = NewPrice(currentPrice);
+
+                        using (SqliteCommand updateCommand = connection.CreateCommand())
+                        {
+                            updateCommand.CommandText = $"UPDATE items SET price = {newPrice} WHERE id = {itemId};";
+                            updateCommand.ExecuteNonQuery();
+                        }
+
+                        priceLog += $"key: {itemId}   value: {currentPrice}\n";
+                    }
+
+                    trans.Commit();
+                    // Debug.Log(priceLog);
+                }
+                catch (Exception e)
+                {
+                    trans.Rollback();
+                    Debug.LogError(e.ToString());
+                    Debug.LogWarning("Price update failed, rollback");
                 }
             }
-            int tempID = 0;
-            int tempPrice = 0;
-            string priceLog = "Dic:\n";
-            foreach(KeyValuePair<int, int> pair in idDic)
-            {
-                tempID = pair.Key;
-                tempPrice = NewPrice(pair.Value);
-                command.CommandText = $"UPDATE items SET price = {tempPrice} WHERE id = {tempID};";
-                command.ExecuteNonQuery();
-
-                priceLog += $"key: {pair.Key}   value: {pair.Value}\n";
-            }
-            trans.Commit();
-            // Debug.Log(priceLog);
-        }
-        catch(Exception e)
-        {
-            trans.Rollback();
-            Debug.LogError(e.ToString());
-            Debug.LogWarning("Price update failed, rollback");
-        }
-        finally
-        {
-            trans.Dispose();
-            command.Dispose();
-            connection.Close();
         }
     }
 
+
+    // old version
+    // ***items***
+    // public void UpdatePrices()
+    // {
+    //     SqliteConnection connection = new SqliteConnection(_dbName);
+    //     connection.Open();
+    //     SqliteCommand command = connection.CreateCommand();
+    //     SqliteTransaction trans = connection.BeginTransaction();
+
+    //     Dictionary<int, int> idDic = new Dictionary<int, int>();
+    //     try
+    //     {
+    //         command.CommandText = "SELECT id, price FROM items;";
+    //         using(IDataReader reader = command.ExecuteReader())
+    //         {
+    //             while(reader.Read())
+    //             {
+    //                 idDic[OTI(reader["id"])] = OTI(reader["price"]);
+    //             }
+    //         }
+    //         int tempID = 0;
+    //         int tempPrice = 0;
+    //         string priceLog = "Dic:\n";
+    //         foreach(KeyValuePair<int, int> pair in idDic)
+    //         {
+    //             tempID = pair.Key;
+    //             tempPrice = NewPrice(pair.Value);
+    //             command.CommandText = $"UPDATE items SET price = {tempPrice} WHERE id = {tempID};";
+    //             command.ExecuteNonQuery();
+
+    //             priceLog += $"key: {pair.Key}   value: {pair.Value}\n";
+    //         }
+    //         trans.Commit();
+    //         // Debug.Log(priceLog);
+    //     }
+    //     catch(Exception e)
+    //     {
+    //         trans.Rollback();
+    //         Debug.LogError(e.ToString());
+    //         Debug.LogWarning("Price update failed, rollback");
+    //     }
+    //     finally
+    //     {
+    //         trans.Dispose();
+    //         command.Dispose();
+    //         connection.Close();
+    //     }
+    // }
+
     // ***pilots
+    // only npcs
     public void LoadPilots()
     {
         SqliteConnection connection = new SqliteConnection(_dbName);

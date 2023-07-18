@@ -28,11 +28,8 @@ public class Planet : MonoBehaviour
 
     private Vector2 _sunLocation;
 
-    ShopStock shopStock;
-
     void Start()
     {
-        shopStock = GetComponent<ShopStock>();
         planetManager = transform.GetComponentInParent<PlanetManager>();
         
         if(_sunLocation == null)
@@ -45,6 +42,11 @@ public class Planet : MonoBehaviour
     public int GetPlanetID()
     {
         return planetID;
+    }
+
+    public int GetShopID()
+    {
+        return shopID;
     }
 
     public Planet SetPlanet(int id, string name, float x, float y, float scale, float angularSpeed, int system_id, int sprite_id, int shop_id)
@@ -68,8 +70,8 @@ public class Planet : MonoBehaviour
         if(collidedObject.tag == "Player")
         {
             Debug.Log("Player collided with planet: " + gameObject.name);
-            // shopStock.PrintStock();
-            planetManager.PrintPlanetStockById(this.shopID);
+            if(planetManager)
+                planetManager.PrintPlanetStockById(this.shopID);
         }
     }
 

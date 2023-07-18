@@ -27,7 +27,11 @@ public class PlanetManager : MonoBehaviour
 
     public void PrintPlanetStockById(int id)
     {
-        _systemDB.GetShopStockById(id);
+        var stockList = _systemDB.GetShopItemsById(id);
+        foreach(var item in stockList)
+        {
+            Debug.Log(item.name);
+        }
     }
 
     public void PrepareSystemPlanets(int oldSysID, int newSysID)

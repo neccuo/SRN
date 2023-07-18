@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 8833258815693163160}
   - component: {fileID: 8833258815693163161}
   - component: {fileID: 8833258815693163163}
-  - component: {fileID: 8889549745094350969}
   - component: {fileID: 8833258815693163162}
   - component: {fileID: -2333982549090726924}
   m_Layer: 0
@@ -98,23 +97,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75c87f39a36b641449cf6628780951e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  planetManager: {fileID: 0}
   planetID: 0
   angularSpeed: 0
   systemID: 0
   spriteID: 0
---- !u!114 &8889549745094350969
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8833258815693163110}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bf4ebc4164ecbb547ba52e42ba1ad642, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  stockSize: 3
+  shopID: 0
 --- !u!58 &8833258815693163162
 CircleCollider2D:
   m_ObjectHideFlags: 0
