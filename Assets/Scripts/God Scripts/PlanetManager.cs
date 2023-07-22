@@ -27,7 +27,7 @@ public class PlanetManager : MonoBehaviour
 
     public void PrintPlanetStockById(int id)
     {
-        var stockList = _systemDB.GetShopItemsById(id);
+        var stockList = _systemDB.GetShopItemsByShopId(id);
         foreach(var item in stockList)
         {
             Debug.Log(item.name);

@@ -22,6 +22,7 @@ public class ShopManager : MonoBehaviour
     [SerializeField] public GameObject ItemsObject;
 
     [SerializeField] public Image highlightedItemImageUI;
+    [SerializeField] private Button _confirmBuyButton;
 
     // The Image inside the ItemSlot object
     [SerializeField] private GameObject _shopItemPrefab;
@@ -31,7 +32,7 @@ public class ShopManager : MonoBehaviour
 
     private List<ShopItem> _shopItems;
 
-    GameObject highlightedItem;
+    private ShopItem _highlightedItem;
     
     [NonSerialized]
     public GameState shopState = GameState.ShopState;
@@ -52,6 +53,24 @@ public class ShopManager : MonoBehaviour
         sprites = Resources.LoadAll<Sprite>(texturePath);
     }
 
+    private void Update() 
+    {
+        // if(ShopBarObject.activeSelf && Input.GetKeyDown(KeyCode.Z))
+        // {
+        //     NullifyHighlightedItem();
+        //     NullifyButtons();
+
+        //     if(_currentShopID == 1)
+        //     {
+        //         OpenByShopID(2);
+        //     }
+        //     else if(_currentShopID == 2)
+        //     {
+        //         OpenByShopID(1);
+        //     }
+        // }
+    }
+
     /* MORE BADASS VERSION OF AWAKE, IT RUNS FIRST
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
     void OnBeforeSceneLoadRuntimeMethod()
@@ -59,17 +78,51 @@ public class ShopManager : MonoBehaviour
         Awake();
     }*/
 
-    public void SetHighlightedItem(GameObject box)
+    private void ItemSlotClicked(GameObject box)
     {
-        highlightedItem = box;
+        SetHighlightedItem(box);
+        _confirmBuyButton.onClick.RemoveAllListeners();
+        _confirmBuyButton.onClick.AddListener(() => BuyHighlightedItem());
+
+        _confirmBuyButton.interactable = true;
+    }
+
+    private void BuyHighlightedItem()
+    {
+        _systemDB.BuyItem(_currentShopID, _highlightedItem.id);
+        Debug.Log("Bought: " + _highlightedItem.ToString());
+
+        ResetShop();
+    }
+
+    private void ResetShop()
+    {
+        NullifyHighlightedItem();
+        NullifyButtons();
+
+        OpenByShopID(_currentShopID);
+    }
+
+    private void CloseShop()
+    {
+        NullifyHighlightedItem();
+        NullifyButtons();
+
+        _currentShopID = -1;
+    }
+
+    private void SetHighlightedItem(GameObject itemObj)
+    {
+        // yarak gibi kod geliyor
+        _highlightedItem = itemObj.GetComponent<ShopItemContainer>().shopItem;
         highlightedItemImageUI.enabled = true;
-        highlightedItemImageUI.sprite = box.GetComponent<Image>().sprite;
+        highlightedItemImageUI.sprite = itemObj.GetComponent<Image>().sprite;
     }
     
     public void OpenByShopID(int id)
     {
         _currentShopID = id;
-        _shopItems = _systemDB.GetShopItemsById(id);
+        _shopItems = _systemDB.GetShopItemsByShopId(id);
         OpenPopup();
     }
 
@@ -97,7 +150,7 @@ public class ShopManager : MonoBehaviour
             int itemQt = item.quantity;
             for(int i = 0; i < itemQt; ++i)
             {
-                SetShopItem(slotIndex, item.id);
+                SetShopItem(slotIndex, item);
                 slotIndex++;
             }
 
@@ -113,51 +166,44 @@ public class ShopManager : MonoBehaviour
     private void OnShopBarDisable()
     {
         Debug.Log("Shop Bar is Disabled");
-
-        NullifyHighlightedItem();
-        Transform itemsTrans = ItemsObject.transform;
-
-        foreach(Transform itemSlot in itemsTrans)
-        {
-            // ASSUMING itemSlot HAS ONE CHILD3
-            DestroyAllChildren(itemSlot);
-
-            Button itemSlotButton = itemSlot.gameObject.GetComponent<Button>();
-            itemSlotButton.interactable = false;
-            itemSlotButton.onClick.RemoveAllListeners();
-
-        }
+        CloseShop();
 
         Controller.ControllerGod.ChangeState(GameState.PlanMovement);
     }
 
-    private void SetShopItem(int slotIndex, int itemId)
-    {
-        GameObject newShopItem = Instantiate(_shopItemPrefab);
-        Image itemImage = newShopItem.GetComponent<Image>();
 
+    private void SetShopItem(int slotIndex, ShopItem item)
+    {
+        GameObject newShopItemObj = Instantiate(_shopItemPrefab);
+        Image itemImage = newShopItemObj.GetComponent<Image>();
+        ShopItemContainer container = newShopItemObj.GetComponent<ShopItemContainer>();
+
+        // TO READ ITEM INFO
+        container.shopItem = item;
+
+        // UI SHIT
         Transform childItemSlot = ItemsObject.transform.GetChild(slotIndex);
         Button myButton = childItemSlot.gameObject.GetComponent<Button>();
 
         myButton.onClick.RemoveAllListeners();
-        myButton.onClick.AddListener(() => SetHighlightedItem(newShopItem));
+        myButton.onClick.AddListener(() => ItemSlotClicked(newShopItemObj));
         myButton.interactable = true;
 
         // DEFINITELY CHANGE, PLEASE
         string spriteName = "";
-        if(itemId == 1)
+        if(item.id == 1)
             spriteName = "drone_0";
-        else if(itemId == 2)
+        else if(item.id == 2)
             spriteName = "radar_1";
-        else if(itemId == 3)
+        else if(item.id == 3)
             spriteName = "engine_3";
 
         Sprite mySprite = System.Array.Find(sprites, s=> s.name == spriteName);
         itemImage.sprite = mySprite;
 
 
-        // NOT SURE ABOUT ,false though...
-        newShopItem.transform.SetParent(childItemSlot, false);
+        // NOT SURE ABOUT 'false' THOUGH...
+        newShopItemObj.transform.SetParent(childItemSlot, false);
     }
 
     private void DestroyAllChildren(Transform trans)
@@ -172,9 +218,25 @@ public class ShopManager : MonoBehaviour
 
     private void NullifyHighlightedItem()
     {
-        highlightedItem = null;
+        _highlightedItem = null;
         highlightedItemImageUI.enabled = false;
         highlightedItemImageUI.sprite = null;
+    }
+
+    private void NullifyButtons()
+    {
+        _confirmBuyButton.interactable = false;
+        _confirmBuyButton.onClick.RemoveAllListeners();
+        Transform itemsTrans = ItemsObject.transform;
+
+        foreach(Transform itemSlot in itemsTrans)
+        {
+            DestroyAllChildren(itemSlot);
+
+            Button itemSlotButton = itemSlot.gameObject.GetComponent<Button>();
+            itemSlotButton.interactable = false;
+            itemSlotButton.onClick.RemoveAllListeners();
+        }
     }
 
 }

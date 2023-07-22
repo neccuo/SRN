@@ -10,7 +10,6 @@ using System.Collections.Generic;
 // you have to revert every change if something goes wrong (including outside commands).
 // Also, decide when to save. End of the day or when the game stops.
 
-
 public class SystemTEMP
 {
     public int id { get; set; }
@@ -59,9 +58,12 @@ public class SystemDB : MonoBehaviour
     // [SerializeField] private ShopManager _shopManager;
     [SerializeField] private Player _player;
 
+    private ShopUtilsDB _shopUtilsDB;
 
     void Start()
     {
+        _shopUtilsDB = new ShopUtilsDB();
+
         LoadPlanets();
         LoadPilots();
 
@@ -84,37 +86,31 @@ public class SystemDB : MonoBehaviour
         }
     }
 
-    public List<ShopItem> GetShopItemsById(int id)
+    // pilotId=0 means pilot is the player
+    public void BuyItem(int shopId, int itemId, int pilotId=0)
+    {
+        if(shopId < 0 || itemId < 0)
+            Debug.LogError($"SOMETHING IS WRONG w/ 'BuyItem'. shopId: {shopId}, itemId: {itemId}");
+        
+        SqliteConnection connection = new SqliteConnection(_dbName);
+        connection.Open();
+
+        // SHOP ASPECT
+        _shopUtilsDB.ShopBuy(connection, shopId, itemId);
+
+        connection.Close();
+
+        // PILOT INVENTORY ASPECT
+    }
+
+    public List<ShopItem> GetShopItemsByShopId(int id)
     {
         SqliteConnection connection = new SqliteConnection(_dbName);
         connection.Open();
 
-        string shopInventoryTableName = "shop_inventories";
+        List<ShopItem> shopItemList = _shopUtilsDB.GetAllShopItems(connection, id);
 
-        List<ShopItem> shopItemList = new List<ShopItem>();
-
-        using (var command = connection.CreateCommand())
-        {
-            command.CommandText =
-                $"SELECT items.id, items.name, ROUND(items.price * {shopInventoryTableName}.price_coefficient), {shopInventoryTableName}.quantity " +
-                $"FROM items " +
-                $"JOIN {shopInventoryTableName} ON {shopInventoryTableName}.item_id = items.id " +
-                $"WHERE {shopInventoryTableName}.shop_id = {id};" + 
-                $"ORDER BY items.id ASC;";
-
-            using (IDataReader reader = command.ExecuteReader())
-            {
-                while (reader.Read())
-                {
-                    ShopItem item = new ShopItem();
-                    item.id = reader.GetInt32(0);
-                    item.name = reader.GetString(1);
-                    item.price = reader.GetDecimal(2);
-                    item.quantity = reader.GetInt32(3);
-                    shopItemList.Add(item);
-                }
-            }
-        }
+        connection.Close();
 
         return shopItemList;
     }
