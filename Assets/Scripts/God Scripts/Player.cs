@@ -41,15 +41,15 @@ public class Player : MonoBehaviour
         HandleDamageInputs();
     }
 
-    public int GetPlayerCredits()
-    {
-        return creditManager.GetCredits();
-    }
+    // public int GetPlayerCredits()
+    // {
+    //     return creditManager.GetCredits();
+    // }
 
-    public void SetPlayerCredits(int amount)
-    {
-        creditManager.SetCredits(amount);
-    }
+    // public void SetPlayerCredits(int amount)
+    // {
+    //     creditManager.SetCredits(amount);
+    // }
 
     public float GetShipSpeed()
     {

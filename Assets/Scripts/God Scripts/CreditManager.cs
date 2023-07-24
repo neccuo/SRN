@@ -1,42 +1,32 @@
 using UnityEngine.UI;
 using UnityEngine;
 
+
+// NOTES TO SELF
+// DUE TO THE SOME CHANGES I MADE, THIS CLASS ONLY WORKS AS A MEDIATOR TO UPDATE THE CREDITS TEXT UI
+// THIS MEANS AT SOME POINT I MIGHT THINK OF DELETING THIS CLASS
 public class CreditManager : MonoBehaviour
 {
-    public Text creditText;
-    private int _credit;
+    public Text creditsText;
+    private int _credits;
 
-    /// ***IMPORTANT***
-    /// CHANGE "playerMoney" AFTER USING A PROPER DATABASE
-    /// SINCE CreditManager IS NOT ONLY FOR THE PLAYER
+    private SystemDB _systemDB;
 
     void Start()
     {
-        _credit = PlayerPrefs.GetInt("playerMoney", 1000); // init credits
+        _systemDB = gameObject.GetComponent<GameManager>().SYSTEMDB;
+        UpdateCredits();
+    }
+
+    // Works as a Tick
+    public void UpdateCredits()
+    {
+        _credits = _systemDB.GetPlayerCredits();
         UpdateText();
-    }
-
-    public void ExchangeCredits(int amount)
-    {
-        SetCredits(_credit + amount);
-    }
-
-    public void SetCredits(int amount)
-    {
-        _credit = amount;
-        PlayerPrefs.SetInt("playerMoney", _credit);
-        // Debug.Log("Money is changed to " + _credit);
-        UpdateText();
-
-    }
-
-    public int GetCredits()
-    {
-        return _credit;
     }
 
     void UpdateText()
     {
-        creditText.text = "CREDITS: " + GetCredits();
+        creditsText.text = "CREDITS: " + _credits;
     }
 }

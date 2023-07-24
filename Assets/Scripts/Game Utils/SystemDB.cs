@@ -59,11 +59,18 @@ public class SystemDB : MonoBehaviour
     [SerializeField] private Player _player;
 
     private ShopUtilsDB _shopUtilsDB;
+    private PilotUtilsDB _pilotUtilsDB;
+
+    // AFERIN GUNU KURTARDIN AQ COCU
+    // BIR ARA LIFE CYCLE'I DUZGUN PLANLA
+    void Awake() 
+    {
+        _shopUtilsDB = new ShopUtilsDB();
+        _pilotUtilsDB = new PilotUtilsDB();
+    }
 
     void Start()
     {
-        _shopUtilsDB = new ShopUtilsDB();
-
         LoadPlanets();
         LoadPilots();
 
@@ -86,21 +93,59 @@ public class SystemDB : MonoBehaviour
         }
     }
 
-    // pilotId=0 means pilot is the player
-    public void BuyItem(int shopId, int itemId, int pilotId=0)
+    // pilotId=0 for player
+    public int GetPlayerCredits()
     {
-        if(shopId < 0 || itemId < 0)
-            Debug.LogError($"SOMETHING IS WRONG w/ 'BuyItem'. shopId: {shopId}, itemId: {itemId}");
-        
-        SqliteConnection connection = new SqliteConnection(_dbName);
-        connection.Open();
+        int credits = -1;
+        using (var connection = new SqliteConnection(_dbName))
+        {
+            connection.Open();
+            credits = _pilotUtilsDB.GetPilotCredit(connection, 0);
+        }
+        return credits;
+    }
 
-        // SHOP ASPECT
-        _shopUtilsDB.ShopBuy(connection, shopId, itemId);
+    // pilotId=0 means pilot is the player
+    public bool BuyItem(int shopId, int itemId, int pilotId=0)
+    {
+        try
+        {
+            if(shopId < 0 || itemId < 0)
+                throw new Exception($"SOMETHING IS WRONG w/ 'BuyItem'. shopId: {shopId}, itemId: {itemId}");
 
-        connection.Close();
+            using (var connection = new SqliteConnection(_dbName))
+            {
+                connection.Open();
+                using (var transaction = connection.BeginTransaction())
+                {
+                    // CHECK ASPECT
+                    int price = _shopUtilsDB.GetPrice(connection, shopId, itemId);
+                    int pilotCredit = _pilotUtilsDB.GetPilotCredit(connection, pilotId);
 
-        // PILOT INVENTORY ASPECT
+                    int newAmt = pilotCredit - price;
+
+                    if (newAmt < 0)
+                        throw new Exception($"ERROR: price ({price}) exceeds the pilotCredit ({pilotCredit})");
+
+                    // SHOP ASPECT
+                    _shopUtilsDB.ShopBuy(connection, shopId, itemId);
+
+                    // PILOT GIVES CREDITS ASPECT
+                    _pilotUtilsDB.SetPilotCredits(connection, pilotId, newAmt);
+
+                    // PILOT INVENTORY ASPECT
+                    _pilotUtilsDB.AddToInventory(connection, pilotId, itemId);
+
+                    transaction.Commit();
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError($"Error buying itemId[{itemId}] from shopId[{shopId}] to pilotId[{pilotId}]: {ex.Message}");
+            return false;
+        }
+        return true;
     }
 
     public List<ShopItem> GetShopItemsByShopId(int id)
@@ -355,56 +400,6 @@ public class SystemDB : MonoBehaviour
         }
     }
 
-
-    // old version
-    // ***items***
-    // public void UpdatePrices()
-    // {
-    //     SqliteConnection connection = new SqliteConnection(_dbName);
-    //     connection.Open();
-    //     SqliteCommand command = connection.CreateCommand();
-    //     SqliteTransaction trans = connection.BeginTransaction();
-
-    //     Dictionary<int, int> idDic = new Dictionary<int, int>();
-    //     try
-    //     {
-    //         command.CommandText = "SELECT id, price FROM items;";
-    //         using(IDataReader reader = command.ExecuteReader())
-    //         {
-    //             while(reader.Read())
-    //             {
-    //                 idDic[OTI(reader["id"])] = OTI(reader["price"]);
-    //             }
-    //         }
-    //         int tempID = 0;
-    //         int tempPrice = 0;
-    //         string priceLog = "Dic:\n";
-    //         foreach(KeyValuePair<int, int> pair in idDic)
-    //         {
-    //             tempID = pair.Key;
-    //             tempPrice = NewPrice(pair.Value);
-    //             command.CommandText = $"UPDATE items SET price = {tempPrice} WHERE id = {tempID};";
-    //             command.ExecuteNonQuery();
-
-    //             priceLog += $"key: {pair.Key}   value: {pair.Value}\n";
-    //         }
-    //         trans.Commit();
-    //         // Debug.Log(priceLog);
-    //     }
-    //     catch(Exception e)
-    //     {
-    //         trans.Rollback();
-    //         Debug.LogError(e.ToString());
-    //         Debug.LogWarning("Price update failed, rollback");
-    //     }
-    //     finally
-    //     {
-    //         trans.Dispose();
-    //         command.Dispose();
-    //         connection.Close();
-    //     }
-    // }
-
     // ***pilots
     // only npcs
     public void LoadPilots()
@@ -476,7 +471,8 @@ public class SystemDB : MonoBehaviour
         connection.Open();
 
         PilotTEMP pilot = new PilotTEMP();
-        pilot.credits = _player.GetPlayerCredits();
+        // pilot.credits = _player.GetPlayerCredits();
+        pilot.credits = GetPlayerCredits();
         pilot.x_axis = _player.transform.position.x;
         pilot.y_axis = _player.transform.position.y;
         pilot.angle = (_player.transform.rotation.eulerAngles.z);
@@ -505,7 +501,8 @@ public class SystemDB : MonoBehaviour
             while(reader.Read())
             {
                 Transform tr = _player.transform;
-                _player.SetPlayerCredits(OTI(reader["credits"]));
+                // PLAYER CREDIT SET IS HANDLED SOMEWHERE ELSE
+                // _player.SetPlayerCredits(OTI(reader["credits"]));
                 tr.position = new Vector3(OTF(reader["x_axis"]), OTF(reader["y_axis"]), tr.position.z);
                 tr.Rotate(tr.rotation.x, tr.rotation.y, OTF(reader["angle"]));
                 // tr.rotation = new Quaternion(tr.rotation.x, tr.rotation.y, OTF(reader["angle"]), tr.rotation.w);

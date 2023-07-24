@@ -28,6 +28,7 @@ public class ShopManager : MonoBehaviour
     [SerializeField] private GameObject _shopItemPrefab;
 
 
+    [SerializeField] private CreditManager _creditManager;
     [SerializeField] private SystemDB _systemDB;
 
     private List<ShopItem> _shopItems;
@@ -38,7 +39,6 @@ public class ShopManager : MonoBehaviour
     public GameState shopState = GameState.ShopState;
 
     private int _currentShopID = -1;
-
     string texturePath = "Sprites/Item_Sprites/itemsprites-items";
     Sprite[] sprites;
 
@@ -51,24 +51,6 @@ public class ShopManager : MonoBehaviour
     {
         // A JOB FOR ITEM MANAGER, KEEPING IT HERE TEMPORARILY
         sprites = Resources.LoadAll<Sprite>(texturePath);
-    }
-
-    private void Update() 
-    {
-        // if(ShopBarObject.activeSelf && Input.GetKeyDown(KeyCode.Z))
-        // {
-        //     NullifyHighlightedItem();
-        //     NullifyButtons();
-
-        //     if(_currentShopID == 1)
-        //     {
-        //         OpenByShopID(2);
-        //     }
-        //     else if(_currentShopID == 2)
-        //     {
-        //         OpenByShopID(1);
-        //     }
-        // }
     }
 
     /* MORE BADASS VERSION OF AWAKE, IT RUNS FIRST
@@ -89,10 +71,17 @@ public class ShopManager : MonoBehaviour
 
     private void BuyHighlightedItem()
     {
-        _systemDB.BuyItem(_currentShopID, _highlightedItem.id);
-        Debug.Log("Bought: " + _highlightedItem.ToString());
-
-        ResetShop();
+        bool isBought = _systemDB.BuyItem(_currentShopID, _highlightedItem.id, 0);
+        if(isBought)
+        {
+            Debug.Log("Bought: " + _highlightedItem.ToString());
+            _creditManager.UpdateCredits();
+            ResetShop();
+        }
+        else
+        {
+            Debug.LogWarning("CANNOT BUY: " + _highlightedItem.ToString());
+        }
     }
 
     private void ResetShop()
@@ -197,6 +186,8 @@ public class ShopManager : MonoBehaviour
             spriteName = "radar_1";
         else if(item.id == 3)
             spriteName = "engine_3";
+        else if(item.id == 4)
+            spriteName = "token_0";
 
         Sprite mySprite = System.Array.Find(sprites, s=> s.name == spriteName);
         itemImage.sprite = mySprite;

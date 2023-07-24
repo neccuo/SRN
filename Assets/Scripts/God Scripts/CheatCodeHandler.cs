@@ -17,7 +17,9 @@ public class CheatCodeHandler : MonoBehaviour
 
     public void AddCredit()
     {
-        creditManager.ExchangeCredits(1000);
+        // USE THE DB FOR IT, BUT LATER
+        
+        // creditManager.ExchangeCredits(1000);
     }
 
     public void Speed67()

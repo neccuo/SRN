@@ -8,6 +8,8 @@ using UnityEngine;
 public class ShopUtilsDB
 {
     private string shopInventoryTableName = "shop_inventories";
+    private string itemsTableName = "items";
+
 
     public void ShopBuy(SqliteConnection connection, int shopId, int itemId)
     {
@@ -26,7 +28,7 @@ public class ShopUtilsDB
         else
         {
             // SOMETHING HORRIBLE HAPPENED
-            Debug.LogError($"itemStock is {itemStock}");
+            throw new Exception($"itemStock is {itemStock}");
         }
     }
 
@@ -40,7 +42,7 @@ public class ShopUtilsDB
                 $"SELECT items.id, items.name, ROUND(items.price * {shopInventoryTableName}.price_coefficient), {shopInventoryTableName}.quantity " +
                 $"FROM items " +
                 $"JOIN {shopInventoryTableName} ON {shopInventoryTableName}.item_id = items.id " +
-                $"WHERE {shopInventoryTableName}.shop_id = {shopId};" + 
+                $"WHERE {shopInventoryTableName}.shop_id = {shopId} " + 
                 $"ORDER BY items.id ASC;";
 
             using (IDataReader reader = command.ExecuteReader())
@@ -59,6 +61,38 @@ public class ShopUtilsDB
 
         return shopItemList;
     }
+
+    public int GetPrice(SqliteConnection connection, int shopId, int itemId)
+    {
+        int price = -1;
+        using (var command = connection.CreateCommand())
+        {
+            string items = itemsTableName;
+            string shopInv = shopInventoryTableName;
+            command.CommandText = 
+                $"SELECT {items}.price * {shopInv}.price_coefficient " + 
+                $"AS calculated_price " +
+                $"FROM {items}, {shopInv} " + 
+                $"WHERE {items}.id = @ItemId " +
+                $"AND {shopInv}.shop_id = @ShopId " + 
+                $"AND {shopInv}.item_id = @ItemId;";
+
+                command.Parameters.AddWithValue("@ShopId", shopId);
+                command.Parameters.AddWithValue("@ItemId", itemId);
+
+            using (IDataReader reader = command.ExecuteReader())
+            {
+                if (reader.Read())
+                {
+                    double calculatedPrice = reader.GetDouble(reader.GetOrdinal("calculated_price"));
+                    price = (int)calculatedPrice;
+                }
+                else
+                    throw new Exception($"READ UNSUCCESSFUL (shopId: {shopId}, itemId: {itemId}) -> price: {price}");
+            }
+        }
+        return price;
+    }
  
 
     private int GetShopItemQuantity(SqliteConnection connection, int shopId, int itemId)
@@ -70,14 +104,14 @@ public class ShopUtilsDB
                 $"SELECT quantity " + 
                 $"FROM {shopInventoryTableName} " + 
                 $"WHERE shop_id = {shopId} " + 
-                $"AND item_id = {itemId}";
+                $"AND item_id = {itemId};";
 
             using (IDataReader reader = command.ExecuteReader())
             {
                 if (reader.Read())
                     itemStock = reader.GetInt32(0);
                 else
-                    Debug.LogError($"READ UNSUCCESSFUL (shopId: {shopId}, itemId: {itemId})");
+                    throw new Exception($"READ UNSUCCESSFUL (shopId: {shopId}, itemId: {itemId})");
             }
         }
         return itemStock;
@@ -100,12 +134,12 @@ public class ShopUtilsDB
 
                 int rowsAffected = command.ExecuteNonQuery();
                 if (rowsAffected == 0)
-                    Debug.LogWarning($"Shop item with ShopId: {shopId}, ItemId: {itemId} not found. Nothing was deleted.");
+                    throw new Exception($"Shop item with ShopId: {shopId}, ItemId: {itemId} not found. Nothing was deleted.");
             }
         }
         catch (Exception ex)
         {
-            Debug.LogError($"Error deleting shop item: {ex.Message}");
+            throw new Exception($"Error deleting shop item: {ex.Message}");
         }
     }
 
@@ -128,12 +162,12 @@ public class ShopUtilsDB
 
                 int rowsAffected = command.ExecuteNonQuery();
                 if (rowsAffected == 0)
-                    Debug.LogWarning($"Shop item with ShopId: {shopId}, ItemId: {itemId} failed to get updated.");
+                    throw new Exception($"Shop item with ShopId: {shopId}, ItemId: {itemId} failed to get updated.");
             }
         }
         catch (Exception ex)
         {
-            Debug.LogError($"Error updating shop item: {ex.Message}");
+            throw new Exception($"Error updating shop item: {ex.Message}");
         }
     }
 }
