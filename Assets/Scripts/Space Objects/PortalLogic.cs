@@ -12,6 +12,11 @@ public class PortalLogic : MonoBehaviour
         _portalManager = transform.parent.gameObject.GetComponent<PortalManager>();
     }
 
+    public int GetBoundSystemID()
+    {
+        return _boundSystemID;
+    }
+
     public void PortalTravelInit() // this one is the first impulse
     {
         _portalManager.TravelToSystemByID(_boundSystemID);

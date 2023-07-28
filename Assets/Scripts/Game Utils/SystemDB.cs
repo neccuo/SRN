@@ -486,6 +486,30 @@ public class SystemDB : MonoBehaviour
         connection.Close();
     }
 
+    public int GetPlayerSystem()
+    {
+        int ans = -1;
+        using (SqliteConnection connection = new SqliteConnection(_dbName))
+        {
+            using (var command = connection.CreateCommand())
+            {
+                command.CommandText =
+                    $"SELECT system_id " +
+                    $"FROM pilots " +
+                    $"WHERE id = 0;";
+
+                using (IDataReader reader = command.ExecuteReader())
+                {
+                    if (reader.Read())
+                        ans = reader.GetInt32(0);
+                    else
+                        throw new Exception($"READ UNSUCCESSFUL");
+                }
+            }
+        }
+        return ans;
+    }
+
     public void LoadPlayer()
     {
         SqliteConnection connection = new SqliteConnection(_dbName);

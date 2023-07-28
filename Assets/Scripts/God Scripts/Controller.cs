@@ -17,6 +17,10 @@ public class Controller : MonoBehaviour
 
     [SerializeField] private GameObject _privateComm;
 
+    [SerializeField] private GalaxyMapManager _galaxyMapManager;
+
+
+
 
     public RectTransform parent;
 
@@ -68,39 +72,6 @@ public class Controller : MonoBehaviour
         lastClickTime = Time.unscaledTime;
     }
 
-    /* void HandleGameState()
-    {
-        switch (gameInstance.GetCurrentState())
-        {
-            case GameState.PlanMovement:
-                TakePlanMovementInput(); // where state changes may happen
-                break;
-
-            case GameState.DuringMovement:
-                if(player.GetFollowedObject() != null)
-                {
-                    player.SetMovementFollow();
-                }
-                player.HandleMovement();
-                // TakeDuringMovementInput(); // where state changes may happen
-                DuringMovementEndConditions();
-                break;
-
-            case GameState.CheatBarState:
-                break;
-            
-            case GameState.ShopState:
-                break;
-
-            case GameState.SpaceSystemLoad:
-                break;
-
-            default:
-                throw new MissingComponentException("" + gameInstance.ToString() + "is not an available state.");
-        }
-        // FinalStateChecker();
-    } */
-
     public void ChangeState(GameState newState) // DEFINITELY CLEAN IT IN THE FUTURE
     {
         GameState stateToBeChanged = gameInstance.GetCurrentState();
@@ -125,7 +96,8 @@ public class Controller : MonoBehaviour
     // hopefully will use algorithms at some point :P
     private bool _CheckDoubleClickWhiteList(string tag)
     {
-        if(tag == "Planet" || tag == "Portal" || tag == "NPC"){return true;}
+        // Excluded portal for now, maybe indefinitely
+        if(tag == "Planet" || /*tag == "Portal" ||*/ tag == "NPC"){return true;}
         return false;
     }
     // for inventory
@@ -140,6 +112,14 @@ public class Controller : MonoBehaviour
         Vector2 mousePos2D = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         RaycastHit2D hit = Physics2D.Raycast(mousePos2D, Vector2.zero);
         return hit.collider?.gameObject;
+    }
+
+    // WILL BE USED FOR THE HYPERDRIVE COMMAND
+    public void SetFollow(GameObject obj)
+    {
+        player.SetFollowedObject(obj);
+        player.SetMovementFollow();
+        clickPoint.SpawnFollowArrow();
     }
 
     private void _OpenInventory()
@@ -184,9 +164,7 @@ public class Controller : MonoBehaviour
                 if (colObj != null && _CheckDoubleClickWhiteList(colObj.tag)) // NEEDS SOME DETAILS IDENTIFYING THE COLLIDER
                 {
                     Debug.Log(colObj.name + " was double clicked");
-                    player.SetFollowedObject(colObj);
-                    player.SetMovementFollow();
-                    clickPoint.SpawnFollowArrow();
+                    SetFollow(colObj);
                 }
                 else /***NESTED IF STATEMENTS ARE SHITTY HACK, CHANGE AT SOME POINT***/
                 {
@@ -205,12 +183,15 @@ public class Controller : MonoBehaviour
                 _OpenSkype();
             }
             // _OpenInventory();
-
-
         }
         else if (Input.GetKey(KeyCode.C) && Input.GetKeyDown(KeyCode.H)) // HOLD C AND PRESS H TO OPEN CHEAT CODE SCREEN
         {
             ChangeState(GameState.CheatBarState);
+        }
+        else if (Input.GetKey(KeyCode.G) && Input.GetKeyDown(KeyCode.M)) // HOLD G AND PRESS M TO OPEN CHEAT CODE SCREEN
+        {
+            // GalaxyMap
+            _galaxyMapManager.OpenMap();
         }
     }
 
@@ -254,18 +235,4 @@ public class Controller : MonoBehaviour
             }*/
         }
     }
-/*
-    void TakeDuringMovementInput()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-            ChangeState(GameState.PlanMovement); // stop game
-        // else if()
-    }
-
-    void FinalStateChecker()
-    {
-        if(player.GetTarget() == (Vector2) player.transform.position && gameInstance.GetCurrentState() == GameState.DuringMovement)
-            ChangeState(GameState.PlanMovement); // stop game
-    }
-*/
 }

@@ -6,12 +6,14 @@ using UnityEngine.Networking;
 
 public enum GameState
 {
+    NullState, // this one is a placeholder, you cannot change the game state to it
     PlanMovement,
     DuringMovement,
     Combat,
     TurnEvaluation,
     CheatBarState,
-    ShopState // , SpaceSystemLoad
+    ShopState, // , SpaceSystemLoad
+    GameUI
 }
 
 public class GameManager : MonoBehaviour
@@ -85,6 +87,9 @@ public class GameManager : MonoBehaviour
             
             case GameState.ShopState:
                 break;
+            
+            case GameState.GameUI:
+                break;
 
             //case GameState.SpaceSystemLoad:
             //    break;
@@ -137,6 +142,10 @@ public class GameManager : MonoBehaviour
                 Time.timeScale = 0; // BE CAREFUL ABOUT IT...!!!!
                 // shopBar.SetActive(true);
                 // OpenShopMenu(Planet planet)
+                break;
+            case GameState.GameUI:
+                Debug.Log("Entering GameUI state");
+                Time.timeScale = 0; // BE CAREFUL ABOUT IT...!!!!
                 break;
             //case GameState.SpaceSystemLoad:
                 // portalManager.CreateSystemToTravel();

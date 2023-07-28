@@ -11,6 +11,10 @@ public class ShopItem
     public int quantity { get; set; }
 }
 
+// DON'T FORGET, THE SHOP CAN BE ACCESSED FROM DIFFERENT PLACES
+// THAT'S WHY YOU HAVE IT AS AN INDEPENDENT GAME OBJECT
+// RATHER THAN A COMPONENT
+
 public class ShopManager : MonoBehaviour
 {
     public static ShopManager shopManager;

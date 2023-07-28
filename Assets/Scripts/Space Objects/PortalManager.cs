@@ -36,6 +36,19 @@ public class PortalManager : MonoBehaviour
         Controller.ControllerGod.ChangeState(GameState.PlanMovement);
     }
 
+    public GameObject SystemIdToPortalObject(int systemId)
+    {
+        foreach(Transform portal in transform)
+        {
+            int portalSysId = portal.GetComponent<PortalLogic>().GetBoundSystemID();
+            if(systemId == portalSysId)
+                return portal.gameObject;
+        }
+        // Couldn't find
+        Debug.LogError($"Invalid systemId[{systemId}]. Couldn't find a portal bound to that id");
+        return null;
+    }
+
     private void _DisableUnusedChildren(GameObject gObject)
     {
         // TODO: WITH SimpleDB, get

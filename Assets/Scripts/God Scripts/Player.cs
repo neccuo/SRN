@@ -10,7 +10,7 @@ public class Player : MonoBehaviour
     public Camera cam;
     public CreditManager creditManager;
 
-    private GameObject _followedObject;
+    [SerializeField] private GameObject _followedObject;
 
     // cam realm
     private float _minimumZoom = 10;
