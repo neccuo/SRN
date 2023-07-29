@@ -44,16 +44,8 @@ public class Controller : MonoBehaviour
     {
         gameInstance = GameManager.Instance;
 
-        clickPoint.origin = (Vector2) player.transform.position;
-
     }
 
-    void Update()
-    {
-        // HandleGameState();
-        clickPoint.origin = (Vector2) player.transform.position;
-        clickPoint.target = player.GetTarget();
-    }
 
     private bool CheckDoubleClick()
     {
@@ -87,11 +79,7 @@ public class Controller : MonoBehaviour
         gameInstance.ChangeGameState(newState);
     }
 
-    void BasicMovementProcedure()
-    {
-        player.SetMovementBasic();
-        clickPoint.SpawnCrossArrow();
-    }
+    
 
     // hopefully will use algorithms at some point :P
     private bool _CheckDoubleClickWhiteList(string tag)
@@ -114,12 +102,22 @@ public class Controller : MonoBehaviour
         return hit.collider?.gameObject;
     }
 
-    // WILL BE USED FOR THE HYPERDRIVE COMMAND
-    public void SetFollow(GameObject obj)
+    void BasicMovementProcedure(Vector2 target)
     {
+        Vector2 origin = player.transform.position;
+        player.SetMovementBasic(target);
+        clickPoint.SpawnArrow(origin, target, Tip.Cross);
+    }
+
+    // WILL BE USED FOR THE HYPERDRIVE COMMAND
+    public void SetFollowProcedure(GameObject obj)
+    {
+        Vector2 origin = player.transform.position;
+        Vector2 target = obj.transform.position;
+
         player.SetFollowedObject(obj);
         player.SetMovementFollow();
-        clickPoint.SpawnFollowArrow();
+        clickPoint.SpawnArrow(origin, target, Tip.Follow);
     }
 
     private void _OpenInventory()
@@ -153,10 +151,11 @@ public class Controller : MonoBehaviour
             ChangeState(GameState.DuringMovement); // continue game
         else if (Input.GetMouseButtonDown(0)/* || Input.GetMouseButton(0)*/) 
         {
+            Vector2 target = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             // HOLDING MOUSE IS UNAVAILABLE FOR A WHILE
             if(!CheckDoubleClick()) // if it is first click
             {
-                BasicMovementProcedure();
+                BasicMovementProcedure(target);
             }
             else // if double click
             {
@@ -164,11 +163,11 @@ public class Controller : MonoBehaviour
                 if (colObj != null && _CheckDoubleClickWhiteList(colObj.tag)) // NEEDS SOME DETAILS IDENTIFYING THE COLLIDER
                 {
                     Debug.Log(colObj.name + " was double clicked");
-                    SetFollow(colObj);
+                    SetFollowProcedure(colObj);
                 }
                 else /***NESTED IF STATEMENTS ARE SHITTY HACK, CHANGE AT SOME POINT***/
                 {
-                    BasicMovementProcedure();
+                    BasicMovementProcedure(target);
                 }
                 Debug.Log("double clicked");
             }

@@ -78,13 +78,12 @@ public class Player : MonoBehaviour
         return null;
     }
 
-    public Vector2 SetMovementBasic()
+    public Vector2 SetMovementBasic(Vector2 target)
     {
         SetFollowedObject(null);
-        _target = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        _dir = Input.mousePosition - Camera.main.WorldToScreenPoint(transform.position);
-        _angle = Mathf.Atan2(_dir.y, _dir.x) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.AngleAxis(_angle - 90, Vector3.forward);
+        _target = target;
+        _dir = (Vector3) _target - transform.position;
+        SetMovementHelper();
         return _target;
     }
 
@@ -93,9 +92,14 @@ public class Player : MonoBehaviour
         // NOTHING TO DO WITH THE CAMERA
         _target = _followedObject.transform.position;
         _dir = _followedObject.transform.position - transform.position;
+        SetMovementHelper();
+        return _target;
+    }
+
+    private void SetMovementHelper()
+    {
         _angle = Mathf.Atan2(_dir.y, _dir.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.AngleAxis(_angle - 90, Vector3.forward);
-        return _target;
     }
 
     public Vector2 HandleMovement()

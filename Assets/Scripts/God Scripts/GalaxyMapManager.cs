@@ -67,7 +67,7 @@ public class GalaxyMapManager : MonoBehaviour
 
         CloseMap();
 
-        Controller.ControllerGod.SetFollow(targetPortalObj);
+        Controller.ControllerGod.SetFollowProcedure(targetPortalObj);
 
         Debug.Log(dstID.ToString());
     }

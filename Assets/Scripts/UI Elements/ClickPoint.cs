@@ -10,7 +10,7 @@ public enum VDT // speed, distance, time
     Time
 }
 
-enum Tip
+public enum Tip
 {
     Cross,
     Follow
@@ -19,11 +19,10 @@ enum Tip
 
 public class ClickPoint : MonoBehaviour
 {
-    public Vector2 origin;
-    public Vector2 target;
+    private Vector2 _origin;
+    private Vector2 _target;
 
     public Player player;
-
 
     public GameObject crossObject;
     public float crossScale = 5f;
@@ -39,27 +38,21 @@ public class ClickPoint : MonoBehaviour
     private GameObject _crossPointer;
     private GameObject _followPointer;
 
-
     float targetAngle;
 
     void Start()
     {
         dotPointers = new List<Object>();
-        // origin = transform.position;
         crossObject.transform.localScale = new Vector2(crossScale, crossScale);
         followObject.transform.localScale = new Vector2(crossScale, crossScale); // BEWARE, SAME AS crossScale
         dotObject.transform.localScale = new Vector2(dotScale, dotScale);
     }
 
-    public void SpawnCrossArrow() // Spawn cross with dots
+    public void SpawnArrow(Vector2 origin, Vector2 target, Tip tip)
     {
-        SpawnTip(Tip.Cross);
-        SpawnDots();
-    }
-
-    public void SpawnFollowArrow() // spawn follow with dots
-    {
-        SpawnTip(Tip.Follow);
+        SetOrigin(origin);
+        SetTarget(target);
+        SpawnTip(tip);
         SpawnDots();
     }
 
@@ -72,7 +65,17 @@ public class ClickPoint : MonoBehaviour
         DestroyDots();
     }
 
-    void DestroyDots()
+    private void SetOrigin(Vector2 v2)
+    {
+        _origin = v2;
+    }
+
+    private void SetTarget(Vector2 v2)
+    {
+        _target = v2;
+    }
+
+    private void DestroyDots()
     {
         if(dotPointers.Count > 0)
         {
@@ -83,21 +86,21 @@ public class ClickPoint : MonoBehaviour
         }
     }
 
-    void DestroyCross()
+    private void DestroyCross()
     {
         Destroy(_crossPointer);
     }
 
-    void DestroyFollow()
+    private void DestroyFollow()
     {
         Destroy(_followPointer);
     }
 
-    void CreateText(VDT type) // 0: dist, 1: days
+    private void CreateText(VDT type) // 0: dist, 1: days
     {
-        Vector2 newVect = Camera.main.WorldToScreenPoint(target);
+        Vector2 newVect = Camera.main.WorldToScreenPoint(_target);
         text.transform.position = new Vector3(newVect.x, newVect.y, 0);
-        Vector2 diff = target - origin;
+        Vector2 diff = _target - _origin;
         string txtOut = "";
         switch(type)
         {
@@ -117,19 +120,19 @@ public class ClickPoint : MonoBehaviour
         text.SetActive(true);
     }
 
-    int FloatCeil(float value)
+    private int FloatCeil(float value)
     {
         return (int) (value+1);
     }
 
-    float FloatPrecisionSimplifier(float value, int degree)
+    private float FloatPrecisionSimplifier(float value, int degree)
     {
         int temp = (int) Mathf.Pow(10, degree);
         int val = (int) (value*temp);
         return  ((float) val / (float) temp);
     }
 
-    void KillDistText()
+    private void KillDistText()
     {
         text.SetActive(false);
     }
@@ -137,8 +140,10 @@ public class ClickPoint : MonoBehaviour
     private void SpawnTip(Tip order) // spawn only the cursor, the pointer (whether it is cross or follow)
     {
         DestroyArrow();
-        target = (Vector2) Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector2 dir = Input.mousePosition - Camera.main.WorldToScreenPoint(origin);
+        // target = (Vector2) Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        // Vector2 dir = Input.mousePosition - Camera.main.WorldToScreenPoint(origin);
+        Vector2 dir = (Vector3) _target - Camera.main.WorldToScreenPoint(_origin);
+
         targetAngle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
 
         CreateText(VDT.Time);
@@ -146,13 +151,13 @@ public class ClickPoint : MonoBehaviour
         {
             case Tip.Cross:
             {
-                _crossPointer = Instantiate(crossObject, target, Quaternion.AngleAxis(targetAngle - 90, Vector3.forward));
+                _crossPointer = Instantiate(crossObject, _target, Quaternion.AngleAxis(targetAngle - 90, Vector3.forward));
                 SetChild(_crossPointer.transform);
                 break;
             }
             case Tip.Follow:
             {
-                _followPointer = Instantiate(followObject, target, Quaternion.AngleAxis(targetAngle - 45, Vector3.forward));
+                _followPointer = Instantiate(followObject, _target, Quaternion.AngleAxis(targetAngle - 45, Vector3.forward));
                 SetChild(_followPointer.transform);
                 break;
             }
@@ -163,14 +168,14 @@ public class ClickPoint : MonoBehaviour
         }
     }
 
-    void SpawnDots()
+    private void SpawnDots()
     {
         DestroyDots();
-        Vector2 difference = target - origin;
+        Vector2 difference = _target - _origin;
         Vector2 unit = difference.normalized;
         int counter = 0;
         GameObject temp;
-        for(Vector2 parser = origin /*+ unit*/; (origin - parser).magnitude < (origin - target).magnitude; parser += unit)
+        for(Vector2 parser = _origin /*+ unit*/; (_origin - parser).magnitude < (_origin - _target).magnitude; parser += unit)
         {
             temp = Instantiate(dotObject, parser, Quaternion.AngleAxis(targetAngle - 90, Vector3.forward));
             dotPointers.Add(temp);
@@ -180,7 +185,7 @@ public class ClickPoint : MonoBehaviour
         }
     }
 
-    void SetChild(Transform child) // MAKING EVERY INSTANCE A CHILD OF THIS OBJ
+    private void SetChild(Transform child) // MAKING EVERY INSTANCE A CHILD OF THIS OBJ
     {
         child.SetParent(transform); 
     }
