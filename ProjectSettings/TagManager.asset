@@ -9,6 +9,7 @@ TagManager:
   - Portal
   - Manager
   - NPC
+  - MinimapCamera
   layers:
   - Default
   - TransparentFX
@@ -18,7 +19,7 @@ TagManager:
   - UI
   - Player
   - NPC
-  - 
+  - Minimap
   - 
   - 
   - 
@@ -66,4 +67,7 @@ TagManager:
     locked: 0
   - name: Card
     uniqueID: 3804261881
+    locked: 0
+  - name: Minimap
+    uniqueID: 2365447439
     locked: 0

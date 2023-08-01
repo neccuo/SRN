@@ -142,7 +142,7 @@ public class ClickPoint : MonoBehaviour
         DestroyArrow();
         // target = (Vector2) Camera.main.ScreenToWorldPoint(Input.mousePosition);
         // Vector2 dir = Input.mousePosition - Camera.main.WorldToScreenPoint(origin);
-        Vector2 dir = (Vector3) _target - Camera.main.WorldToScreenPoint(_origin);
+        Vector2 dir = _target - _origin;
 
         targetAngle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
 
