@@ -5,11 +5,60 @@ using System.Data;
 using Mono.Data.Sqlite;
 using UnityEngine;
 
+public class PilotTEMP
+{
+    public int id { get; set; }
+    public string name { get; set; }
+    public int credits { get; set; }
+    public string race { get; set; }
+    public int hull_id { get; set; }
+    public float x_axis { get; set; }
+    public float y_axis { get; set; }
+    public float angle { get; set; }
+
+
+    public int system_id { get; set; }
+    
+}
+
 public class PilotUtilsDB
 {
     private string pilotInventoryTableName = "pilot_inventories";
     private string pilotsTableName = "pilots";
 
+    public List<PilotTEMP> GetAllNPCs(SqliteConnection connection)
+    {
+        List<PilotTEMP> pilotList = new List<PilotTEMP>();
+
+        using (var command = connection.CreateCommand())
+        {
+            string pilots = pilotsTableName;
+
+            // Not including pilot with id 0 (player)
+            command.CommandText = $"SELECT * FROM {pilots} WHERE id != 0;";
+
+            using (var reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    PilotTEMP temp = new PilotTEMP
+                    {
+                        id = OTI(reader["id"]),
+                        name = reader["name"].ToString(),
+                        credits = OTI(reader["credits"]),
+                        race = reader["race"].ToString(),
+                        hull_id = OTI(reader["hull_id"]),
+                        x_axis = OTF(reader["x_axis"]),
+                        y_axis = OTF(reader["y_axis"]),
+                        angle = OTF(reader["angle"]),
+                        system_id = OTI(reader["system_id"])
+                    };
+                    pilotList.Add(temp);
+                }
+            }
+        }
+        return pilotList;
+    }
 
     public int GetPilotCredit(SqliteConnection connection, int pilotId)
     {
@@ -194,6 +243,16 @@ public class PilotUtilsDB
         {
             throw new Exception($"Error updating shop item: {ex.Message}");
         }
+    }
+
+    private int OTI(object obj)
+    {
+        return Int32.Parse(obj.ToString());
+    }
+
+    private float OTF(object obj)
+    {
+        return float.Parse(obj.ToString());
     }
 
 }

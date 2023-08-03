@@ -7,6 +7,7 @@ using System;
 
 public class SystemManager : MonoBehaviour
 {
+    // 0 is a default and an invalid value
     [SerializeField] public int currentSystemID = 0;
     [SerializeField] private Text _systemNameDisplay;
     [SerializeField] private GameObject _spaceBG;

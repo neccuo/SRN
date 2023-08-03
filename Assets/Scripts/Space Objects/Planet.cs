@@ -38,7 +38,6 @@ public class Planet : MonoBehaviour
         }
     }
 
-
     public int GetPlanetID()
     {
         return planetID;
@@ -70,8 +69,8 @@ public class Planet : MonoBehaviour
         if(collidedObject.tag == "Player")
         {
             Debug.Log("Player collided with planet: " + gameObject.name);
-            if(planetManager)
-                planetManager.PrintPlanetStockById(this.shopID);
+            // if(planetManager)
+            //     planetManager.PrintPlanetStockById(this.shopID);
         }
     }
 

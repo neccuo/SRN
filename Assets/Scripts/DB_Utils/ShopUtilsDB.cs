@@ -39,7 +39,7 @@ public class ShopUtilsDB
         using (var command = connection.CreateCommand())
         {
             command.CommandText =
-                $"SELECT items.id, items.name, ROUND(items.price * {shopInventoryTableName}.price_coefficient), {shopInventoryTableName}.quantity " +
+                $"SELECT items.id, items.name, ROUND(items.price * {shopInventoryTableName}.price_coefficient), {shopInventoryTableName}.quantity, items.stackable " +
                 $"FROM items " +
                 $"JOIN {shopInventoryTableName} ON {shopInventoryTableName}.item_id = items.id " +
                 $"WHERE {shopInventoryTableName}.shop_id = {shopId} " + 
@@ -54,6 +54,7 @@ public class ShopUtilsDB
                     item.name = reader.GetString(1);
                     item.price = reader.GetDecimal(2);
                     item.quantity = reader.GetInt32(3);
+                    item.stackable = reader.GetBoolean(4);
                     shopItemList.Add(item);
                 }
             }

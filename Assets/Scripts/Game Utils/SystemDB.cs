@@ -32,22 +32,6 @@ public class PlanetTEMP
 
 }
 
-public class PilotTEMP
-{
-    public int id { get; set; }
-    public string name { get; set; }
-    public int credits { get; set; }
-    public string race { get; set; }
-    public int hull_id { get; set; }
-    public float x_axis { get; set; }
-    public float y_axis { get; set; }
-    public float angle { get; set; }
-
-
-    public int system_id { get; set; }
-    
-}
-
 // ONLY MANAGERS CAN ACCESS IT
 public class SystemDB : MonoBehaviour
 {
@@ -72,7 +56,7 @@ public class SystemDB : MonoBehaviour
     void Start()
     {
         LoadPlanets();
-        LoadPilots();
+        LoadNPCs();
 
         LoadPlayer(); // THIS ONE ALSO SETS THE SYSTEM
     }
@@ -82,7 +66,8 @@ public class SystemDB : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.S))
         {
             // Save time/date
-            SavePlanets();
+
+            // SavePlanets();
             SavePilots();
             SavePlayer();
             UpdatePrices();
@@ -108,6 +93,11 @@ public class SystemDB : MonoBehaviour
     // pilotId=0 means pilot is the player
     public bool BuyItem(int shopId, int itemId, int pilotId=0)
     {
+        if(shopId == -1)
+        {
+            Debug.LogWarning($"pilotId[{pilotId}] cannot buy itemId[{itemId}] because shopId is [{shopId}]");
+            return false;
+        }
         try
         {
             if(shopId < 0 || itemId < 0)
@@ -160,6 +150,22 @@ public class SystemDB : MonoBehaviour
         return shopItemList;
     }
 
+    // YOU MAY CHANGE IT TO BE CALLED FROM THE NPC MANAGER
+    // YOU DON'T WANT TO HAVE OUTSIDE LOGIC CALLED FROM THE DB CLASS...
+    // **revised**
+    public void LoadNPCs()
+    {
+        using (var connection = new SqliteConnection(_dbName))
+        {
+            connection.Open();
+            List<PilotTEMP> pilotList = _pilotUtilsDB.GetAllNPCs(connection);
+            foreach(PilotTEMP pilot in pilotList)
+            {
+                _npcManager.SpawnNPC(pilot);
+            }
+        }
+    }
+
 
     // ONLY USE IT AT THE START
     // ***planets***
@@ -169,6 +175,7 @@ public class SystemDB : MonoBehaviour
         connection.Open();
         using (var command = connection.CreateCommand())
         {
+            // PLEASE DON'T CHANGE THE ORDERING, THANK YOU (see PlanetManager.GetClosestPlanetInSystem())
             command.CommandText = "SELECT * FROM planets ORDER BY system_id;";
 
             using (IDataReader reader = command.ExecuteReader())
@@ -188,6 +195,7 @@ public class SystemDB : MonoBehaviour
 
                     _planetManager.SpawnPlanet(temp);
                 }
+                _planetManager.SetAllPlanetsList();
                 reader.Close();
             }
         }
@@ -295,16 +303,16 @@ public class SystemDB : MonoBehaviour
         using (var connection = new SqliteConnection(_dbName))
         {
             connection.Open();
-            Dictionary<int, Planet> planetDic = _planetManager.GetPlanetDic();
+            List<Planet> allPlanets = _planetManager.GetAllPlanetsList();
 
-            foreach(KeyValuePair<int, Planet> entry in planetDic)
+            foreach(Planet planet in allPlanets)
             {
                 using (var command = connection.CreateCommand())
                 {
                     command.CommandText = "UPDATE planets SET " +
-                        "x_axis = '" + entry.Value.transform.position.x + "', " +
-                        "y_axis = '" + entry.Value.transform.position.y + "' " +
-                        "WHERE id = '" + entry.Key + "'" +
+                        "x_axis = '" + planet.transform.position.x + "', " +
+                        "y_axis = '" + planet.transform.position.y + "' " +
+                        "WHERE id = '" + planet.GetPlanetID() + "'" +
                         ";";
                     command.ExecuteNonQuery();
                 }
@@ -400,41 +408,7 @@ public class SystemDB : MonoBehaviour
         }
     }
 
-    // ***pilots
-    // only npcs
-    public void LoadPilots()
-    {
-        SqliteConnection connection = new SqliteConnection(_dbName);
-        connection.Open();
-        SqliteCommand command = connection.CreateCommand();
-        SqliteTransaction trans = connection.BeginTransaction();
-
-        // not including 0
-        command.CommandText = "SELECT * FROM pilots WHERE id != 0;";
-
-        using(IDataReader reader = command.ExecuteReader())
-        {
-            // expecting only one iteration
-            while(reader.Read())
-            {
-                PilotTEMP temp = new PilotTEMP();
-                temp.id = OTI(reader["id"]);
-                temp.name = reader["name"].ToString();
-                temp.credits = OTI(reader["credits"]);
-                temp.race = reader["race"].ToString();
-                temp.hull_id = OTI(reader["hull_id"]);
-                temp.x_axis = OTF(reader["x_axis"]);
-                temp.y_axis = OTF(reader["y_axis"]);
-                temp.angle = OTF(reader["angle"]);
-                temp.system_id = OTI(reader["system_id"]);
-
-                _npcManager.SpawnNPC(temp);
-            }
-        }
-        trans.Dispose();
-        command.Dispose();
-        connection.Close();
-    }
+    
 
     public void SavePilots()
     {

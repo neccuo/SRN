@@ -2,6 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// NPC OBJECTIVES
+public enum Objective
+{
+    Follow,
+    Patrol,
+    SeekPortal,
+    RandomWandering,
+    SeekPlanet
+}
+
 public class NpcManager : MonoBehaviour
 {
     [SerializeField] private SystemDB _systemDB;
@@ -52,16 +62,10 @@ public class NpcManager : MonoBehaviour
         }
     }
 
-    void MoveNpcs()
+    public void NpcBuyItem(int shopId, int itemId, int npcId)
     {
-
-    }
-
-    // use it at the start
-    public void InitializeAllPilots()
-    {
-        
-
+        Debug.Log($"{npcId} will buy {itemId} from {shopId}");
+        _systemDB.BuyItem(shopId, itemId, npcId);
     }
 
     public void PrepareSystemNPCs(int oldSysID, int newSysID)
@@ -85,11 +89,6 @@ public class NpcManager : MonoBehaviour
         return _npcDic;
     }
 
-    private void FillNpcDic(int id, NPC npcObj)
-    {
-        _npcDic[id] = npcObj;
-    }
-
     public void SpawnNPC(PilotTEMP inp)
     {
         GameObject obj = Instantiate(_npcPrefab);
@@ -107,6 +106,8 @@ public class NpcManager : MonoBehaviour
 
         tr.localScale = new Vector3(0.5f, 0.5f, 1); // change
 
+        npcLogic.SetNpcManager(this);
+
         npcLogic.SetNPCID(inp.id);
         npcLogic.SetSystemID(inp.system_id);
         npcLogic.SetNpcCredits(inp.credits);
@@ -121,29 +122,16 @@ public class NpcManager : MonoBehaviour
         FillNpcDic(inp.id, npcLogic);
     }
 
-    public Vector3 PickRandomPlanetPos()
+    // I'm pretty sure it won't be used for something else
+    public GameObject GetClosestPlanetObjByPos(int systemId, Vector3 pos)
     {
-        int childCount = _planetManager.transform.childCount;
-        if(childCount == 0)
-        {
-            Debug.LogError("Planet count is 0, can't pick a planet");
-            return new Vector3(0,0,-100);
-        }
-        int rndNum = Random.Range(0, childCount);
-        Transform chosenPlanet = _planetManager.transform.GetChild(rndNum);
-        Debug.Log(chosenPlanet.name + " is chosen. Will spawn in: " + chosenPlanet.position);
-        return chosenPlanet.position;
+        GameObject closestPlanet = _planetManager.GetClosestPlanetInSystem(systemId, pos);
+        return closestPlanet;
     }
 
-    private int _PickRandomShipID()
+    private void FillNpcDic(int id, NPC npcObj)
     {
-        return Random.Range(1, 8);
-    }
-
-    private void _RegisterHull(SpriteRenderer sr, Spaceship ship, int id)
-    {
-        sr.sprite = Resources.Load<Sprite>("Sprites/Ships/spaceship-" + id.ToString());
-        ship.SetHullID(id);
+        _npcDic[id] = npcObj;
     }
 
     private void _RegisterHull(GameObject obj, int id)
@@ -154,6 +142,23 @@ public class NpcManager : MonoBehaviour
         ship.SetHullID(id);
     }
 
+    // AŞAĞISI ÇÖPTÜR
+    // ARKADAŞIM EŞEK
+
+    // SİKİN
+    private int _PickRandomShipID()
+    {
+        return Random.Range(1, 8);
+    }
+
+    // SİKİN
+    private void _RegisterHull(SpriteRenderer sr, Spaceship ship, int id)
+    {
+        sr.sprite = Resources.Load<Sprite>("Sprites/Ships/spaceship-" + id.ToString());
+        ship.SetHullID(id);
+    }
+
+    // SİKİN
     public void LoadExistingNpc(int id, string name, int ship_id, float x_axis, float y_axis)
     {
         // let's say a tick just came and you have to set the attributes of the npc
@@ -191,6 +196,7 @@ public class NpcManager : MonoBehaviour
 
     }
 
+    // SİKİN
     public void DefineFreshNpc()
     {
         // let's say a tick just came and you have to set the attributes of the npc
@@ -201,7 +207,7 @@ public class NpcManager : MonoBehaviour
         // TRANSFORM ASSIGNMENT REALM
         Transform transformRef = _npcObjectPointer.transform; // EXPERIMENTAL
 
-        Vector3 loc = PickRandomPlanetPos(); // ASSUMING WE ARE WORKING WITH PLANETS NOW
+        Vector3 loc = _planetManager.PickRandomPlanetPos(); // ASSUMING WE ARE WORKING WITH PLANETS NOW
         transformRef.position = loc; // temp
         transformRef.localScale = new Vector3(0.5f, 0.5f, 1);
 
@@ -230,6 +236,7 @@ public class NpcManager : MonoBehaviour
         // _RegisterFreshNpc(_npcObjectPointer);
     }
 
+    // SİKİN
     // Depends on the outcome of the coroutine, npc will be registered to the db or destroyed
     private void _RegisterFreshNpc(GameObject npc)
     {
@@ -254,6 +261,7 @@ public class NpcManager : MonoBehaviour
 
     }
 
+    // SİKİN
     private void _NamingFreshNpc(GameObject newNpc) // names are given as: "NPC_" + npcSpawned
     {
         // int npcID = npcs.transform.childCount;

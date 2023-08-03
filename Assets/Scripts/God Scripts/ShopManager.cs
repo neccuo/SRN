@@ -9,6 +9,7 @@ public class ShopItem
     public string name { get; set; }
     public decimal price { get; set; }
     public int quantity { get; set; }
+    public bool stackable { get; set; }
 }
 
 // DON'T FORGET, THE SHOP CAN BE ACCESSED FROM DIFFERENT PLACES
@@ -51,7 +52,7 @@ public class ShopManager : MonoBehaviour
         shopManager = this;
     }
 
-    private void Start() 
+    void Start() 
     {
         // A JOB FOR ITEM MANAGER, KEEPING IT HERE TEMPORARILY
         sprites = Resources.LoadAll<Sprite>(texturePath);
@@ -64,16 +65,34 @@ public class ShopManager : MonoBehaviour
         Awake();
     }*/
 
+    // NPC ACTION
+    public bool N_BuyItem(int shopId, int itemId, int pilotId)
+    {
+        if(pilotId <= 0)
+            Debug.LogError("Bad NPC ID");
+        bool isBought = _systemDB.BuyItem(shopId, itemId, pilotId);
+        return isBought;
+    }
+
+
+    public void OpenByShopID(int id)
+    {
+        _currentShopID = id;
+        _shopItems = _systemDB.GetShopItemsByShopId(id);
+        OpenPopup();
+    }
+
     private void ItemSlotClicked(GameObject box)
     {
         SetHighlightedItem(box);
         _confirmBuyButton.onClick.RemoveAllListeners();
-        _confirmBuyButton.onClick.AddListener(() => BuyHighlightedItem());
+        _confirmBuyButton.onClick.AddListener(() => P_BuyHighlightedItem());
 
         _confirmBuyButton.interactable = true;
     }
 
-    private void BuyHighlightedItem()
+    // PLAYER
+    private void P_BuyHighlightedItem()
     {
         bool isBought = _systemDB.BuyItem(_currentShopID, _highlightedItem.id, 0);
         if(isBought)
@@ -110,13 +129,6 @@ public class ShopManager : MonoBehaviour
         _highlightedItem = itemObj.GetComponent<ShopItemContainer>().shopItem;
         highlightedItemImageUI.enabled = true;
         highlightedItemImageUI.sprite = itemObj.GetComponent<Image>().sprite;
-    }
-    
-    public void OpenByShopID(int id)
-    {
-        _currentShopID = id;
-        _shopItems = _systemDB.GetShopItemsByShopId(id);
-        OpenPopup();
     }
 
     private void OpenPopup()
@@ -183,7 +195,7 @@ public class ShopManager : MonoBehaviour
         myButton.interactable = true;
 
         // DEFINITELY CHANGE, PLEASE
-        string spriteName = "";
+        string spriteName = string.Empty;
         if(item.id == 1)
             spriteName = "drone_0";
         else if(item.id == 2)
@@ -192,10 +204,12 @@ public class ShopManager : MonoBehaviour
             spriteName = "engine_3";
         else if(item.id == 4)
             spriteName = "token_0";
-
-        Sprite mySprite = System.Array.Find(sprites, s=> s.name == spriteName);
-        itemImage.sprite = mySprite;
-
+        
+        if(!string.IsNullOrWhiteSpace(spriteName))
+        {
+            Sprite mySprite = System.Array.Find(sprites, s=> s.name == spriteName);
+            itemImage.sprite = mySprite;
+        }
 
         // NOT SURE ABOUT 'false' THOUGH...
         newShopItemObj.transform.SetParent(childItemSlot, false);

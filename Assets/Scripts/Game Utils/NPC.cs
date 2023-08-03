@@ -2,14 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum Objective
-{
-    Follow,
-    Patrol,
-    SeekPortal,
-    RandomWandering,
-    SeekPlanet
-}
+// ADD 'SpaceShip' CLASS HERE...
 
 public class NPC : MonoBehaviour
 {
@@ -31,13 +24,16 @@ public class NPC : MonoBehaviour
     public float patrolRange = 10f;
 
     private Vector2 _currentLoc;
-    private Vector2 _target;
+    [SerializeField] private GameObject _targetObj;
+    [SerializeField] private Vector2 _targetLoc;
     private Vector2 _dir;
     private float _angle;
 
     private Vector2[] directions;
     private int index;
     private GameManager _gm;
+
+    [SerializeField] private NpcManager _npcManager;
 
     private Vector3 _nullVector = new Vector3(0, 0, -1);
     [SerializeField] private int remainingWandering;
@@ -46,20 +42,17 @@ public class NPC : MonoBehaviour
 
     // PORTAL SEEK REALM
     public bool teleportReady = false;
-    private GameObject _chosenObject;
 
     private readonly int _wanderingLimit = 2;
 
-    void Start()
+    void Awake()
     {
-        // objective = Objective.Patrol; // starts with patrolling for testing
-
         _gm = GameManager.Instance;
 
         FillRemainingWandering();
         _currentLoc = (Vector2) transform.position;
         // DEFINITELY CHANGE IT
-        _target = _currentLoc; // exceptional situation, just for initialization
+        _targetLoc = _currentLoc; // exceptional situation, just for initialization
 
         if(player == null)
         {
@@ -69,7 +62,13 @@ public class NPC : MonoBehaviour
 
         directions = new Vector2[4]{ Vector2.left, Vector2.up, Vector2.right, Vector2.down};
         index = 0;
-        
+
+    }
+
+    // DONE WHEN SPAWNING, DON'T WORRY
+    public void SetNpcManager(NpcManager mng)
+    {
+        _npcManager = mng;
     }
 
     public void NpcFakeUpdate() // for making the npcs move when disabled
@@ -146,6 +145,13 @@ public class NPC : MonoBehaviour
         HandleMovement();
     }
 
+    private void OnSeekPlanetActivated()
+    {
+        GameObject closestPlanet = _npcManager.GetClosestPlanetObjByPos(_systemID, transform.position);
+
+        SetTarget(closestPlanet);
+    }
+
     bool CheckSwitchFromRandomWandering(Objective newObjective)
     {
         if(--remainingWandering < 0)
@@ -170,12 +176,14 @@ public class NPC : MonoBehaviour
 
     void SetObjective(Objective newObjective)
     {
+        if(newObjective == Objective.SeekPlanet)
+            OnSeekPlanetActivated();
         objective = newObjective;
     }
 
     void HandleFollow()
     {
-        _target = (Vector2) player.transform.position;
+        _targetLoc = (Vector2) player.transform.position;
     }
 
     void FillRemainingWandering()
@@ -185,12 +193,12 @@ public class NPC : MonoBehaviour
 
     bool IsTargetReached()
     {
-        return (_currentLoc == _target) ? true : false;
+        return (_currentLoc == _targetLoc) ? true : false;
     }
 
     bool IsTargetReached(int permittedDistance)
     {
-        return (Vector2.Distance(_currentLoc, _target) <= permittedDistance) ? true : false;
+        return Vector2.Distance(_currentLoc, _targetLoc) <= permittedDistance;
     }
 
     void HandlePatrol()
@@ -202,14 +210,16 @@ public class NPC : MonoBehaviour
         }
     }
 
-    Vector3 ClosestObjectLocationByTag(string tag)
+    GameObject ClosestObjectByTag(string tag)
     {
+        GameObject chosenObject = null;
+
         GameObject[] objects;
         objects = GameObject.FindGameObjectsWithTag(tag);
         if(objects.Length == 0)
         {
             Debug.LogWarning("NO " + tag + " AVAILABLE, BEWARE");
-            return _nullVector;
+            return null;
         }
         float closestPos = -1f;
         float temp;
@@ -219,17 +229,10 @@ public class NPC : MonoBehaviour
             if(temp < closestPos || closestPos == -1f)
             {
                 closestPos = temp;
-                _chosenObject = obj;
+                chosenObject = obj;
             }
         }
-        return _chosenObject.transform.position;
-    }
-
-    void TargetClosestObjectByTag(string tag)
-    {
-        Vector3 closestObject = ClosestObjectLocationByTag(tag);
-        if(closestObject == _nullVector){return;}
-        SetTarget((Vector2)closestObject);
+        return chosenObject;
     }
 
     void HandleSeekPortal()
@@ -237,32 +240,28 @@ public class NPC : MonoBehaviour
         // BURADA HİÇ PORTAL YOKSA OLACAKLARI DÜŞÜN
         if(!teleportReady)
         {
-            TargetClosestObjectByTag("Portal");
+            // I MIGHT HAVE TO CHANGE THIS BECAUSE PORTAL USAGE IS DIFFERENT NOW
+            // I HAVEN'T DECIDED WHETHER I'M GONNA PUT EVERY POSSIBLE PORTAL IN ONE SCENE OR ELSE
+            GameObject closestPortal = ClosestObjectByTag("Portal");
+            // Vector3 portalLoc = closestPortal.transform.position;
+            SetTarget(closestPortal);
             teleportReady = true;
         }
     }
 
-    void BuyItem()
+    void Buy(int shopId, int itemId)
     {
-        int randInt = Random.Range(0, 3);
-        int randInt2 = Random.Range(1, 4);
-        // StartCoroutine(_gm.saveLoad.NpcItemBuy(npcID, randInt, randInt2));
-    }
-
-    void SellItem()
-    {
-        int randInt = Random.Range(0, 3);
-        int randInt2 = Random.Range(1, 2); // returns 1
-        // StartCoroutine(_gm.saveLoad.NpcItemSell(npcID, randInt, randInt2));
+        _npcManager.NpcBuyItem(shopId, itemId, _npcID);
     }
 
     void HandleSeekPlanet() // CHANGES ITS FOCUS WHENEVER A PLANET IS CLOSER TO IT (ADHD)
     {
-        TargetClosestObjectByTag("Planet");
+        
         if(IsTargetReached(5))
         {
-            int randInt = Random.Range(0, 2);
-            if(randInt == 0) BuyItem(); else SellItem();
+            // 5 IS THE TEST ITEM!!!!!
+            Buy(_targetObj.GetComponent<Planet>().GetShopID(), 5);
+
             FillRemainingWandering();
             SetObjective(Objective.RandomWandering);
         }
@@ -273,22 +272,29 @@ public class NPC : MonoBehaviour
         return (loc - (Vector2) transform.position).magnitude;
     }
 
+    public void SetTarget(GameObject obj)
+    {
+        _targetObj = obj;
+        _targetLoc = obj.transform.position;
+    }
+
     public void SetTarget(Vector2 loc)
     {
-        _target = loc;
+        _targetObj = null;
+        _targetLoc = loc;
     }
 
     public Vector2 SetPatrolTarget(Vector2 direction)
     {
-        _target = _currentLoc + (direction.normalized * patrolRange); // (Vector2) player.transform.position; 
-        Debug.Log("Target: " + _target);
-        return _target;
+        _targetLoc = _currentLoc + (direction.normalized * patrolRange); // (Vector2) player.transform.position; 
+        Debug.Log("Target: " + _targetLoc);
+        return _targetLoc;
     }
 
     public Vector2 HandleMovement()
     {
-        transform.position = Vector2.MoveTowards(_currentLoc, _target, Time.deltaTime * ship.speed);
-        _dir = _target - _currentLoc;
+        transform.position = Vector2.MoveTowards(_currentLoc, _targetLoc, Time.deltaTime * ship.speed);
+        _dir = _targetLoc - _currentLoc;
         _angle = Mathf.Atan2(_dir.y, _dir.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.AngleAxis(_angle - 90, Vector3.forward);
         return transform.position;
